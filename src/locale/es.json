@@ -1,0 +1,163 @@
+{
+  "justSwipe": "Simplemente desliza",
+  "homepage": {
+    "winRealMoney": "¡Gana dinero real en su lugar!",
+    "createAccount": "Crea una cuenta o inicia sesión.",
+    "liveGames": "Juegos en vivo",
+    "allGames": "Todos los juegos",
+    "all": "Todos",
+    "games": "Juegos",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "noGamesFound": "No se encontraron juegos.",
+    "iam21": "Tengo más de 21 años.",
+    "iagree": "Acepto los",
+    "toc": "términos y condiciones"
+  },
+  "loadMore": "Cargar más",
+  "deposit": "Depósito",
+  "withdraw": "Retirar",
+  "paymentProvider": "Proveedor de pago",
+  "selectPaymentProvider": "Seleccionar proveedor de pago",
+  "paymentMethod": "Método de pago",
+  "selectPaymentMethod": "Seleccionar proveedor de pago",
+  "amount": "Cantidad",
+  "minimum": "Mínimo",
+  "proceed": "Continuar",
+  "clear": "Limpiar",
+  "accountName": "Nombre de la cuenta",
+  "accountNum": "Número de cuenta",
+  "currentBalance": "Saldo actual",
+  "searchGame": "Buscar juego aquí...",
+  "lottery": "Lotería",
+  "lotteryText": "Nuestros resultados de lotería se obtienen directamente de la Oficina de Sorteos de Caridad de Filipinas (PCSO), garantizando una experiencia de juego justa e imparcial. Confía en nuestro compromiso con la integridad mientras te traemos sorteos de lotería transparentes e imparciales.",
+  "poweredBy": "ALIMENTADO POR",
+  "ourPaymentGateway": "NUESTRA PASARELA DE PAGO",
+  "sideMenus": {
+    "otherInfo": "Otra información",
+    "menuTitle": "Menú",
+    "comingSoon": "Próximamente",
+    "unavailable": "No disponible",
+    "menu": {
+      "home": "Inicio",
+      "editProfile": "Editar perfil",
+      "raffleDraw": "Sorteo de rifas",
+      "promotions": "Promociones",
+      "logout": "Cerrar sesión"
+    },
+    "otherinfo": {
+      "about": "Acerca de nosotros",
+      "faq": "Preguntas frecuentes",
+      "contacts": "Contáctenos"
+    }
+  },
+  "gameTypes": {
+    "all": "Todos",
+    "slot": "Tragamonedas",
+    "fishing": "Pesca",
+    "bingo": "Bingo",
+    "liveCasino": "Casino en vivo",
+    "sabong": "Sabong",
+    "lotto": "Lotería",
+    "sports": "Apuestas deportivas",
+    "arcade": "Juego de arcade y frutas"
+  },
+  "scwithdrawn": "retirado exitosamente",
+  "via": "a través de",
+  "heroSection": {
+    "slide_c2w": {
+      "text": "Experimenta el juego limpio y las ganancias ilimitadas en Come2Win. Sumérgete en un mundo de juegos emocionantes y tecnología de vanguardia. Únete ahora para la máxima aventura de juego en línea.",
+      "btnText": "DESCARGAR APP"
+    },
+    "slide_first_depo": {
+      "text": "Date prisa, el bono de 50 pesos solo está disponible hasta el 30 de abril. A partir del 1 de mayo, vuelve a ser un BONO DE PRIMER DEPÓSITO DE P100. Aprovecha la oportunidad de jugar y disfrutar de tus juegos favoritos con bonificaciones fantásticas en Come2Win. ¡No esperes, juega ahora!",
+      "btnText": "DESCARGAR APP"
+    },
+    "slide_lottery": {
+      "text": "¡Prueba tu suerte con EZ2, Lucky Pick 3 y 3D Lotto para tener la oportunidad de ganar grandes premios! Disfruta de la simplicidad de elegir números y experimenta la emoción de ganar masivamente. ¡No te pierdas la emoción, juega ahora para tener la oportunidad de ganar premios de lotería que cambian la vida!",
+      "btnText": "DESCARGAR APP"
+    },
+    "slide_casino": {
+      "text": "Sumérgete en la emoción de nuestro casino en línea donde te esperan grandes botes. Gira los carretes, juega tus juegos favoritos y tienes la oportunidad de ganar recompensas que cambian la vida. ¡Únete ahora para vivir una experiencia de juego emocionante y la oportunidad de ganar un gran bote!",
+      "btnText": "DESCARGAR APP"
+    },
+    "slide_virtual": {
+      "text": "Sumérgete en el mundo de los juegos virtuales desde la comodidad de tu propio espacio. Nuestra plataforma en línea te ofrece lo último en tecnología de juegos, ofreciendo emocionantes deportes virtuales y juegos de casino. Apuesta, juega y gana fácilmente en tu dispositivo. Únete ahora para experimentar una nueva forma de disfrutar de los juegos y ganar, ¡todo al alcance de tu mano!",
+      "btnText": "DESCARGAR APP"
+    },
+    "slide_sports": {
+      "text": "Prepárate para la emoción de las apuestas deportivas en nuestra plataforma. Ya sean partidos emocionantes o grandes torneos, experimenta la emoción de predecir resultados y ganar grandes premios. ¡Únete ahora para elevar la emoción de tus deportes favoritos y convertir tus predicciones en momentos victoriosos!",
+      "btnText": "DESCARGAR APP"
+    }
+  },
+  "footer": {
+    "sec1": "1187746596421 FZ sobre registro estatal de entidades legales y FE 2024. Explora una amplia variedad de juegos, juego sin interrupciones y grandes victorias. Únete a torneos, juega de manera responsable y ¡conquista la emoción ahora!",
+    "copyright": "Derechos de autor © 2024 Come2Win. Todos los derechos reservados.",
+    "Information": {
+      "title": "Información",
+      "about": "Acerca de nosotros",
+      "faq": "Preguntas frecuentes",
+      "contact": "Contáctenos",
+      "toc": "Términos y condiciones",
+      "privacy": "Política de privacidad",
+      "legal": "Opinión legal"
+    },
+    "games": {
+      "title": "Juegos",
+      "slot": "Tragamonedas",
+      "fishing": "Pesca",
+      "bingo": "Bingo",
+      "liveCasino": "Casino en vivo",
+      "sabong": "Sabong",
+      "poker": "Póker"
+    },
+    "social": {
+      "title": "Social"
+    },
+    "sec2": {
+      "manage": "El sitio web es operado y administrado por Come2Win.",
+      "textManage": "Los servicios de juego en este sitio web son proporcionados por Come2Win, con licencia y regulados por la Corporación de Juegos y Entretenimiento de Filipinas (PAGCOR). El juego puede ser adictivo. Manténlo divertido. Juega responsablemente."
+    }
+  },
+  "profile": {
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "forgotPass": "Olvidé la contraseña",
+    "mobileNumber": "Número de teléfono móvil",
+    "enterEmail": "Ingrese su correo electrónico",
+    "enterMobileNum": "Ingrese su número de teléfono móvil",
+    "email": "Correo electrónico",
+    "mobile": "Número de teléfono",
+    "saveChanges": "Guardar cambios",
+    "changePass": "Cambiar contraseña",
+    "oldPass": "Contraseña anterior",
+    "newPass": "Nueva contraseña",
+    "confirmPass": "Confirmar contraseña",
+    "backToHomepage": "Volver a la página de inicio",
+    "unavailableBadge": "Insignia no disponible",
+    "depositHistory": "Historial de depósitos",
+    "withdrawalHistory": "Historial de retiros",
+    "show": "Mostrar",
+    "transactionID": "ID de transacción",
+    "amount": "Cantidad",
+    "selectDates": "Seleccionar fechas"
+  },
+  "chats": {
+    "header": "Soporte de chat en vivo",
+    "guestTitle": "Eres un invitado",
+    "desc": "Por favor, indica tu nombre antes de contactar a nuestro representante de servicio al cliente. Sé amable y respetuoso con nuestro equipo de servicio al cliente, evitando cualquier lenguaje inapropiado que pueda causar problemas o afectar la experiencia de nuestros representantes. Gracias.",
+    "name": "Nombre",
+    "max": "Máximo de 7 caracteres solamente",
+    "enterName": "Ingrese su nombre aquí...",
+    "submit": "Enviar",
+    "guestName": "Nombre de invitado",
+    "playerName": "Nombre del jugador",
+    "logout": "Cerrar sesión",
+    "send": "Enviar",
+    "typeMessage": "Escribe un mensaje aquí..."
+  },
+  "error_messages": {
+    "loginFirstDepo": "Por favor, inicia sesión en tu cuenta antes de solicitar un depósito/retiro.",
+    "loginFirstGame": "Por favor, inicia sesión en tu cuenta antes de acceder al juego."
+  }
+}

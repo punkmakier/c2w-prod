@@ -1,0 +1,353 @@
+@media (width >= 431px) and (width <= 834px) {
+  .QROnlyClass {
+    width: 98% !important;
+    height: 98vh !important;
+    flex-direction: column;
+    gap: 0px !important;
+    overflow: auto;
+  }
+  .qrCode {
+    margin-top: 50px;
+  }
+  .closeQR {
+    display: block !important;
+  }
+
+  .pagarAvailClass {
+    width: 90px !important;
+  }
+  .paymentOnlyURL {
+    width: 98% !important;
+  }
+  .frame-header {
+    top: -7% !important;
+  }
+  .right-content {
+    display: none !important;
+  }
+  .header {
+    display: none !important;
+  }
+
+  .chars {
+    display: none !important;
+  }
+  .cp1 {
+    display: none !important;
+  }
+
+  .left-content {
+    width: 100% !important;
+  }
+  .hrtext-1 {
+    margin-top: 130px !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .hrtext-1 img {
+    width: 250px !important;
+    margin: 0 auto !important;
+  }
+  .left-sidebar,
+  .left-sidebar-inner {
+    width: 100% !important;
+  }
+  .hero-section {
+    min-height: 50vh !important;
+    flex-direction: column;
+    background: url("@/assets/images/mobilebg.avif") !important;
+    height: auto !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+  }
+  .carousel-parent {
+    position: relative !important;
+    height: auto !important;
+  }
+  .hero-content-1 {
+    padding-bottom: 50px !important;
+  }
+
+  .burger {
+    display: block !important;
+    padding: 10px;
+  }
+  .providerNameSpan span {
+    font-size: 1.5rem !important;
+  }
+  .logReg {
+    display: block !important;
+  }
+
+  .w-container {
+    bottom: 0% !important;
+  }
+  .game-list {
+    gap: 20px !important;
+    justify-content: center !important;
+  }
+  /* .game-info,
+  .games-logo {
+    width: 160px !important;
+    height: 160px !important;
+  } */
+  .main-games {
+    padding: 0px 10px !important;
+  }
+
+  .walletSidebar {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 30px !important;
+  }
+  .wd {
+    margin-left: 0 !important;
+  }
+  .wd .dw {
+    padding: 10px 35px !important;
+  }
+
+  .left-sidebar,
+  .left-sidebar-inner {
+    width: 100% !important;
+  }
+  .sidebar {
+    padding: 0 20px !important;
+  }
+  .p-sidebar-content {
+    padding: 0 !important;
+  }
+  .p-sidebar-right .p-sidebar {
+    background-color: #1e1a1a !important;
+  }
+  .walletSidebar {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 30px !important;
+  }
+  .wd .dw {
+    padding: 10px 35px !important;
+  }
+
+  .imageHolder {
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .imageHolder span {
+    font-size: 2rem !important;
+  }
+  .img-desc .name {
+    font-size: 1.1rem !important;
+  }
+
+  .imageLogoHolder {
+    display: block !important;
+  }
+
+  /* FOOTER HERE */
+  .footer {
+    display: block !important;
+    padding: 10px !important;
+  }
+  .firstrow {
+    width: 100% !important;
+  }
+  .cp1 {
+    display: none;
+  }
+  .cp2 {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  }
+  .lisc {
+    width: 100% !important;
+    text-align: center;
+  }
+  .liscence {
+    justify-content: center;
+    margin-top: 30px;
+  }
+  .rightFooter {
+    margin-top: 60px;
+    flex-wrap: wrap !important;
+    justify-content: space-between;
+    gap: 10px !important;
+  }
+  .firstrow {
+    text-align: center !important;
+  }
+  .firstrow p {
+    margin-bottom: 30px !important;
+  }
+  .firstrow .cont {
+    justify-content: center !important;
+  }
+  /* PAYMENT GATEWAY HERE */
+  .pg-img {
+    width: 130px !important;
+  }
+  /* User Profile */
+  .profile-info {
+    width: 100% !important;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .savebuttons {
+    margin-top: 20px !important;
+  }
+  .upper-profile {
+    flex-direction: column;
+    justify-content: center !important;
+  }
+  .user-profile-inner {
+    width: 95% !important;
+    padding: 20px !important;
+    height: auto !important;
+  }
+  .analysis {
+    padding: 0 !important;
+    gap: 10px !important;
+  }
+  .total-transactions a,
+  span {
+    font-size: 0.8rem !important;
+  }
+  .card-analyst img {
+    width: 50px !important;
+  }
+  .card-analyst {
+    width: 240px;
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+  .user-profile-parent {
+    height: auto !important;
+    background-position: cover !important;
+    padding: 40px 0;
+  }
+
+  .secondcolumn {
+    width: 100% !important;
+  }
+  .lotto-top {
+    padding: 10px !important;
+    padding-bottom: 50px !important;
+  }
+  .lottery-content-upper {
+    width: 90% !important;
+  }
+  .prizes-mech {
+    flex-wrap: wrap !important;
+    gap: 30px !important;
+  }
+  .zero {
+    top: 10% !important;
+  }
+  .stack-cards {
+    flex-wrap: wrap !important;
+    margin: 0 auto !important;
+  }
+  .info-body-otherinfo {
+    padding-bottom: 100px !important;
+  }
+  .right-content-body {
+    display: none !important;
+  }
+  .left-content-body {
+    width: 95% !important;
+    margin: 0 auto !important;
+  }
+  .aboutus,
+  .faq {
+    width: 90% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+  .c-cards {
+    width: auto !important;
+    height: auto !important;
+  }
+  .c-cards h4 {
+    margin-bottom: 10px !important;
+  }
+  .c-cards p {
+    font-size: 0.8rem !important;
+  }
+  .csr,
+  .tth,
+  .cw {
+    background-size: cover !important;
+  }
+
+  .parent-sabong {
+    padding: 1rem !important;
+  }
+  .header-sabong {
+    margin-bottom: 30px !important;
+  }
+  .sabong-title {
+    font-size: 1.3rem !important;
+  }
+  .content-left-sabong {
+    flex: 0 !important;
+  }
+  .ghostdiv {
+    display: none !important;
+  }
+  .content-sabong {
+    height: auto !important;
+  }
+  .content-sabong,
+  .content2-sabong {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  .chips-amount {
+    flex-wrap: wrap !important;
+  }
+  .item-sabong {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .iframeSabong {
+    height: 350px !important;
+    width: 100% !important;
+  }
+}
+
+@media (width >= 835px) and (width <= 1023px) {
+  .QROnlyClass {
+    width: 98% !important;
+    height: 98vh !important;
+    flex-direction: column;
+    gap: 0px !important;
+    overflow: auto;
+  }
+  .qrCode {
+    margin-top: 50px;
+  }
+  .closeQR {
+    display: block !important;
+  }
+
+  .pagarAvailClass {
+    width: 90px !important;
+  }
+  .paymentOnlyURL {
+    width: 98% !important;
+  }
+}
+@media (width >= 1024px) and (width <= 1350px) {
+  .paymentOnlyURL {
+    width: 60% !important;
+  }
+  .QROnlyClass {
+    min-width: 60% !important;
+    height: 98vh !important;
+    flex-direction: column;
+    gap: 0px !important;
+    overflow: auto;
+  }
+}

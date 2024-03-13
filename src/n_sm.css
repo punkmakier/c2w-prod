@@ -1,0 +1,507 @@
+@media (width <= 430px) {
+  .right-content {
+    display: none !important;
+  }
+  .header {
+    display: none !important;
+  }
+
+  .chars {
+    display: none !important;
+  }
+  .cp1 {
+    display: none !important;
+  }
+
+  .left-content {
+    width: 100% !important;
+  }
+
+  .left-sidebar,
+  .left-sidebar-inner {
+    width: 100% !important;
+  }
+  .hero-section {
+    justify-content: end !important;
+    flex-direction: column;
+    /* background: url("@/assets/images/mobilebg.avif") !important; */
+    height: auto !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+  }
+  .carousel-parent {
+    position: relative !important;
+    height: auto !important;
+  }
+  .hero-content-1 {
+    padding-bottom: 50px !important;
+  }
+
+  .providerNameSpan span {
+    font-size: 1.5rem !important;
+  }
+  .burger {
+    display: block !important;
+    padding: 10px;
+  }
+  .hrtext-1 {
+    margin-top: 130px !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .hrtext-1 img {
+    width: 250px !important;
+    margin: 0 auto !important;
+  }
+  .w-container {
+    bottom: 0% !important;
+  }
+  .game-list {
+    gap: 20px !important;
+    justify-content: center !important;
+  }
+  .game-info,
+  .game-info-live {
+    width: 150px !important;
+    height: 150px !important;
+  }
+  .games-logo {
+    width: 150px !important;
+  }
+  .main-games {
+    padding: 0px 10px !important;
+  }
+
+  .walletSidebar {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 30px !important;
+  }
+  .wd {
+    margin-left: 0 !important;
+  }
+  .wd .dw {
+    padding: 10px 35px !important;
+  }
+
+  .left-sidebar,
+  .left-sidebar-inner {
+    width: 100% !important;
+  }
+  .sidebar {
+    padding: 0 20px !important;
+  }
+  .p-sidebar-content {
+    padding: 0 !important;
+  }
+
+  .walletSidebar {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 30px !important;
+  }
+  .logReg {
+    display: block !important;
+  }
+  .wd .dw {
+    padding: 10px 35px !important;
+  }
+
+  .imageHolder {
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .imageHolder span {
+    font-size: 2rem !important;
+  }
+  .img-desc .name {
+    font-size: 1.1rem !important;
+  }
+
+  .imageLogoHolder {
+    display: block !important;
+  }
+
+  /* FOOTER HERE */
+  .footer {
+    display: block !important;
+    padding: 10px !important;
+  }
+  .firstrow {
+    width: 100% !important;
+  }
+  .cp1 {
+    display: none;
+  }
+  .cp2 {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  }
+  .lisc {
+    width: 100% !important;
+    text-align: center;
+  }
+  .liscence {
+    justify-content: center;
+    margin-top: 30px;
+  }
+  .rightFooter {
+    margin-top: 60px;
+    flex-wrap: wrap !important;
+    justify-content: space-between;
+    gap: 10px !important;
+  }
+  .firstrow {
+    text-align: center !important;
+  }
+  .firstrow p {
+    margin-bottom: 30px !important;
+  }
+  .firstrow .cont {
+    justify-content: center !important;
+  }
+  /* PAYMENT GATEWAY HERE */
+  .pg-img {
+    width: 100px !important;
+  }
+
+  /* User Profile */
+  /* User Profile */
+  .profile-info {
+    width: 100% !important;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .savebuttons {
+    margin-top: 20px !important;
+  }
+  .upper-profile {
+    flex-direction: column;
+    justify-content: center !important;
+  }
+  .user-profile-inner {
+    width: 95% !important;
+    padding: 20px !important;
+    height: auto !important;
+  }
+  .analysis {
+    padding: 0 !important;
+    gap: 10px !important;
+  }
+  .total-transactions a,
+  span {
+    font-size: 0.8rem !important;
+  }
+  .card-analyst img {
+    width: 50px !important;
+  }
+  .card-analyst {
+    width: 240px;
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+  .user-profile-parent {
+    height: auto !important;
+    background-position: cover !important;
+    padding: 40px 0;
+  }
+
+  .secondcolumn {
+    width: 100% !important;
+  }
+
+  .prizes-mech {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .prizes-mech img {
+    width: 100% !important;
+    height: 550px !important;
+  }
+  .prizes-mech .swiper {
+    width: 370px !important;
+  }
+  .lotto-top {
+    padding: 10px !important;
+    padding-bottom: 50px !important;
+  }
+  .lottery-content-upper {
+    width: 90% !important;
+  }
+  .w-parent {
+    flex-direction: column;
+  }
+  .w-parent label {
+    margin-bottom: 10px;
+  }
+  .right-content-body {
+    display: none;
+  }
+  .lottery-body-info {
+    flex-direction: column;
+  }
+  .left-content-body {
+    width: 100% !important;
+  }
+  .lottery-body-info {
+    width: 100%;
+  }
+  .create-lot {
+    width: 100% !important;
+  }
+  .lottery-prizes {
+    width: 100% !important;
+  }
+  .header-lottery {
+    display: none !important;
+  }
+  .money-wallet {
+    width: 45% !important;
+  }
+  .youpick .second-youpick,
+  .youpick .first-youpick {
+    width: 100% !important;
+  }
+  .inner-bet {
+    flex-direction: column !important;
+  }
+  .inner-bet .inputBet,
+  .inner-bet .nameOptional {
+    width: 100% !important;
+  }
+  .betType {
+    display: flex;
+    gap: 10px;
+  }
+  .money {
+    justify-content: center !important;
+  }
+  .header-mobile-lottery {
+    display: flex !important;
+  }
+  .mobile-draw-class {
+    display: block !important;
+  }
+  .balls-handler {
+    width: 97% !important;
+    justify-content: center;
+  }
+  .youpick {
+    flex-direction: column;
+    gap: 20px !important;
+  }
+  .p-sidebar-right .p-sidebar {
+    background-color: #1e1a1a !important;
+  }
+  .image-balance .unameHandler {
+    font-size: 7rem !important;
+  }
+
+  .user-profile-inner .p-tabview .p-tabview-panels {
+    padding: 30px 0px !important;
+  }
+  .depo .paymentMethods {
+    width: 310px !important;
+    flex-wrap: wrap;
+  }
+  .g {
+    width: 150px !important;
+  }
+  .stack-cards {
+    flex-wrap: wrap !important;
+    margin: 0 auto !important;
+  }
+  .info-body-otherinfo {
+    padding-bottom: 100px !important;
+  }
+  .right-content-body {
+    display: none !important;
+  }
+  .left-content-body {
+    width: 95% !important;
+    margin: 0 auto !important;
+  }
+  .aboutus,
+  .faq {
+    width: 90% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+  .c-cards {
+    width: auto !important;
+    height: auto !important;
+  }
+  .c-cards h4 {
+    margin-bottom: 10px !important;
+  }
+  .c-cards p {
+    font-size: 0.8rem !important;
+  }
+  .csr,
+  .tth,
+  .cw {
+    background-size: cover !important;
+  }
+  .contact h1 {
+    margin-top: 60px;
+    text-align: center !important;
+  }
+  .contact img {
+    width: 300px !important;
+  }
+  .QROnlyClass {
+    width: 98% !important;
+    height: 90vh !important;
+    flex-direction: column;
+    gap: 0px !important;
+    overflow: auto;
+  }
+  .parentqr {
+    margin-top: 620px !important;
+  }
+  .qrCode {
+    margin-top: 50px;
+  }
+  .closeQR {
+    display: block !important;
+  }
+
+  .pagarAvailClass {
+    width: 90px !important;
+  }
+  .paymentOnlyURL {
+    width: 98% !important;
+  }
+  .chat-box {
+    width: 392px !important;
+  }
+  .amountDep {
+    display: flex;
+    flex-direction: column;
+  }
+  .mindep {
+    margin-left: 0 !important;
+  }
+  .depositView {
+    flex-direction: column;
+  }
+  .main-modal-body {
+    width: 98% !important;
+    height: 98% !important;
+    padding: 50px 20px !important;
+  }
+  .parent-sabong {
+    padding: 1rem !important;
+  }
+  .header-sabong {
+    margin-bottom: 30px !important;
+  }
+  .sabong-title {
+    font-size: 1.3rem !important;
+  }
+  .content-left-sabong {
+    flex: 0 !important;
+  }
+  .ghostdiv {
+    display: none !important;
+  }
+  .content-sabong {
+    height: auto !important;
+  }
+  .content-sabong,
+  .content2-sabong {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  .chips-amount {
+    flex-wrap: wrap !important;
+  }
+  .item-sabong {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .iframeSabong {
+    height: 350px !important;
+    width: 100% !important;
+  }
+}
+
+@media (width <= 393px) {
+  .chat-box {
+    width: 368px !important;
+  }
+  .qrCode {
+    margin-top: 200px !important;
+  }
+  .game-list {
+    gap: 10px !important;
+    justify-content: center !important;
+  }
+  .logo-herosection {
+    width: 320px !important;
+  }
+  .prizes-mech .swiper {
+    width: 335px !important;
+  }
+  .frame-header {
+    top: -9% !important;
+  }
+}
+@media (width <= 375px) {
+  .chat-box {
+    width: 350px !important;
+  }
+  .depo .paymentMethods {
+    width: 300px !important;
+  }
+  .g {
+    width: 135px !important;
+  }
+  .games-list-parent {
+    padding: 10px !important;
+  }
+  .latestResBalls {
+    flex-direction: column !important;
+    gap: 20px;
+    align-items: center;
+  }
+  .latestResBalls button {
+    width: 100% !important;
+  }
+}
+
+@media (width <= 360px) {
+  .chat-box {
+    width: 337px !important;
+  }
+  .game-info,
+  .game-info-live {
+    width: 140px !important;
+    height: 140px !important;
+  }
+  .prizes-mech .swiper {
+    width: 320px !important;
+  }
+  .frame-header {
+    top: -10% !important;
+  }
+}
+
+@media (width <= 320px) {
+  .chat-box {
+    width: 295px !important;
+  }
+  .game-info,
+  .game-info-live {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  .prizes-mech .swiper {
+    width: 320px !important;
+  }
+  .frame-header {
+    top: -10% !important;
+  }
+}

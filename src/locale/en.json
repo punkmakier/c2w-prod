@@ -1,0 +1,163 @@
+{
+  "justSwipe": "Just swipe",
+  "homepage": {
+    "winRealMoney": "Win real money instead!",
+    "createAccount": "Create an account or login.",
+    "liveGames": "Live Games",
+    "allGames": "All Games",
+    "all": "All",
+    "games": "Games",
+    "login": "Login",
+    "register": "Register",
+    "noGamesFound": "No games were found.",
+    "iam21": "I am 21+ years old.",
+    "iagree": "I agree to the",
+    "toc": "terms and conditions"
+  },
+  "loadMore": "Load More",
+  "deposit": "Deposit",
+  "withdraw": "Withdraw",
+  "paymentProvider": "Payment Provider",
+  "selectPaymentProvider": "Select payment provider",
+  "paymentMethod": "Payment Method",
+  "selectPaymentMethod": "Select payment provider",
+  "amount": "Amount",
+  "minimum": "Minimum",
+  "proceed": "Proceed",
+  "clear": "Clear",
+  "accountName": "Account Name",
+  "accountNum": "Account Number",
+  "currentBalance": "Current Balance",
+  "searchGame": "Search game here...",
+  "lottery": "Lottery",
+  "lotteryText": "Our lottery results are sourced directly from the Philippine Charity Sweepstakes Office (PCSO), guaranteeing a fair and unbiased gaming experience. Trust in our commitment to integrity as we bring you transparent and impartial lottery draws.",
+  "poweredBy": "POWERED BY",
+  "ourPaymentGateway": "OUR PAYMENT GATEWAY",
+  "sideMenus": {
+    "otherInfo": "Other Information",
+    "menuTitle": "Menu",
+    "comingSoon": "Coming Soon",
+    "unavailable": "Unavailable",
+    "menu": {
+      "home": "Home",
+      "editProfile": "Edit Profile",
+      "raffleDraw": "Raffle Draw",
+      "promotions": "Promotions",
+      "logout": "Logout"
+    },
+    "otherinfo": {
+      "about": "About Us",
+      "faq": "FAQ",
+      "contacts": "Contact Us"
+    }
+  },
+  "gameTypes": {
+    "all": "All",
+    "slot": "Slots",
+    "fishing": "Fishing",
+    "bingo": "Bingo",
+    "liveCasino": "Live Casino",
+    "sabong": "Sabong",
+    "lotto": "Lotto",
+    "sports": "Sports Betting",
+    "arcade": "Arcade & Fruit Game"
+  },
+  "scwithdrawn": "successfully withdrawn",
+  "via": "via",
+  "heroSection": {
+    "slide_c2w": {
+      "text": "Experience fair play and limitless wins at Come2Win. Dive into a world of thrilling games and cutting-edge tech. Join us now for the ultimate online gambling adventure.",
+      "btnText": "DOWNLOAD APP"
+    },
+    "slide_first_depo": {
+      "text": "Hurry, the 50 pesos bonus is only available until April 30th. Starting May 1st, it goes back to a P100 FIRST DEPOSIT BONUS. Seize the opportunity to play and enjoy your favorite games with fantastic bonuses at Come2Win. Don't wait – play now!",
+      "btnText": "DOWNLOAD APP"
+    },
+    "slide_lottery": {
+      "text": "Try your luck with EZ2, Lucky Pick 3, and 3D Lotto for a chance to win huge prizes! Enjoy the simplicity of choosing numbers and experience the thrill of massive wins. Don't miss out on the excitement – play now for your shot at life-changing lotto prizes!",
+      "btnText": "DOWNLOAD APP"
+    },
+    "slide_casino": {
+      "text": "Dive into the excitement of our online casino where big jackpots await. Spin the reels, play your favorite games, and stand a chance to win life-changing rewards. Join now for a thrilling gaming experience and the opportunity to score a massive jackpot!",
+      "btnText": "DOWNLOAD APP"
+    },
+    "slide_virtual": {
+      "text": "Dive into the world of virtual gaming from the comfort of your own space. Our online platform brings you the latest in gaming technology, offering exciting virtual sports and casino games. Bet, play, and win easily on your device. Join us now to experience a new way of enjoying games and winning, all at your fingertips",
+      "btnText": "DOWNLOAD APP"
+    },
+    "slide_sports": {
+      "text": "Get ready for the thrill of sports betting on our platform. Whether it's exciting matches or major tournaments, experience the rush of predicting outcomes and scoring big wins. Join now to elevate the excitement of your favorite sports and turn your predictions into victorious moments!",
+      "btnText": "DOWNLOAD APP"
+    }
+  },
+  "footer": {
+    "sec1": "1187746596421 FZ on state registration of legal entities and FE 2024. Explore diverse games, seamless play, and big wins.Join tournaments, play responsibly, and conquer the excitement now!",
+    "copyright": "Copyright © 2024 Come2Win. All rights reserved.",
+    "Information": {
+      "title": "Information",
+      "about": "About Us",
+      "faq": "FAQ",
+      "contact": "Contact Us",
+      "toc": "Term of Condition",
+      "privacy": "Privacy Policy",
+      "legal": "Legal Opinion"
+    },
+    "games": {
+      "title": "Games",
+      "slot": "Slots",
+      "fishing": "Fishing",
+      "bingo": "Bingo",
+      "liveCasino": "Live Casino",
+      "sabong": "Sabong",
+      "poker": "Poker"
+    },
+    "social": {
+      "title": "Social"
+    },
+    "sec2": {
+      "manage": "The website is operated and managed by Come2Win.",
+      "textManage": "Gaming services on this website are provided by Come2Win, licensed and regulated by the Philippine Amusement and Gaming Corporation (PAGCOR). Gambling can be addictive. Keep it fun. Game responsibly."
+    }
+  },
+  "profile": {
+    "username": "Username",
+    "password": "Password",
+    "forgotPass": "Forgot Password",
+    "mobileNumber": "Mobile Number",
+    "enterEmail": "Enter your email",
+    "enterMobileNum": "Enter your mobile number",
+    "email": "Email",
+    "mobile": "Phone Number",
+    "saveChanges": "Save Changes",
+    "changePass": "Change Password",
+    "oldPass": "Old Password",
+    "newPass": "New Password",
+    "confirmPass": "Confirm Password",
+    "backToHomepage": "Back to homepage",
+    "unavailableBadge": "Unavailable Badge",
+    "depositHistory": "Deposit History",
+    "withdrawalHistory": "Withdrawal History",
+    "show": "Show",
+    "transactionID": "Transaction ID",
+    "amount": "Amount",
+    "selectDates": "Select dates"
+  },
+  "chats": {
+    "header": "Live Chat Support",
+    "guestTitle": "You're a Guest",
+    "desc": "Please state your name before contacting our customer service representative. Kindly be polite and respectful to our customer service team, avoiding any inappropriate language that may cause issues or impact the experience of our representatives. Thank you.",
+    "name": "Name",
+    "max": "Maximum of 7 characters only",
+    "enterName": "Enter your name here...",
+    "submit": "Submit",
+    "guestName": "Guest Name",
+    "playerName": "Player Name",
+    "logout": "Logout",
+    "send": "Send",
+    "typeMessage": "Type a message here..."
+  },
+  "error_messages": {
+    "loginFirstDepo": "Please log in to your account before requesting a deposit/withdrawal.",
+    "loginFirstGame": "Please log in to your account before accessing the game."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Come2Win",
+  "short_name": "STL",
+  "description": "Small Town Lottery",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff0000",
+  "icons": [
+    {
+      "src": "./images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
