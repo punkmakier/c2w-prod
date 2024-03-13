@@ -1,0 +1,353 @@
+<template lang="">
+  <div class="logReg" style="display: none" v-if="!isLogin">
+    <div class="wd logShow">
+      <a
+        href="javascript:void(0)"
+        class="dw"
+        :class="{ 'dw-active': isDeposit }"
+        @click="loginModal2 = true"
+        >{{ $t("deposit") }}</a
+      >
+      <a
+        href="javascript:void(0)"
+        class="dw"
+        :class="{ 'dw-active': !isDeposit }"
+        @click="registerModal = true"
+        >{{ $t("withdraw") }}</a
+      >
+    </div>
+  </div>
+  <div class="header">
+    <div class="logo-menu">
+      <!-- <router-link to="/" class="menu-links"
+        ><img src="@/assets/images/logo.png" style="width: 100px" alt=""
+      /></router-link> -->
+    </div>
+    <div class="wd">
+      <a
+        href="javascript:void(0)"
+        class="dw"
+        :class="{ 'dw-active': isDeposit }"
+        @click="handleAction('deposit')"
+        >{{ $t("deposit") }}</a
+      >
+      <a
+        href="javascript:void(0)"
+        class="dw"
+        :class="{ 'dw-active': !isDeposit }"
+        @click="handleAction('withdraw')"
+        >{{ $t("withdraw") }}</a
+      >
+    </div>
+
+    <TheWalletMoney style="width: 210px !important" />
+
+    <Dialog
+      :draggable="false"
+      v-model:visible="deposit"
+      modal
+      :header="$t('deposit')"
+      :style="{ width: '50rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <WithdrawDeposit
+        type="Deposit"
+        @submitDeposit="depositSubmit"
+        :isLoading="isLoadingButton" />
+    </Dialog>
+    <Dialog
+      :draggable="false"
+      v-model:visible="withdraw"
+      modal
+      :header="$t('withdraw')"
+      :style="{ width: '50rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <WithdrawDeposit
+        type="Withdraw"
+        @submitWithdraw="withdrawSubmit"
+        :isLoading="isLoadingButton"
+        :severity="severity"
+        :responseMessage="responseMessage" />
+    </Dialog>
+
+    <Dialog
+      :draggable="false"
+      v-model:visible="loginModal"
+      modal
+      header=" "
+      :style="{ width: '50rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <TheLoginForm
+        @submit="submitLogin"
+        :errorMessage="errorMessage"
+        :loading="isLoadingButton" />
+    </Dialog>
+    <Dialog
+      :draggable="false"
+      v-model:visible="loginModal2"
+      modal
+      header=" "
+      :style="{ width: '50rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <TheLoginForm
+        @submit="submitLogin"
+        :errorMessage="errorMessage2"
+        :loading="isLoadingButton" />
+    </Dialog>
+    <Dialog
+      :draggable="false"
+      v-model:visible="registerModal"
+      modal
+      header=" "
+      :style="{ width: '50rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <TheRegisterForm @submit="submitRegister" />
+    </Dialog>
+  </div>
+</template>
+<script>
+import TheWallet from "@/components/TheWallet.vue";
+import WithdrawDeposit from "@/components/WithdrawDeposit.vue";
+import TheLoginForm from "@/components/TheLoginForm.vue";
+import TheRegisterForm from "@/components/TheRegisterForm.vue";
+import TheWalletMoney from "@/components/TheWalletMoney.vue";
+import { C2WAPIService as axios } from "@/plugins/APIServices.js";
+import { ref, onMounted, watchEffect } from "vue";
+import { useAuthStore } from "@/stores/user.js";
+import { useI18n } from "vue-i18n";
+import { useToast } from "primevue/usetoast";
+import { usePaymentProcess } from "@/stores/payment_process";
+export default {
+  components: {
+    TheWallet,
+    TheWalletMoney,
+    WithdrawDeposit,
+    TheLoginForm,
+    TheRegisterForm,
+  },
+  setup() {
+    const { t } = useI18n();
+    const deposit = ref(false);
+    const withdraw = ref(false);
+    const isDeposit = ref(false);
+    const loginModal = ref(false);
+    const registerModal = ref(false);
+    const loginModal2 = ref(false);
+    const errorMessage = ref("");
+    const isLogin = ref(false);
+    const errorMessage2 = ref("");
+    const type = ref("");
+    const store = useAuthStore();
+    const { state } = usePaymentProcess();
+    const isLoadingButton = ref(false);
+    const responseMessage = ref("");
+    const severity = ref("");
+    const paymentURL = ref("");
+    const qrCodeText = ref("");
+    const toast = useToast();
+    const amountDep = ref(0);
+
+    const handleAction = (action) => {
+      if (store.user) {
+        if (action === "deposit") {
+          deposit.value = true;
+          isDeposit.value = true;
+          withdraw.value = false;
+        } else if (action === "withdraw") {
+          isDeposit.value = false;
+          deposit.value = false;
+          withdraw.value = true;
+        }
+      } else {
+        loginModal.value = true;
+        errorMessage.value = t("error_messages.loginFirstDepo");
+      }
+    };
+
+    const submitLogin = async (creds) => {
+      isLoadingButton.value = true;
+      const res = await store.login(creds);
+      if (res === "Success") {
+        loginModal.value = false;
+        loginModal2.value = false;
+        isLogin.value = true;
+        isLoadingButton.value = false;
+      } else {
+        errorMessage.value = res;
+        errorMessage2.value = res;
+        isLoadingButton.value = false;
+      }
+    };
+
+    const submitRegister = async (data) => {
+      try {
+        const getResult = await axios.post("your-register-endpoint", data);
+        console.log(getResult);
+      } catch (error) {
+        console.error("Error during registration:", error);
+      }
+    };
+
+    const depositSubmit = async (data) => {
+      isLoadingButton.value = true;
+      const uname = store.user[0].username;
+      const token = store.user[0].token;
+      const passData = { username: uname, token: token, ...data };
+      const res = await axios.postDeposit(passData);
+      if (res.ErrorCode === 0) {
+        state.url = res.Url;
+        state.amount = data.amount;
+        state.qr = res.QR;
+        deposit.value = false;
+        amountDep.value = data.amount;
+        qrCodeText.value = res.QR;
+        paymentURL.value = res.Url;
+      } else {
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: res.ErrorMessage,
+          life: 5000,
+        });
+      }
+
+      isLoadingButton.value = false;
+    };
+    const withdrawSubmit = async (data) => {
+      console.log(data);
+      isLoadingButton.value = true;
+      const uname = store.user[0].username;
+      const token = store.user[0].token;
+      const passData = { username: uname, token: token, ...data };
+      const res = await axios.postWithdraw(passData);
+      console.log(res);
+      if (res.resStatus === 0) {
+        isLoadingButton.value = false;
+        responseMessage.value =
+          "Your withdrawal request has been processed. Your funds will be credited shortly.";
+        severity.value = "success";
+        return;
+      }
+      if (res.resStatus === 1) {
+        isLoadingButton.value = false;
+        responseMessage.value = res.resMsg;
+        severity.value = "error";
+        return;
+      } else {
+        responseMessage.value = "Something went wrong. Please try again.";
+
+        isLoadingButton.value = false;
+        severity.value = "error";
+        return;
+      }
+    };
+    onMounted(() => {
+      if (store.user) {
+        isLogin.value = true;
+      } else {
+        isLogin.value = false;
+      }
+    });
+
+    watchEffect(() => {
+      if (store.user) {
+        isLogin.value = true;
+      } else {
+        isLogin.value = false;
+      }
+    });
+
+    return {
+      amountDep,
+      paymentURL,
+      responseMessage,
+      severity,
+      isLoadingButton,
+      deposit,
+      withdraw,
+      isDeposit,
+      loginModal,
+      registerModal,
+      loginModal2,
+      errorMessage,
+      isLogin,
+      errorMessage2,
+      type,
+      store,
+      qrCodeText,
+      handleAction,
+      submitLogin,
+      submitRegister,
+      depositSubmit,
+      withdrawSubmit,
+    };
+  },
+};
+</script>
+<style>
+.logReg {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+.logShow {
+  box-shadow: 0 0 10px #000;
+}
+.wd {
+  display: flex;
+  gap: 3px;
+  background-color: rgb(28, 26, 26);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: 0.3s ease;
+  margin-left: 140px;
+}
+.d:hover {
+  background-color: rgba(59, 59, 59, 0.78);
+}
+.dw {
+  cursor: pointer;
+}
+.wd .dw {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 30px;
+  border-radius: 30px;
+  caret-color: transparent; /* Standard property */
+  caret-shape: none; /* For Firefox */
+}
+.dw-active {
+  background-color: #ff1354;
+  transition: 0.3s ease;
+}
+.dw-active:hover {
+  background-color: #c70c41;
+}
+.logo-menu {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.logo-menu a {
+  color: #979797;
+  text-decoration: none;
+  transition: 0.3s ease;
+  caret-color: transparent; /* Standard property */
+  caret-shape: none; /* For Firefox */
+}
+.logo-menu a:hover {
+  color: #fefefe;
+  font-weight: 600;
+}
+
+.header {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  z-index: 3;
+}
+</style>

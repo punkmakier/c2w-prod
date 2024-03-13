@@ -1,0 +1,93 @@
+[
+  {
+    "id": "1",
+    "name": "ez2",
+    "image": "2d.png",
+    "url": "http://user.come2win.ph/lottery/ez2",
+    "title": "EZ-2",
+    "type": "Lotto"
+  },
+
+  {
+    "id": "2",
+    "name": "3d",
+    "image": "3d.png",
+    "url": "https://user.come2win.ph/lottery/3dlotto",
+    "title": "EZ-2",
+    "type": "Lotto"
+  },
+  {
+    "id": "3",
+    "name": "pick3",
+    "image": "pick3.png",
+    "url": "http://user.come2win.ph/lottery/pick3",
+    "title": "EZ-2",
+    "type": "Lotto"
+  },
+  {
+    "id": "1005",
+    "name": "Short Cock Fighting",
+    "image": "cock_short_knife.png",
+    "url": "http://localhost:5173/sabong/short",
+    "title": "Short Cocking Fighting",
+    "type": "Sabong"
+  },
+  {
+    "id": "1006",
+    "name": "Long Cock Fighting",
+    "image": "cock_long_knife.png",
+    "url": "http://localhost:5173/sabong/long",
+    "title": "Long Cocking Fighting",
+    "type": "Sabong"
+  },
+  {
+    "id": "1081",
+    "name": "Sports Betting",
+    "image": "sports_betting.png",
+    "url": "https://www.come2win.ph/",
+    "title": "EZ-2",
+    "type": "Sports"
+  },
+  {
+    "id": "5",
+    "name": "Poker",
+    "image": "master_poker.png",
+    "url": "https://www.come2win.ph/",
+    "title": "EZ-2",
+    "type": "Poker"
+  },
+  {
+    "id": "1017",
+    "name": "E-Sports",
+    "image": "esports.png",
+    "url": "https://www.come2win.ph/",
+    "title": "E-Sports",
+    "type": "Sports"
+  },
+
+  {
+    "id": "15",
+    "name": "Virtual Sports",
+    "image": "vplobby.png",
+    "url": "https://www.come2win.ph/",
+    "title": "Virtual Sports",
+    "type": "Sports"
+  },
+  {
+    "id": "26",
+    "name": "SA Gaming Live",
+    "image": "sexyhall.jpg",
+    "url": "https://www.come2win.ph/",
+    "title": "SA Gaming Live",
+    "type": "Live Casino"
+  },
+  {
+    "id": "27",
+    "name": "Sexy Gaming",
+    "image": "sexy.png",
+    "url": "https://www.come2win.ph/",
+    "title": "Sexy Gaming",
+    "providerImage": "sexy_gaming_logo.png",
+    "type": "Live Casino"
+  }
+]

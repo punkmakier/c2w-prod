@@ -1,0 +1,163 @@
+{
+  "justSwipe": "Geser saja",
+  "homepage": {
+    "winRealMoney": "Menangi wang sebenar!",
+    "createAccount": "Cipta akaun atau log masuk.",
+    "liveGames": "Permainan Langsung",
+    "allGames": "Semua Permainan",
+    "all": "Semua",
+    "games": "Permainan",
+    "login": "Log Masuk",
+    "register": "Daftar",
+    "noGamesFound": "Tiada permainan dijumpai.",
+    "iam21": "Saya berumur 21 tahun ke atas.",
+    "iagree": "Saya bersetuju dengan",
+    "toc": "terma dan syarat"
+  },
+  "loadMore": "Muat Lebih",
+  "deposit": "Deposit",
+  "withdraw": "Tarik",
+  "paymentProvider": "Pembekal Pembayaran",
+  "selectPaymentProvider": "Pilih pembekal pembayaran",
+  "paymentMethod": "Kaedah Pembayaran",
+  "selectPaymentMethod": "Pilih pembekal pembayaran",
+  "amount": "Jumlah",
+  "minimum": "Minimum",
+  "proceed": "Teruskan",
+  "clear": "Kosongkan",
+  "accountName": "Nama Akaun",
+  "accountNum": "Nombor Akaun",
+  "currentBalance": "Baki Semasa",
+  "searchGame": "Cari permainan di sini...",
+  "lottery": "Loteri",
+  "lotteryText": "Keputusan loteri kami diperolehi secara langsung dari Pejabat Amal Loteri Filipina (PCSO), menjamin pengalaman permainan yang adil dan tidak berat sebelah. Percayalah pada komitmen kami terhadap integriti ketika kami membawa anda penarikan loteri yang telus dan tidak berat sebelah.",
+  "poweredBy": "DIDAYAKAN OLEH",
+  "ourPaymentGateway": "PINTU GANTRY PEMBAYARAN KAMI",
+  "sideMenus": {
+    "otherInfo": "Maklumat Lain",
+    "menuTitle": "Menu",
+    "comingSoon": "Akan Datang",
+    "unavailable": "Tidak Tersedia",
+    "menu": {
+      "home": "Laman Utama",
+      "editProfile": "Edit Profil",
+      "raffleDraw": "Lekapan Loteri",
+      "promotions": "Promosi",
+      "logout": "Log Keluar"
+    },
+    "otherinfo": {
+      "about": "Tentang Kami",
+      "faq": "Soalan Lazim",
+      "contacts": "Hubungi Kami"
+    }
+  },
+  "gameTypes": {
+    "all": "Semua",
+    "slot": "Slot",
+    "fishing": "Memancing",
+    "bingo": "Bingo",
+    "liveCasino": "Kasino Langsung",
+    "sabong": "Sabong",
+    "lotto": "Lotto",
+    "sports": "Pertaruhan Sukan",
+    "arcade": "Permainan Arked & Buah"
+  },
+  "scwithdrawn": "berjaya ditarik balik",
+  "via": "melalui",
+  "heroSection": {
+    "slide_c2w": {
+      "text": "Alami permainan yang adil dan kemenangan tanpa had di Come2Win. Terjun ke dalam dunia permainan yang mendebarkan dan teknologi terkini. Sertai kami sekarang untuk pengembaraan perjudian dalam talian yang hebat.",
+      "btnText": "MUAT TURUN APP"
+    },
+    "slide_first_depo": {
+      "text": "Bersegeralah, bonus 50 pesos hanya tersedia sehingga 30 April. Mulai 1 Mei, ia kembali kepada BONUS DEPOSIT PERTAMA P100. Ambil peluang untuk bermain dan nikmati permainan kegemaran anda dengan bonus yang fantastik di Come2Win. Jangan tunggu - main sekarang!",
+      "btnText": "MUAT TURUN APP"
+    },
+    "slide_lottery": {
+      "text": "Cuba nasib anda dengan EZ2, Lucky Pick 3, dan 3D Lotto untuk peluang memenangi hadiah besar! Nikmati kemudahan memilih nombor dan alami keseronokan kemenangan besar. Jangan lepaskan peluang untuk menikmati hadiah loteri yang mengubah hidup - main sekarang!",
+      "btnText": "MUAT TURUN APP"
+    },
+    "slide_casino": {
+      "text": "Terjun ke dalam keseronokan kasino dalam talian kami di mana jackpot besar menanti. Putar gelendong, mainkan permainan kegemaran anda, dan berpeluang memenangi ganjaran yang mengubah hidup. Sertai sekarang untuk pengalaman permainan yang mendebarkan dan peluang untuk menang jackpot besar!",
+      "btnText": "MUAT TURUN APP"
+    },
+    "slide_virtual": {
+      "text": "Terjun ke dalam dunia permainan maya dari keselesaan ruang anda sendiri. Platform dalam talian kami membawa anda yang terkini dalam teknologi permainan, menawarkan sukan maya yang mengasyikkan dan permainan kasino. Bertaruh, main, dan menang dengan mudah di peranti anda. Sertai kami sekarang untuk mengalami cara baru menikmati permainan dan menang, semua di hujung jari anda",
+      "btnText": "MUAT TURUN APP"
+    },
+    "slide_sports": {
+      "text": "Sedia untuk kegembiraan pertaruhan sukan di platform kami. Sama ada perlawanan yang mengasyikkan atau kejohanan utama, alami keghairahan meramal hasil dan memenangi kemenangan besar. Sertai sekarang untuk meningkatkan keghairahan sukan kegemaran anda dan menjadikan ramalan anda sebagai momen kejayaan!",
+      "btnText": "MUAT TURUN APP"
+    }
+  },
+  "footer": {
+    "sec1": "1187746596421 FZ pada pendaftaran entiti undang-undang negeri dan FE 2024. Terokai pelbagai permainan, permainan yang lancar, dan kemenangan besar. Sertai kejohanan, bermain dengan tanggungjawab, dan takluki keghairahan sekarang!",
+    "copyright": "Hak Cipta © 2024 Come2Win. Semua hak cipta.",
+    "Information": {
+      "title": "Maklumat",
+      "about": "Tentang Kami",
+      "faq": "Soalan Lazim",
+      "contact": "Hubungi Kami",
+      "toc": "Terma dan Syarat",
+      "privacy": "Dasar Privasi",
+      "legal": "Pendapat Undang-Undang"
+    },
+    "games": {
+      "title": "Permainan",
+      "slot": "Slot",
+      "fishing": "Memancing",
+      "bingo": "Bingo",
+      "liveCasino": "Kasino Langsung",
+      "sabong": "Sabong",
+      "poker": "Poker"
+    },
+    "social": {
+      "title": "Sosial"
+    },
+    "sec2": {
+      "manage": "Laman web ini dioperasikan dan diuruskan oleh Come2Win.",
+      "textManage": "Perkhidmatan perjudian di laman web ini disediakan oleh Come2Win, berlesen dan dikawal selia oleh Perbadanan Amalan Permainan dan Perjudian Filipina (PAGCOR). Perjudian boleh membuat ketagihan. Jadikan ia menyeronokkan. Berjudi dengan bertanggungjawab."
+    }
+  },
+  "profile": {
+    "username": "Nama Pengguna",
+    "password": "Kata Laluan",
+    "forgotPass": "Lupa Kata Laluan",
+    "mobileNumber": "Nombor Telefon Bimbit",
+    "enterEmail": "Masukkan emel anda",
+    "enterMobileNum": "Masukkan nombor telefon bimbit anda",
+    "email": "Emel",
+    "mobile": "Nombor Telefon",
+    "saveChanges": "Simpan Perubahan",
+    "changePass": "Tukar Kata Laluan",
+    "oldPass": "Kata Laluan Lama",
+    "newPass": "Kata Laluan Baru",
+    "confirmPass": "Sahkan Kata Laluan",
+    "backToHomepage": "Kembali ke laman utama",
+    "unavailableBadge": "Badge Tidak Tersedia",
+    "depositHistory": "Sejarah Deposit",
+    "withdrawalHistory": "Sejarah Pengeluaran",
+    "show": "Papar",
+    "transactionID": "ID Transaksi",
+    "amount": "Jumlah",
+    "selectDates": "Pilih tarikh"
+  },
+  "chats": {
+    "header": "Sokongan Sembang Langsung",
+    "guestTitle": "Anda adalah Tetamu",
+    "desc": "Sila nyatakan nama anda sebelum menghubungi wakil perkhidmatan pelanggan kami. Harap berbudi bahasa dan hormat kepada pasukan perkhidmatan pelanggan kami, elakkan penggunaan bahasa yang tidak sesuai yang boleh menyebabkan masalah atau memberi kesan kepada pengalaman wakil kami. Terima kasih.",
+    "name": "Nama",
+    "max": "Maksimum 7 aksara sahaja",
+    "enterName": "Masukkan nama anda di sini...",
+    "submit": "Hantar",
+    "guestName": "Nama Tetamu",
+    "playerName": "Nama Pemain",
+    "logout": "Log Keluar",
+    "send": "Hantar",
+    "typeMessage": "Taip mesej di sini..."
+  },
+  "error_messages": {
+    "loginFirstDepo": "Sila log masuk ke akaun anda sebelum meminta deposit/tarik.",
+    "loginFirstGame": "Sila log masuk ke akaun anda sebelum mengakses permainan."
+  }
+}
