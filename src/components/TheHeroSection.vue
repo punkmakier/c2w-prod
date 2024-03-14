@@ -189,8 +189,7 @@ export default {
               icon="pi pi-play"
               class="mt-2"
               :class="{ buttonShake: isShaking }"
-              rounded
-              @click="addToHomeScreen" />
+              rounded />
           </div>
           <img :src="`/src/assets/images/${value.imageHolder}`" class="chars" />
           <!-- <img :src="`/src/assets/images/char2.webp`" class="characters" /> -->
@@ -245,6 +244,9 @@ export default {
   display: flex;
   justify-content: space-between;
   position: relative;
+}
+.swiper-wrapper {
+  height: auto !important;
 }
 .chars {
   z-index: 2;

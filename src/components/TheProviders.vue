@@ -88,8 +88,6 @@ export default {
     onMounted(async () => {
       const response = await axios.getProviders();
       providers.value = response;
-
-      console.log(providers.value);
     });
 
     const selectedProviders = ref("");
