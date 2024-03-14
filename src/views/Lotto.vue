@@ -15,14 +15,10 @@
       <swiper :modules="modules" :slides-per-view="1" :loop="true">
         <swiper-slide v-for="(value, index) in ez2prizes" :key="index">
           <div class="sd">
-<<<<<<< HEAD
             <img
               :src="`/src/assets/lotto_logos/${value}`"
               @click="showBigImage(index, value)"
               style="cursor: pointer" />
-=======
-            <img :src="`/src/assets/lotto_logos/${value}`" />
->>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           </div>
         </swiper-slide>
         <Button label="BET EZ-2" icon="pi pi-star-fill" class="w-100 mt-2" />
@@ -36,14 +32,10 @@
         }">
         <swiper-slide v-for="(value, index) in d3prizes" :key="index">
           <div class="sd">
-<<<<<<< HEAD
             <img
               :src="`/src/assets/lotto_logos/${value}`"
               @click="showBigImage(index, value)"
               style="cursor: pointer" />
-=======
-            <img :src="`/src/assets/lotto_logos/${value}`" />
->>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           </div>
         </swiper-slide>
         <Button
@@ -60,14 +52,10 @@
         }">
         <swiper-slide v-for="(value, index) in pick3prizes" :key="index">
           <div class="sd">
-<<<<<<< HEAD
             <img
               :src="`/src/assets/lotto_logos/${value}`"
               @click="showBigImage(index, value)"
               style="cursor: pointer" />
-=======
-            <img :src="`/src/assets/lotto_logos/${value}`" />
->>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           </div>
         </swiper-slide>
         <Button
@@ -94,7 +82,6 @@ export default {
       "pick3prizes2.png",
       "pick3prizes3.png",
     ];
-<<<<<<< HEAD
 
     const showBigImage = (index, value) => {
       const bigImg = document.createElement("img");
@@ -141,9 +128,6 @@ export default {
       d3prizes,
       showBigImage,
     };
-=======
-    return { modules: [Autoplay], pick3prizes, ez2prizes, d3prizes };
->>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
   },
 };
 </script>

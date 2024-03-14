@@ -122,11 +122,7 @@ import TriStateCheckbox from "primevue/tristatecheckbox";
 import VirtualScroller from "primevue/virtualscroller";
 
 const app = createApp(App);
-<<<<<<< HEAD
 const lang = localStorage.getItem("language") || "EN";
-=======
-const lang = localStorage.getItem("language");
->>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
 const i18n = createI18n({
   legacy: false,
   locale: lang,
