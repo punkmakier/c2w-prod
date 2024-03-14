@@ -1,6 +1,8 @@
 <template lang="">
-  <div class="logReg" style="display: none" v-if="!isLogin">
-    <div class="wd logShow">
+  <div class="logReg" style="display: none; width: 100%" v-if="!isLogin">
+    <div
+      class="wd logShow"
+      style="width: 40%; margin: 0 auto !important; margin-right: 200px">
       <a
         href="javascript:void(0)"
         class="dw"
@@ -16,6 +18,42 @@
         >{{ $t("withdraw") }}</a
       >
     </div>
+    <Dropdown
+      v-if="!showLang"
+      v-model="selectedLanguage"
+      :options="languages"
+      optionLabel="name"
+      class="w-full md:w-14rem"
+      style="
+        background-color: #292929;
+        border: 1px solid #1e1a1a;
+        position: absolute;
+        right: 2%;
+        top: 0;
+      "
+      @change="handleLanguageChange">
+      <template #value="slotProps">
+        <div
+          v-if="slotProps.value"
+          class="flex align-items-center"
+          style="display: flex; gap: 10px">
+          <img
+            :alt="slotProps.value.label"
+            :src="`/src/assets/language_flags/${slotProps.value.icon}`"
+            :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+            style="width: 25px" />
+        </div>
+      </template>
+      <template #option="slotProps">
+        <div class="flex align-items-center" style="display: flex; gap: 10px">
+          <img
+            :alt="slotProps.option.label"
+            :src="`/src/assets/language_flags/${slotProps.option.icon}`"
+            :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
+            style="width: 25px" />
+        </div>
+      </template>
+    </Dropdown>
   </div>
   <div class="header">
     <div class="logo-menu">

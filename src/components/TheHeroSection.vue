@@ -177,9 +177,13 @@ export default {
 
             <p
               style="
-                color: var(--surface-400);
+                color: #fff;
                 font-weight: 300;
-                text-shadow: 0 0 4px 10px rgba(0, 0, 0, 0.8);
+                text-shadow: 0 2px #000;
+                background-color: #1e1a1a;
+                padding: 10px;
+                border-radius: 6px;
+                border: 1px solid #ff1354;
               ">
               {{ value.subtext }}
             </p>
@@ -187,7 +191,7 @@ export default {
               v-if="value.button"
               :label="value.button"
               icon="pi pi-play"
-              class="mt-2"
+              class="mt-1"
               :class="{ buttonShake: isShaking }"
               rounded />
           </div>
