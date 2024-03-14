@@ -4,7 +4,10 @@ import { useAuthStore } from "@/stores/user.js";
 import { useActivityCheck } from "@/stores/activity_check.js";
 import SessionExpired from "@/components/SessionExpired.vue";
 import { C2WAPIService as axios } from "@/plugins/APIServices";
+<<<<<<< HEAD
 import { onBeforeMount } from "vue";
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
 export default {
   components: { SessionExpired },
   data() {
@@ -12,6 +15,7 @@ export default {
       showSessionExpired: false,
     };
   },
+<<<<<<< HEAD
   setup() {
     onBeforeMount(() => {
       if (localStorage.getItem("language") == null) {
@@ -20,6 +24,12 @@ export default {
     });
   },
   mounted() {
+=======
+  mounted() {
+    if (localStorage.getItem("language") == null) {
+      localStorage.setItem("language", "EN");
+    }
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
 

@@ -327,7 +327,10 @@
         </div>
       </div>
       <div
+<<<<<<< HEAD
         class="intro-guest"
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         style="
           background-color: #fcd248;
           width: 70%;
@@ -587,7 +590,10 @@ import SplashScreen from "@/components/SplashScreen.vue";
 import { useToast } from "primevue/usetoast";
 import InHouseGame from "@/data/InhouseGames.json";
 import LiveGames from "@/data/LiveGames.json";
+<<<<<<< HEAD
 import AllGames from "@/data/AllGames.json";
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
 import { useAccountBalance } from "@/stores/user_balance";
 import { useI18n } from "vue-i18n";
 export default {
@@ -673,9 +679,17 @@ export default {
 
       resultAllSearch.value = liveGameList.value;
       totalGames.value = liveGameList.value.length;
+<<<<<<< HEAD
       countGameCards.value = liveGameList.value.length + 1;
       totalShowGames.value = liveGameList.value.length + 1;
 
+=======
+      console.log(resultAllSearch.value);
+      countGameCards.value = liveGameList.value.length + 1;
+      totalShowGames.value = liveGameList.value.length + 1;
+
+      console.log(liveGameList.value);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       nextTick(() => {
         gamesListRef.value?.scrollIntoView({ behavior: "smooth" });
       });
@@ -703,6 +717,10 @@ export default {
       (newVal) => {
         showFavorites.value = Boolean(newVal);
         if (store.user) {
+<<<<<<< HEAD
+=======
+          console.log("Fetched");
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           checkFavorites();
           if (
             store.user[0].email === "default@email.com" ||
@@ -775,6 +793,10 @@ export default {
         // sendMessage to database
 
         const res = await axios.addMessageChat(data);
+<<<<<<< HEAD
+=======
+        console.log(res);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         msg.value = "";
       } else {
         const data = {
@@ -808,6 +830,10 @@ export default {
     const handleIncomingMessage = (event) => {
       const data = JSON.parse(event.data);
 
+<<<<<<< HEAD
+=======
+      console.log(data);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       const storedData = JSON.parse(localStorage.getItem("chat_guest"));
       if (storedData != null && data.token === storedData.guest_token) {
         if (
@@ -838,9 +864,18 @@ export default {
 
       connection.value.onmessage = handleIncomingMessage;
 
+<<<<<<< HEAD
       connection.value.onopen = (event) => {};
     };
 
+=======
+      connection.value.onopen = (event) => {
+        // console.log("Successfully connected to the echo WebSocket server...");
+      };
+    };
+
+    // Call the WebSocket setup when the component is created
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     setupWebSocket();
 
     const createGuestChat = () => {
@@ -906,6 +941,10 @@ export default {
         token: dataP.guest_token,
       });
 
+<<<<<<< HEAD
+=======
+      console.log(res);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       if (res.resStatus == 0) {
         localStorage.removeItem("chat_guest");
         isGuestChat.value = false;
@@ -942,6 +981,10 @@ export default {
       if (store.user) {
         showFavorites.value = true;
         const res = await axios.getFav({ username: store.user[0].username });
+<<<<<<< HEAD
+=======
+        console.log(res);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         if (res.resMsg !== "Unable to find your favorites.") {
           await fetchMessage();
           res.forEach((element) => {
@@ -979,6 +1022,10 @@ export default {
           user: "registered",
         });
         if (resGuest.data != null || resGuest.data != undefined) {
+<<<<<<< HEAD
+=======
+          console.log(resGuest.data);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           resGuest.data.forEach((element) => {
             messages.value.push(element);
           });
@@ -1019,8 +1066,13 @@ export default {
         }, 4000);
       }
       try {
+<<<<<<< HEAD
         // const response = await axios.getGames();
         originalGameDataList.value = AllGames;
+=======
+        const response = await axios.getGames();
+        originalGameDataList.value = response;
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         receivedGameDataList.value = [...originalGameDataList.value];
         receivedGameDataList.value = originalGameDataList.value.slice(
           0,
@@ -1061,6 +1113,10 @@ export default {
     const gameTypeSelectedHolder = ref("");
     const resultAllSearch = ref();
     const addRemoveFaveList = async (id, fave) => {
+<<<<<<< HEAD
+=======
+      console.log(fave);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       if (fave === undefined || fave === false) {
         if (favoriteHandler.value.length > 4) {
           toast.add({
@@ -1092,12 +1148,23 @@ export default {
           return;
         }
       } else if (fave === false) {
+<<<<<<< HEAD
         const addF = await axios.addFav(favData);
+=======
+        console.log(fave);
+        const addF = await axios.addFav(favData);
+        console.log(addF);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         const existingFavorite = favoriteHandler.value.find(
           (favorite) => favorite.id === id
         );
         if (!existingFavorite || existingFavorite == undefined) {
           const addF = await axios.addFav(favData);
+<<<<<<< HEAD
+=======
+          console.log(addF);
+          // if (addF.resStatus === 0) {
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           favoriteHandler.value.push({ ...datass[0], favorite: true });
           toast.add({
             severity: "success",
@@ -1106,7 +1173,13 @@ export default {
             life: 3000,
           });
           return;
+<<<<<<< HEAD
         } else {
+=======
+          // }
+        } else {
+          console.log("asd");
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         }
       } else {
         const removeFav = await axios.removeFav(favData);
@@ -1125,7 +1198,11 @@ export default {
         return;
       }
 
+<<<<<<< HEAD
       const faveHolder = !fave;
+=======
+      const faveHolder = !fave; // Toggle the favorite value
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       const updatedGameDataList = receivedGameDataList.value.map((item) => {
         if (item.id === id) {
           return { ...item, favorite: faveHolder };
@@ -1148,6 +1225,17 @@ export default {
     };
 
     const gameTypeSelected = (game) => {
+<<<<<<< HEAD
+=======
+      // if (
+      //   !searchedItemStore.value &&
+      //   !searchedItemStore.value.includes(game[0])
+      // ) {
+      //   searchedItemStore.value.push(game[0]);
+      // } else {
+      //   searchedItemStore.value[0] = game[0];
+      // }
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       gameTypeSelectedHolder.value = game;
       const selectedInhouseRef = ["Sabong", "Sports", "Live Casino", "Lotto"];
       if (game.some((item) => selectedInhouseRef.includes(item))) {
@@ -1159,6 +1247,13 @@ export default {
         );
         receiveInhouseGame2.value = res;
         receiveInhouseGame1.value = res1;
+<<<<<<< HEAD
+=======
+
+        // nextTick(() => {
+        //   inHouseRef.value?.scrollIntoView({ behavior: "smooth" });
+        // });
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       } else {
         if (game[0] === "All") {
           receiveInhouseGame2.value = originalInHouseGame2.value;
@@ -1186,9 +1281,18 @@ export default {
           token: token,
           mobile: isMobile,
         };
+<<<<<<< HEAD
         const res = await axios.gameLogin(updatedObject);
         if (res.html) {
           htmlVal.value = res.html;
+=======
+        console.log(updatedObject);
+        const res = await axios.gameLogin(updatedObject);
+        console.log(res);
+        if (res.html) {
+          htmlVal.value = res.html;
+          console.log(htmlVal.value);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         }
         showGameModal.value = true;
 
@@ -1203,8 +1307,129 @@ export default {
         }
       }
     };
+<<<<<<< HEAD
 
     const playInhouseGame = async (game) => {
+=======
+    // const playInhouseGame = async (game) => {
+    //   console.log(game);
+    //   if (!store.user) {
+    //     loginModal.value = true;
+    //     errorMessage.value =
+    //       "Please log in to your account before accessing the game.";
+    //   } else {
+    //     showLoaders.value = true;
+    //     const token = store.user[0].token;
+    //     const user = store.user[0].username;
+    //     const updatedObject = {
+    //       ...game,
+    //       username: user,
+    //       token: token,
+    //     };
+
+    //     if (game.gameID == 5) {
+    //       let isMobile = "false";
+    //       if (screen.width <= 782) {
+    //         isMobile = "true";
+    //       }
+    //       const dataPassObj = { token: token, mobile: isMobile };
+    //       const res = await axios.gameInHouseLoginPoker(dataPassObj);
+    //       if (res.resMsg === "No token") {
+    //         localStorage.removeItem("auth.user");
+    //         store.resetUser();
+    //         showLoaders.value = false;
+    //         return;
+    //       } else {
+    //         showLoaders.value = false;
+    //         gameUrl.value = res.url;
+    //         activityState.url = res.url;
+    //       }
+    //     } else if (game.gameID == 1081) {
+    //       const passD = {
+    //         ProductID: game.gameID,
+    //         GameType: 3,
+    //         username: user,
+    //         token: token,
+    //       };
+    //       const res = await axios.postlaunchGameInhouse(passD);
+    //       console.log(res);
+    //       if (res.resMsg === "Session expired please relogin.") {
+    //         localStorage.removeItem("auth.user");
+    //         store.resetUser();
+    //         showLoaders.value = false;
+    //         return;
+    //       } else {
+    //         showLoaders.value = false;
+    //         gameUrl.value = res.resUrl;
+    //         activityState.url = res.resUrl;
+    //       }
+    //     } else if (game.gameID == 1017) {
+    //       const token = store.user[0].token;
+    //       const user = store.user[0].username;
+    //       const passD = {
+    //         ProductID: game.gameID,
+    //         GameType: 13,
+    //         username: user,
+    //         token: token,
+    //       };
+    //       const res = await axios.postlaunchGameInhouse(passD);
+    //       console.log(res);
+    //       if (res.resMsg === "Session expired please relogin.") {
+    //         localStorage.removeItem("auth.user");
+    //         store.resetUser();
+    //         showLoaders.value = false;
+    //         return;
+    //       } else {
+    //         showLoaders.value = false;
+    //         gameUrl.value = res.Url;
+    //         activityState.url = res.resUrl;
+    //       }
+    //     } else if (
+    //       game.gameID == 26 ||
+    //       game.gameID == 15 ||
+    //       game.gameID == 12 ||
+    //       game.gameID == 27
+    //     ) {
+    //       const passD = {
+    //         ProductID: game.gameID,
+    //         GameType: 3,
+    //         username: user,
+    //         token: token,
+    //       };
+    //       const res = await axios.postlaunchGameliveLogin(passD);
+    //       console.log(res);
+    //       if (res.resMsg === "Session expired please relogin.") {
+    //         localStorage.removeItem("auth.user");
+    //         store.resetUser();
+    //         showLoaders.value = false;
+    //         return;
+    //       } else {
+    //         showLoaders.value = false;
+    //         gameUrl.value = res.resUrl;
+    //         activityState.url = res.resUrl;
+    //       }
+    //     } else {
+    //       console.log(updatedObject);
+    //       const res = await axios.gameInHouseLogin(updatedObject);
+    //       if (res.resMsg === "Session expired please relogin.") {
+    //         localStorage.removeItem("auth.user");
+    //         store.resetUser();
+    //         showLoaders.value = false;
+    //       } else {
+    //         showLoaders.value = false;
+    //         gameUrl.value = res.resUrl;
+    //         activityState.url = res.resUrl;
+    //       }
+    //     }
+
+    //     showGameModal.value = true;
+    //   }
+    // };
+
+    const playInhouseGame = async (game) => {
+      console.log(game);
+
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       if (!store.user) {
         showLoginModal();
       } else {
@@ -1223,10 +1448,16 @@ export default {
           } else if (["26", "15", "12", "27"].includes(game.gameID)) {
             await handleLiveGameLaunch(game.gameID, 3, username, token);
           } else if (["1005", "1006"].includes(game.gameID)) {
+<<<<<<< HEAD
             showLoaders.value = false;
             window.open(game.urlGame, "_blank");
           } else if (["1", "2", "3"].includes(game.gameID)) {
             window.location.href = game.urlGame;
+=======
+            // window.location.href = game.urlGame;
+            showLoaders.value = false;
+            window.open(game.urlGame, "_blank");
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           } else {
             await handleDefaultGameLaunch(updatedObject);
           }
@@ -1291,6 +1522,10 @@ export default {
 
       try {
         const res = await axios.postlaunchGameliveLogin(passD);
+<<<<<<< HEAD
+=======
+        console.log(res);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         if (res.resMsg === "Session expired please relogin.") {
           handleSessionExpired();
         } else {
@@ -1304,6 +1539,10 @@ export default {
     const handleDefaultGameLaunch = async (updatedObject) => {
       try {
         const res = await axios.gameInHouseLogin(updatedObject);
+<<<<<<< HEAD
+=======
+        console.log(updatedObject);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         if (res.resMsg === "Session expired please relogin.") {
           handleSessionExpired();
         } else {
@@ -1345,6 +1584,10 @@ export default {
     };
 
     const loadMore = async () => {
+<<<<<<< HEAD
+=======
+      console.log(resultAllSearch.value);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       countGameCards.value += 18;
       totalShowGames.value += 18;
 
@@ -1379,6 +1622,10 @@ export default {
           token: token,
         });
         balance.current_balance = getResult.balance;
+<<<<<<< HEAD
+=======
+        console.log(balance.current_balance);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       }
     };
 
@@ -1420,6 +1667,10 @@ export default {
       totalShowGames.value = 27;
       resultAllSearch.value = filteredResult;
       totalGames.value = filteredResult.length;
+<<<<<<< HEAD
+=======
+      console.log(receivedGameDataList.value.length);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     };
 
     const openFileUpload = () => {
@@ -1440,6 +1691,7 @@ export default {
         console.warn("No file selected.");
         return;
       }
+<<<<<<< HEAD
       const maxSizeInKB = 1574;
       const maxSizeInBytes = maxSizeInKB * 1024;
       if (file.size >= maxSizeInBytes) {
@@ -1448,6 +1700,16 @@ export default {
           severity: "error",
           summary: "Failed",
           detail: "The fileData size must not exceed 1574 kilobytes.",
+=======
+      const maxSizeInKB = 100;
+      const maxSizeInBytes = maxSizeInKB * 1024;
+      if (file.size >= maxSizeInBytes) {
+        // File is within the allowed size limit (below 100 KB)
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: "The fileData size must not exceed 100 kilobytes.",
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           life: 3000,
         });
         event.target.value = null;
@@ -1483,6 +1745,10 @@ export default {
           };
 
           messages.value.push(data);
+<<<<<<< HEAD
+=======
+          console.log(file);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
           connection.value.send(JSON.stringify(data));
           const formData = new FormData();
           formData.append("fileData", file);
@@ -1509,6 +1775,10 @@ export default {
                 });
                 return;
               }
+<<<<<<< HEAD
+=======
+              console.log(data);
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
             })
             .catch((error) => {
               console.error("Error uploading file:", error);
@@ -1517,9 +1787,22 @@ export default {
         reader.readAsDataURL(file);
       } catch (error) {
         console.error("Error handling file change:", error);
+<<<<<<< HEAD
       }
     };
 
+=======
+        // Handle the error or log it as needed
+      }
+    };
+    // const removeGameType = (data) => {
+    //   console.log(data);
+    //   const newData = searchedItemStore.value.filter((item) => item !== data);
+    //   searchedItemStore.value = newData;
+    //   gameTypeSelectedHolder.value = ["All"];
+    //   handleSearching();
+    // };
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     const showBigImage = (index, type) => {
       const img = messages.value[index];
       const bigImg = document.createElement("img");
@@ -1791,7 +2074,11 @@ section {
   z-index: 99;
   border-radius: 10px;
   overflow: hidden;
+<<<<<<< HEAD
   background: url("/src/assets/images/chat-background.webp") no-repeat center /
+=======
+  background: url("/src/assets/images/chat-background.png") no-repeat center /
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     cover;
 }
 

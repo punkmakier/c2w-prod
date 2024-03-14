@@ -39,6 +39,7 @@
         >{{ $t("withdraw") }}</a
       >
     </div>
+<<<<<<< HEAD
     <Dropdown
       v-if="!showLang"
       v-model="selectedLanguage"
@@ -75,6 +76,10 @@
       </template>
     </Dropdown>
     <TheWalletMoney style="width: 210px !important" v-else />
+=======
+
+    <TheWalletMoney style="width: 210px !important" />
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
 
     <Dialog
       :draggable="false"
@@ -180,6 +185,7 @@ export default {
     const toast = useToast();
     const amountDep = ref(0);
 
+<<<<<<< HEAD
     const showLang = ref(false);
     const selectedLanguage = ref({
       name: "English",
@@ -203,6 +209,8 @@ export default {
       window.location.reload();
     };
 
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     const handleAction = (action) => {
       if (store.user) {
         if (action === "deposit") {
@@ -303,27 +311,38 @@ export default {
       } else {
         isLogin.value = false;
       }
+<<<<<<< HEAD
       const getLang = localStorage.getItem("language");
       const selectedLang = languages.value.filter(
         (item) => item.code === getLang
       );
       selectedLanguage.value = selectedLang[0];
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     });
 
     watchEffect(() => {
       if (store.user) {
         isLogin.value = true;
+<<<<<<< HEAD
         showLang.value = true;
       } else {
         isLogin.value = false;
         showLang.value = false;
+=======
+      } else {
+        isLogin.value = false;
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       }
     });
 
     return {
+<<<<<<< HEAD
       selectedLanguage,
       languages,
       showLang,
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
       amountDep,
       paymentURL,
       responseMessage,
@@ -346,7 +365,10 @@ export default {
       submitRegister,
       depositSubmit,
       withdrawSubmit,
+<<<<<<< HEAD
       handleLanguageChange,
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
     };
   },
 };

@@ -64,7 +64,11 @@ export default {
         imageHolder: "char2.webp",
       },
       {
+<<<<<<< HEAD
         bgimage: "bg-first-deposit.webp",
+=======
+        bgimage: "bg-first-deposit.png",
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
         headerImage: "first-deposit-bonus.png",
         subtext: t("heroSection.slide_first_depo.text"),
         button: t("heroSection.slide_first_depo.btnText"),

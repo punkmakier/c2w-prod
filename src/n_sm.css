@@ -1,7 +1,10 @@
 @media (width <= 430px) {
+<<<<<<< HEAD
   .intro-guest {
     width: 80% !important;
   }
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
   .right-content {
     display: none !important;
   }
@@ -66,11 +69,19 @@
   }
   .game-info,
   .game-info-live {
+<<<<<<< HEAD
     width: 170px !important;
     height: 170px !important;
   }
   .games-logo {
     width: 170px !important;
+=======
+    width: 150px !important;
+    height: 150px !important;
+  }
+  .games-logo {
+    width: 150px !important;
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
   }
   .main-games {
     padding: 0px 10px !important;
@@ -432,12 +443,15 @@
 }
 
 @media (width <= 393px) {
+<<<<<<< HEAD
   .intro-guest {
     width: 90% !important;
   }
   .games-list-parent {
     padding: 10px !important;
   }
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
   .chat-box {
     width: 368px !important;
   }
@@ -459,11 +473,14 @@
   }
 }
 @media (width <= 375px) {
+<<<<<<< HEAD
   .game-info,
   .game-info-live {
     width: 160px !important;
     height: 160px !important;
   }
+=======
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
   .chat-box {
     width: 350px !important;
   }
@@ -504,12 +521,17 @@
 }
 
 @media (width <= 320px) {
+<<<<<<< HEAD
   .intro-guest {
     width: 95% !important;
   }
   .chat-box {
     width: 305px !important;
     height: 90vh !important;
+=======
+  .chat-box {
+    width: 295px !important;
+>>>>>>> df4f7c99f0951fdfb0ac5903201ef6219ee80d57
   }
   .game-info,
   .game-info-live {
