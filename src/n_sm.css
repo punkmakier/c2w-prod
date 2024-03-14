@@ -1,4 +1,7 @@
 @media (width <= 430px) {
+  .intro-guest {
+    width: 80% !important;
+  }
   .right-content {
     display: none !important;
   }
@@ -63,11 +66,11 @@
   }
   .game-info,
   .game-info-live {
-    width: 150px !important;
-    height: 150px !important;
+    width: 170px !important;
+    height: 170px !important;
   }
   .games-logo {
-    width: 150px !important;
+    width: 170px !important;
   }
   .main-games {
     padding: 0px 10px !important;
@@ -429,6 +432,12 @@
 }
 
 @media (width <= 393px) {
+  .intro-guest {
+    width: 90% !important;
+  }
+  .games-list-parent {
+    padding: 10px !important;
+  }
   .chat-box {
     width: 368px !important;
   }
@@ -450,6 +459,11 @@
   }
 }
 @media (width <= 375px) {
+  .game-info,
+  .game-info-live {
+    width: 160px !important;
+    height: 160px !important;
+  }
   .chat-box {
     width: 350px !important;
   }
@@ -490,8 +504,12 @@
 }
 
 @media (width <= 320px) {
+  .intro-guest {
+    width: 95% !important;
+  }
   .chat-box {
-    width: 295px !important;
+    width: 305px !important;
+    height: 90vh !important;
   }
   .game-info,
   .game-info-live {

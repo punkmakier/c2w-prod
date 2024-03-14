@@ -15,7 +15,10 @@
       <swiper :modules="modules" :slides-per-view="1" :loop="true">
         <swiper-slide v-for="(value, index) in ez2prizes" :key="index">
           <div class="sd">
-            <img :src="`/src/assets/lotto_logos/${value}`" />
+            <img
+              :src="`/src/assets/lotto_logos/${value}`"
+              @click="showBigImage(index, value)"
+              style="cursor: pointer" />
           </div>
         </swiper-slide>
         <Button label="BET EZ-2" icon="pi pi-star-fill" class="w-100 mt-2" />
@@ -29,7 +32,10 @@
         }">
         <swiper-slide v-for="(value, index) in d3prizes" :key="index">
           <div class="sd">
-            <img :src="`/src/assets/lotto_logos/${value}`" />
+            <img
+              :src="`/src/assets/lotto_logos/${value}`"
+              @click="showBigImage(index, value)"
+              style="cursor: pointer" />
           </div>
         </swiper-slide>
         <Button
@@ -46,7 +52,10 @@
         }">
         <swiper-slide v-for="(value, index) in pick3prizes" :key="index">
           <div class="sd">
-            <img :src="`/src/assets/lotto_logos/${value}`" />
+            <img
+              :src="`/src/assets/lotto_logos/${value}`"
+              @click="showBigImage(index, value)"
+              style="cursor: pointer" />
           </div>
         </swiper-slide>
         <Button
@@ -73,7 +82,52 @@ export default {
       "pick3prizes2.png",
       "pick3prizes3.png",
     ];
-    return { modules: [Autoplay], pick3prizes, ez2prizes, d3prizes };
+
+    const showBigImage = (index, value) => {
+      const bigImg = document.createElement("img");
+      bigImg.style.width = "100%";
+      bigImg.style.height = "80vh";
+      bigImg.style.display = "inline";
+
+      bigImg.src = `/src/assets/lotto_logos/${value}`;
+
+      const over = document.createElement("div");
+      document.body.style.overflow = "hidden";
+      over.style.height = "100vh";
+      over.style.width = "100%";
+      bigImg.style.margin = "60px auto";
+      over.style.background = "rgba(0,0,0,.82)";
+      over.style.position = "fixed";
+      over.style.top = "0";
+      over.style.left = "0";
+      over.style.opacity = "0.0";
+      over.style.cursor = "pointer";
+      over.style.zIndex = "9999";
+      over.style.textAlign = "center";
+
+      over.appendChild(bigImg);
+
+      over.addEventListener("click", () => {
+        document.body.style.overflow = "";
+        over.style.opacity = "0";
+        setTimeout(() => {
+          document.body.removeChild(over);
+        }, 300);
+      });
+
+      document.body.appendChild(over);
+
+      setTimeout(() => {
+        over.style.opacity = "1";
+      }, 0);
+    };
+    return {
+      modules: [Autoplay],
+      pick3prizes,
+      ez2prizes,
+      d3prizes,
+      showBigImage,
+    };
   },
 };
 </script>

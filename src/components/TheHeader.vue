@@ -39,8 +39,42 @@
         >{{ $t("withdraw") }}</a
       >
     </div>
-
-    <TheWalletMoney style="width: 210px !important" />
+    <Dropdown
+      v-if="!showLang"
+      v-model="selectedLanguage"
+      :options="languages"
+      optionLabel="name"
+      class="w-full md:w-14rem"
+      style="background-color: #292929; border: 1px solid #1e1a1a"
+      @change="handleLanguageChange">
+      <template #value="slotProps">
+        <div
+          v-if="slotProps.value"
+          class="flex align-items-center"
+          style="display: flex; gap: 10px">
+          <img
+            :alt="slotProps.value.label"
+            :src="`/src/assets/language_flags/${slotProps.value.icon}`"
+            :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+            style="width: 25px" />
+          <div style="color: #fff !important">{{ slotProps.value.name }}</div>
+        </div>
+        <span v-else style="color: #fff !important">
+          {{ slotProps.placeholder }}
+        </span>
+      </template>
+      <template #option="slotProps">
+        <div class="flex align-items-center" style="display: flex; gap: 10px">
+          <img
+            :alt="slotProps.option.label"
+            :src="`/src/assets/language_flags/${slotProps.option.icon}`"
+            :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
+            style="width: 25px" />
+          <div>{{ slotProps.option.name }}</div>
+        </div>
+      </template>
+    </Dropdown>
+    <TheWalletMoney style="width: 210px !important" v-else />
 
     <Dialog
       :draggable="false"
@@ -146,6 +180,29 @@ export default {
     const toast = useToast();
     const amountDep = ref(0);
 
+    const showLang = ref(false);
+    const selectedLanguage = ref({
+      name: "English",
+      code: "EN",
+      icon: "us.png",
+    });
+    const languages = ref([
+      { name: "English", code: "EN", icon: "us.png" },
+      { name: "Cambodia", code: "KM", icon: "km.png" },
+      { name: "Thai", code: "TH", icon: "th.webp" },
+      { name: "Hindi", code: "HI", icon: "hi.png" },
+      { name: "China", code: "ZH", icon: "zh.png" },
+      { name: "Japanese", code: "JA", icon: "ja.webp" },
+      { name: "Malaysia", code: "MS", icon: "ms.png" },
+      { name: "Spanish", code: "ES", icon: "es.png" },
+    ]);
+
+    const handleLanguageChange = () => {
+      console.log(selectedLanguage.value);
+      localStorage.setItem("language", selectedLanguage.value.code);
+      window.location.reload();
+    };
+
     const handleAction = (action) => {
       if (store.user) {
         if (action === "deposit") {
@@ -246,17 +303,27 @@ export default {
       } else {
         isLogin.value = false;
       }
+      const getLang = localStorage.getItem("language");
+      const selectedLang = languages.value.filter(
+        (item) => item.code === getLang
+      );
+      selectedLanguage.value = selectedLang[0];
     });
 
     watchEffect(() => {
       if (store.user) {
         isLogin.value = true;
+        showLang.value = true;
       } else {
         isLogin.value = false;
+        showLang.value = false;
       }
     });
 
     return {
+      selectedLanguage,
+      languages,
+      showLang,
       amountDep,
       paymentURL,
       responseMessage,
@@ -279,6 +346,7 @@ export default {
       submitRegister,
       depositSubmit,
       withdrawSubmit,
+      handleLanguageChange,
     };
   },
 };
