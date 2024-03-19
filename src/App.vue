@@ -67,7 +67,6 @@ export default {
     let idleTimer;
 
     document.addEventListener("visibilitychange", () => {
-      console.log("asd");
       if (document.hidden) {
         this.updateOnlineStatus(0);
         const storage = JSON.parse(localStorage.getItem("auth.user"));
@@ -103,7 +102,6 @@ export default {
 
     window.addEventListener("beforeunload", (event) => {
       // Synchronously update online status before the browser is closed
-      console.log("Asdasd");
       this.updateOnlineStatus(0);
     });
   },
@@ -170,7 +168,6 @@ export default {
             isOnline: 0,
           };
           const res = await axios.forceLogout(dataPass);
-          console.log(res);
           localStorage.removeItem("auth.user");
           store.resetUser();
           this.showSessionExpired = true;

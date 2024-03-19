@@ -21,7 +21,16 @@
               style="cursor: pointer" />
           </div>
         </swiper-slide>
-        <Button label="BET EZ-2" icon="pi pi-star-fill" class="w-100 mt-2" />
+        <Button
+          label="BET EZ-2"
+          icon="pi pi-star-fill"
+          class="w-100 mt-2"
+          @click="
+            $emit('playInhouseGame', {
+              gameID: '1',
+              urlGame: 'https://user.come2win.ph/lottery/ez2',
+            })
+          " />
       </swiper>
       <swiper
         :modules="modules"
@@ -41,7 +50,13 @@
         <Button
           label="BET 3D Lotto"
           icon="pi pi-star-fill"
-          class="w-100 mt-2" />
+          class="w-100 mt-2"
+          @click="
+            $emit('playInhouseGame', {
+              gameID: '2',
+              urlGame: 'https://user.come2win.ph/lottery/3dlotto',
+            })
+          " />
       </swiper>
       <swiper
         :modules="modules"
@@ -61,7 +76,13 @@
         <Button
           label="BET Lucky Pick 3"
           icon="pi pi-star-fill"
-          class="w-100 mt-2" />
+          class="w-100 mt-2"
+          @click="
+            $emit('playInhouseGame', {
+              gameID: '3',
+              urlGame: 'https://user.come2win.ph/lottery/pick3',
+            })
+          " />
       </swiper>
     </div>
   </div>

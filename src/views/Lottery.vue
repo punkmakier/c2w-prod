@@ -63,7 +63,7 @@ import { useRoute } from "vue-router";
 import LottoSidebar from "@/components/Lottery/LottoSidebar.vue";
 import TheWalletMoney from "@/components/TheWalletMoney.vue";
 import { ref, watch } from "vue";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
 import ez2comp from "@/components/Lottery/ez2comp.vue";
 import d3lottocomp from "@/components/Lottery/d3lottocomp.vue";
 import pick3comp from "@/components/Lottery/pick3comp.vue";
@@ -152,7 +152,44 @@ export default {
     // const submitTicket = (data) => {
     //   console.log(data);
     // };
+    const showAlert = () => {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+      });
+      swalWithBootstrapButtons
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel!",
+          reverseButtons: true,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire({
+              title: "Cancelled",
+              text: "Your imaginary file is safe :)",
+              icon: "error",
+            });
+          }
+        });
+    };
     const submitTicketEZ2 = (data) => {
+      showAlert();
       const firstNum = data[0].pickedNumbers[0];
       const secondNum = data[0].pickedNumbers[1];
       const bet = data[0].bet;
@@ -351,8 +388,8 @@ export default {
   border-radius: 17px;
 }
 .sb {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background-color: rgb(39, 202, 112);
   border-radius: 50%;
   justify-content: center;
@@ -372,6 +409,7 @@ export default {
 }
 .bettings-button {
   display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 .inner-bet {
@@ -428,8 +466,8 @@ export default {
   margin-top: 20px;
 }
 .money-ball {
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   background: rgb(255, 243, 20);
   cursor: pointer;
   border-radius: 50%;
@@ -590,8 +628,8 @@ export default {
   gap: 10px;
 }
 .youpick .balls-pick {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background-color: #ff1354;
   box-shadow: -1px 2px 5px #ff1354;
   border-radius: 50%;
@@ -601,6 +639,18 @@ export default {
   align-items: center;
   color: #fff;
   position: relative;
+}
+.red-ball {
+  background-color: #df1818 !important;
+  box-shadow: -1px 2px 5px #df1818 !important;
+}
+.blue-ball {
+  background-color: #3d18df !important;
+  box-shadow: -1px 2px 5px #3d18df !important;
+}
+.green-ball {
+  background-color: #17e117 !important;
+  box-shadow: -1px 2px 5px #17e117 !important;
 }
 .pick-balls-handler {
   display: flex;

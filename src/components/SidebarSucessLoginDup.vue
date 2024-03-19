@@ -43,6 +43,10 @@
         {{ data.name }}
         <small class="comingsoon" v-if="data.badge">{{ data.badge }}</small>
       </router-link>
+      <div class="menu-link-d" @click="toAgentDashboard">
+        <i class="pi pi-briefcase" style="font-size: 1rem"></i>
+        <span>Agent Dashboard</span>
+      </div>
 
       <div class="menu-text mt-3">
         <i
@@ -96,12 +100,14 @@
           </span>
         </template>
         <template #option="slotProps">
-          <div class="flex align-items-center" style="display: flex; gap: 10px">
+          <div
+            class="flex align-items-center"
+            style="display: flex; gap: 10px; align-items: center">
             <img
               :alt="slotProps.option.label"
               :src="`/src/assets/language_flags/${slotProps.option.icon}`"
               :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
-              style="width: 25px" />
+              style="width: 25px; height: 15px" />
             <div>{{ slotProps.option.name }}</div>
           </div>
         </template>
@@ -145,6 +151,7 @@ import { C2WAPIService as axios } from "@/plugins/APIServices";
 import { usePaymentProcess } from "@/stores/payment_process";
 import { useToast } from "primevue/usetoast";
 import { useI18n } from "vue-i18n";
+import { routerKey } from "vue-router";
 export default {
   components: {
     TheWalletMoney,
@@ -217,6 +224,13 @@ export default {
       return str.replace(/\b\w/g, (char) => char.toUpperCase());
     }
 
+    const toAgentDashboard = () => {
+      const agentInfo =
+        "username=" + store.user[0].username + "&token=" + store.user[0].token;
+      window.open("http://localhost:5175/dashboard?" + agentInfo, "_blank");
+      // window.open("http://agent.come2win.ph/dashboard", "_blank");
+    };
+
     uname.value = capitalizeFirstLetter(store.user[0].username);
 
     const menuLinks = ref([
@@ -266,10 +280,10 @@ export default {
     const languages = ref([
       { name: "English", code: "EN", icon: "us.png" },
       { name: "Cambodia", code: "KM", icon: "km.png" },
-      { name: "Thai", code: "TH", icon: "th.webp" },
+      { name: "Thai", code: "TH", icon: "th.png" },
       { name: "Hindi", code: "HI", icon: "hi.png" },
       { name: "China", code: "ZH", icon: "zh.png" },
-      { name: "Japanese", code: "JA", icon: "ja.webp" },
+      { name: "Japanese", code: "JA", icon: "ja.png" },
       { name: "Malaysia", code: "MS", icon: "ms.png" },
       { name: "Spanish", code: "ES", icon: "es.png" },
     ]);
@@ -366,6 +380,7 @@ export default {
       withdrawSubmit,
       depositSubmit,
       handleLanguageChange,
+      toAgentDashboard,
     };
   },
 };

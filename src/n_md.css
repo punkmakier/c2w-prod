@@ -1,4 +1,16 @@
 @media (width >= 431px) and (width <= 834px) {
+  .content-right-sabong,
+  .content-left-sabong {
+    width: 100% !important;
+  }
+  .drawBetForMobile,
+  .regladaForMobile {
+    display: block !important;
+  }
+  .drawBetForDesktop,
+  .regladaForDesktop {
+    display: none !important;
+  }
   .QROnlyClass {
     width: 98% !important;
     height: 98vh !important;

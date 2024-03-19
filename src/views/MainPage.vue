@@ -139,7 +139,6 @@
           <i class="pi pi-search" />
           <InputText
             v-model="searchTerm"
-            @input="handleSearch"
             class="searchField"
             :placeholder="$t('searchGame')" />
         </span>
@@ -201,7 +200,7 @@
       >
       <div class="mb-5" v-if="totalShowGames >= totalGames"></div>
 
-      <Lotto />
+      <Lotto @playInhouseGame="playInhouseGame" />
       <ThePaymentGateway />
       <div class="separator"><Divider /></div>
 
@@ -576,8 +575,8 @@ import TheSidebar from "@/components/TheSidebar.vue";
 import TheGameFrame from "@/components/TheGameFrame.vue";
 import ImportantNotice from "@/components/ImportantNotice.vue";
 import LiveGamesModal from "@/components/LiveGamesModal.vue";
-
-import { ref, watch, onMounted, watchEffect, nextTick } from "vue";
+import { socket } from "@/socket";
+import { ref, watch, onMounted, watchEffect, nextTick, computed } from "vue";
 import { C2WAPIService as axios } from "@/plugins/APIServices.js";
 import { useAuthStore } from "@/stores/user.js";
 import { useActivityCheck } from "@/stores/activity_check.js";
@@ -590,6 +589,7 @@ import LiveGames from "@/data/LiveGames.json";
 import AllGames from "@/data/AllGames.json";
 import { useAccountBalance } from "@/stores/user_balance";
 import { useI18n } from "vue-i18n";
+
 export default {
   components: {
     TheHeroSection,
@@ -639,7 +639,6 @@ export default {
     const showFavorites = ref(false);
     const msg = ref("");
     const connection = ref(null);
-    const messages = ref([]);
     const bottomChat = ref(null);
     const myUsername = ref("");
     const countUnreadChat = ref(0);
@@ -654,7 +653,8 @@ export default {
     const receiveInhouseGame1 = ref();
     const receiveInhouseGame2 = ref();
     // const searchedItemStore = ref([]);
-
+    const messages = ref();
+    const initToken = ref();
     const showLiveGameModalFunc = async (data) => {
       if (!store.user) {
         loginModal.value = true;
@@ -770,11 +770,9 @@ export default {
           isDeleted: 0,
           type: "text",
         };
-        messages.value.push(data);
-        connection.value.send(JSON.stringify(data));
-        // sendMessage to database
-
-        const res = await axios.addMessageChat(data);
+        console.log(data);
+        socket.emit("chat-message", JSON.stringify(data));
+        await axios.addMessageChat(data);
         msg.value = "";
       } else {
         const data = {
@@ -787,9 +785,8 @@ export default {
           isDeleted: 0,
           type: "text",
         };
-        messages.value.push(data);
-        connection.value.send(JSON.stringify(data));
-        // sendMessage to database
+        console.log(data);
+        socket.emit("chat-message", JSON.stringify(data));
         await axios.addMessageChat(data);
         msg.value = "";
       }
@@ -806,8 +803,7 @@ export default {
     };
 
     const handleIncomingMessage = (event) => {
-      const data = JSON.parse(event.data);
-
+      const data = event;
       const storedData = JSON.parse(localStorage.getItem("chat_guest"));
       if (storedData != null && data.token === storedData.guest_token) {
         if (
@@ -832,16 +828,21 @@ export default {
         }
       }
     };
-
     const setupWebSocket = () => {
-      connection.value = new WebSocket("wss://macwin.live");
+      if (socket) {
+        socket.on("chat-message", (data) => {
+          const getVal = JSON.parse(data);
+          handleIncomingMessage(getVal);
+        });
 
-      connection.value.onmessage = handleIncomingMessage;
-
-      connection.value.onopen = (event) => {};
+        socket.on("connect", () => {
+          console.log("Connected to WebSocket server.");
+          // Your open event handling logic
+        });
+      } else {
+        console.error("Socket is not initialized properly.");
+      }
     };
-
-    setupWebSocket();
 
     const createGuestChat = () => {
       const currentDate = new Date();
@@ -900,7 +901,7 @@ export default {
         type: "text",
       };
       messages.value.push(data);
-      connection.value.send(JSON.stringify(data));
+
       const res = await axios.flushGuestChat({
         username: dataP.guest_name,
         token: dataP.guest_token,
@@ -978,9 +979,11 @@ export default {
           token: dataUser[0].chatToken,
           user: "registered",
         });
+        console.log();
         if (resGuest.data != null || resGuest.data != undefined) {
           resGuest.data.forEach((element) => {
             messages.value.push(element);
+            // socket.emit("chat-message", element);
           });
           nextTick(() => {
             bottomChat.value?.scrollIntoView({ behavior: "smooth" });
@@ -990,6 +993,7 @@ export default {
     };
 
     onMounted(async () => {
+      setupWebSocket();
       originalInHouseGame1.value = LiveGames;
       originalInHouseGame2.value = InHouseGame;
       receiveInhouseGame1.value = LiveGames;
@@ -1002,9 +1006,13 @@ export default {
           token: guestChat.guest_token,
           user: "guest",
         });
+        console.log(resGuest);
+        const sortedMessagesByDate = resGuest.data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
         if (resGuest.data != null || resGuest.data != undefined) {
-          resGuest.data.forEach((element) => {
-            messages.value.push(element);
+          sortedMessagesByDate.forEach((element) => {
+            handleIncomingMessage(element);
           });
         }
         nextTick(() => {
@@ -1212,7 +1220,7 @@ export default {
 
         const { token, username } = store.user[0];
         const updatedObject = { ...game, username, token };
-
+        console.log(updatedObject);
         try {
           if (game.gameID == 5) {
             handlePokerGame(token);
@@ -1223,8 +1231,18 @@ export default {
           } else if (["26", "15", "12", "27"].includes(game.gameID)) {
             await handleLiveGameLaunch(game.gameID, 3, username, token);
           } else if (["1005", "1006"].includes(game.gameID)) {
-            showLoaders.value = false;
-            window.open(game.urlGame, "_blank");
+            const arenaT =
+              game.gameID === "1005" ? "Short Knife" : "Long Knife";
+            const passD = {
+              username: username,
+              token: token,
+              arenaType: arenaT,
+            };
+            const res = await handleSabongLaunch(passD);
+            if (res?.error === 0) {
+              showLoaders.value = false;
+              window.open(game.urlGame, "_blank");
+            }
           } else if (["1", "2", "3"].includes(game.gameID)) {
             window.location.href = game.urlGame;
           } else {
@@ -1304,6 +1322,23 @@ export default {
     const handleDefaultGameLaunch = async (updatedObject) => {
       try {
         const res = await axios.gameInHouseLogin(updatedObject);
+        if (res.resMsg === "Session expired please relogin.") {
+          handleSessionExpired();
+        } else {
+          handleGameUrl(res.resUrl);
+        }
+      } catch (error) {
+        handleError(error);
+      }
+    };
+
+    const handleSabongLaunch = async (updatedObject) => {
+      try {
+        const res = await axios.sabonggetGame(updatedObject);
+        console.log(res);
+        if (res.error === 0) {
+          return res;
+        }
         if (res.resMsg === "Session expired please relogin.") {
           handleSessionExpired();
         } else {
@@ -1481,9 +1516,8 @@ export default {
             type: "image",
             imageVal: "data:image/jpeg;base64," + base64Image,
           };
+          socket.emit("chat-message", JSON.stringify(data));
 
-          messages.value.push(data);
-          connection.value.send(JSON.stringify(data));
           const formData = new FormData();
           formData.append("fileData", file);
           formData.append("username", dataUser[0].username);
@@ -1563,6 +1597,7 @@ export default {
       }, 0);
     };
     return {
+      initToken,
       fileInput,
       // searchedItemStore,
       isLoading,

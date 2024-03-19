@@ -119,4 +119,18 @@ export const C2WAPIService = {
   uploadImageChat: async (data) => {
     return await post("/api/chat/uploadImageChat", data);
   },
+
+  // SABONG
+  sabongLogin: async (data) => {
+    return await post("/api/sabong/login", data);
+  },
+  sabongPlaceBet: async (data) => {
+    return await post("/api/sabong/placeBet", data);
+  },
+  sabonggetGame: async (data) => {
+    return await post("/api/sabong/getGame", data);
+  },
+  postFetchReglada: async (data) => {
+    return await post("/api/sabong/fetchReglada", data);
+  },
 };

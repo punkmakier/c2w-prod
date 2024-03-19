@@ -80,7 +80,7 @@
             @click="selectGameType(value.type)">
             <img
               :src="`/src/assets/gametype_logos/${value.img}`"
-              style="width: 40px"
+              style="object-fit: cover; border-radius: 10px"
               alt="" />
             <span
               :style="`color: #fff; font-weight: 800;margin-top: 10px; font-size: ${checkStringLength(
@@ -114,31 +114,31 @@ export default {
   setup(props, { emit }) {
     const { t } = useI18n();
     const gameType = [
-      { name: t("gameTypes.all"), type: ["All"], img: "all.png" },
-      { name: t("gameTypes.slot"), type: ["Slot"], img: "slots.png" },
-      { name: t("gameTypes.fishing"), type: ["Fishing"], img: "fishing.png" },
-      { name: t("gameTypes.bingo"), type: ["Bingo"], img: "bingo.png" },
+      { name: t("gameTypes.all"), type: ["All"], img: "c2wall.png" },
+      { name: t("gameTypes.slot"), type: ["Slot"], img: "g_slot.png" },
+      { name: t("gameTypes.fishing"), type: ["Fishing"], img: "g_fishing.png" },
+      { name: t("gameTypes.bingo"), type: ["Bingo"], img: "g_bingo.png" },
 
       {
         name: t("gameTypes.liveCasino"),
         type: ["Live Casino"],
-        img: "live casino.png",
+        img: "g_live_casino.png",
       },
       {
         name: t("gameTypes.sabong"),
         type: ["Sabong"],
-        img: "g_cock_fighting.png",
+        img: "g_sabong.png",
       },
-      { name: t("gameTypes.lotto"), type: ["Lotto"], img: "lotto.png" },
+      { name: t("gameTypes.lotto"), type: ["Lotto"], img: "g_lotto.png" },
       {
         name: t("gameTypes.sports"),
         type: ["Sports"],
-        img: "sports betting.png",
+        img: "g_sports.png",
       },
       {
         name: t("gameTypes.arcade"),
         type: ["arcade", "fruit game"],
-        img: "arcade.png",
+        img: "g_arcade_fruit.png",
       },
     ];
 
@@ -172,6 +172,15 @@ export default {
             "pic12.png",
             "pic13.png",
             "pic14.png",
+            "pic15.png",
+            "pic16.png",
+            "pic17.png",
+            "pic18.png",
+            "pic19.png",
+            "pic20.png",
+            "pic21.png",
+            "pic22.png",
+            "pic23.png",
           ];
           const imgsrc =
             picRandomizer[Math.floor(Math.random() * picRandomizer.length)];
@@ -308,19 +317,18 @@ export default {
   position: relative;
 }
 .game-info-category {
-  height: 100px;
-  background-color: rgb(134, 134, 134, 10%);
-  border: 1px solid rgb(134, 134, 134, 30%);
+  height: 140px;
+  /* background-color: rgb(134, 134, 134, 10%); */
+  /* border: 1px solid rgb(134, 134, 134, 30%); */
   cursor: pointer;
   border-radius: 5px;
   transition: 0.3s ease-in-out;
   text-align: center;
-  padding: 3px 3px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url("@/assets/gametype_logos/gametype_bg1.png");
+  /* background: url("@/assets/gametype_logos/gametype_bg1.png"); */
 }
 
 .game-info-category:hover {

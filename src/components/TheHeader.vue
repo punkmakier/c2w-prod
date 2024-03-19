@@ -2,20 +2,20 @@
   <div class="logReg" style="display: none; width: 100%" v-if="!isLogin">
     <div
       class="wd logShow"
-      style="width: 40%; margin: 0 auto !important; margin-right: 200px">
+      style="width: 40%; margin: 0 auto !important; margin-right: 170px">
       <a
         href="javascript:void(0)"
         class="dw"
         :class="{ 'dw-active': isDeposit }"
         @click="loginModal2 = true"
-        >{{ $t("deposit") }}</a
+        >{{ $t("homepage.login") }}</a
       >
       <a
         href="javascript:void(0)"
         class="dw"
         :class="{ 'dw-active': !isDeposit }"
         @click="registerModal = true"
-        >{{ $t("withdraw") }}</a
+        >{{ $t("homepage.register") }}</a
       >
     </div>
     <Dropdown
@@ -28,7 +28,7 @@
         background-color: #292929;
         border: 1px solid #1e1a1a;
         position: absolute;
-        right: 2%;
+        right: -12%;
         top: 0;
       "
       @change="handleLanguageChange">
@@ -62,7 +62,7 @@
       /></router-link> -->
     </div>
     <div class="wd">
-      <a
+      <!-- <a
         href="javascript:void(0)"
         class="dw"
         :class="{ 'dw-active': isDeposit }"
@@ -73,6 +73,18 @@
         href="javascript:void(0)"
         class="dw"
         :class="{ 'dw-active': !isDeposit }"
+        @click="handleAction('withdraw')"
+        >{{ $t("withdraw") }}</a
+      > -->
+      <a
+        href="javascript:void(0)"
+        class="dw depos"
+        @click="handleAction('deposit')"
+        >{{ $t("deposit") }}</a
+      >
+      <a
+        href="javascript:void(0)"
+        class="dw withd"
         @click="handleAction('withdraw')"
         >{{ $t("withdraw") }}</a
       >
@@ -102,12 +114,14 @@
         </span>
       </template>
       <template #option="slotProps">
-        <div class="flex align-items-center" style="display: flex; gap: 10px">
+        <div
+          class="flex align-items-center"
+          style="display: flex; gap: 10px; align-items: center">
           <img
             :alt="slotProps.option.label"
             :src="`/src/assets/language_flags/${slotProps.option.icon}`"
             :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
-            style="width: 25px" />
+            style="width: 25px; height: 15px" />
           <div>{{ slotProps.option.name }}</div>
         </div>
       </template>
@@ -227,10 +241,10 @@ export default {
     const languages = ref([
       { name: "English", code: "EN", icon: "us.png" },
       { name: "Cambodia", code: "KM", icon: "km.png" },
-      { name: "Thai", code: "TH", icon: "th.webp" },
+      { name: "Thai", code: "TH", icon: "th.png" },
       { name: "Hindi", code: "HI", icon: "hi.png" },
       { name: "China", code: "ZH", icon: "zh.png" },
-      { name: "Japanese", code: "JA", icon: "ja.webp" },
+      { name: "Japanese", code: "JA", icon: "ja.png" },
       { name: "Malaysia", code: "MS", icon: "ms.png" },
       { name: "Spanish", code: "ES", icon: "es.png" },
     ]);
@@ -390,6 +404,13 @@ export default {
 };
 </script>
 <style>
+.depos {
+  background-color: #39ff14;
+  color: #000 !important;
+}
+.withd {
+  background-color: #ff1354;
+}
 .logReg {
   position: absolute;
   top: 4%;
@@ -426,6 +447,10 @@ export default {
 .dw-active {
   background-color: #ff1354;
   transition: 0.3s ease;
+}
+.p-dropdown-items-wrapper {
+  position: absolute;
+  right: 10%;
 }
 .dw-active:hover {
   background-color: #c70c41;

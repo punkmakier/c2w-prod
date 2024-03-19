@@ -4,6 +4,9 @@ import "primeicons/primeicons.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 import EN from "/src/locale/en.json";
 import KM from "/src/locale/km.json";
 import TH from "/src/locale/th.json";
@@ -137,11 +140,11 @@ const i18n = createI18n({
     ES: ES,
   },
 });
-
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(VueSweetalert2);
 app.use(createPinia());
 app.use(i18n);
 app.use(router);

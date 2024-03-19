@@ -48,7 +48,7 @@
               <div
                 class="noballs"
                 v-if="!picked2numbers || !picked2numbers[0]"></div>
-              <div class="balls-pick remove-cursor" v-else>
+              <div class="red-ball balls-pick remove-cursor" v-else>
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[0])"
@@ -59,7 +59,7 @@
               <div
                 class="noballs"
                 v-if="!picked2numbers || !picked2numbers[1]"></div>
-              <div class="balls-pick remove-cursor" v-else>
+              <div class="blue-ball balls-pick remove-cursor" v-else>
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[1])"
@@ -69,17 +69,7 @@
               </div>
             </div>
           </div>
-          <div class="second-youpick">
-            <Button
-              label="Quick Pick"
-              class="w-100"
-              @click="$emit('ez2generatedNumber')" />
-            <Button
-              label="Clear"
-              class="w-100"
-              outlined
-              @click="$emit('clearEZ2Ball')" />
-          </div>
+          <div class="second-youpick"></div>
         </div>
         <div class="divider mt-1 mb-3"></div>
         <div class="balls-handler">
@@ -99,7 +89,7 @@
         <div class="bet-expect-money">
           <div class="bet bem">
             <div class="inner-bet">
-              <div class="inputBet" style="width: 32%">
+              <div class="inputBet" style="width: 50%">
                 <span>Your Bet</span
                 ><InputNumber
                   v-model="dataValue"
@@ -110,7 +100,7 @@
                   class="w-100"
                   @input="updateAmountBet" />
               </div>
-              <div class="betTypes" style="width: 27%">
+              <!-- <div class="betTypes" style="width: 27%">
                 <span>Bet Type</span>
                 <div
                   class=""
@@ -132,10 +122,10 @@
                     <label for="Rambol" class="ml-2">Rambol</label>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="nameOptional" style="width: 35%">
-                <span>Enter a name (Optional)</span
+              <div class="nameOptional" style="width: 50%">
+                <span>Enter player name (Optional)</span
                 ><InputText type="text" v-model="playerName" />
               </div>
             </div>
@@ -153,7 +143,7 @@
         </div>
       </div>
       <div class="bettings-button mt-3">
-        <Button label="Submit" class="w-100" @click="submitTicket" />
+        <Button label="Place Bet" class="w-100" @click="submitTicket" />
         <Button
           label="View Mechanics"
           class="w-100"
@@ -188,6 +178,7 @@
           <Column field="category" header="Amount"></Column>
           <Column field="quantity" header="Status"></Column>
           <Column field="quantity" header="Remarks"></Column>
+          <Column field="quantity" header="Player Name"></Column>
         </DataTable>
       </div>
       <!-- <div class="imagePrize">

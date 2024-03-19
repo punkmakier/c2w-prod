@@ -47,7 +47,7 @@
               <div
                 class="noballs"
                 v-if="!picked2numbers || !picked2numbers[0]"></div>
-              <div class="balls-pick remove-cursor" v-else>
+              <div class="red-ball balls-pick remove-cursor" v-else>
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[0])"
@@ -58,7 +58,7 @@
               <div
                 class="noballs"
                 v-if="!picked2numbers || !picked2numbers[1]"></div>
-              <div class="balls-pick remove-cursor" v-else>
+              <div class="blue-ball balls-pick remove-cursor" v-else>
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[1])"
@@ -69,7 +69,7 @@
               <div
                 class="noballs"
                 v-if="!picked2numbers || !picked2numbers[2]"></div>
-              <div class="balls-pick remove-cursor" v-else>
+              <div class="green-ball balls-pick remove-cursor" v-else>
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[2])"
@@ -79,7 +79,7 @@
               </div>
             </div>
           </div>
-          <div class="second-youpick">
+          <!-- <div class="second-youpick">
             <Button
               label="Quick Pick"
               class="w-100"
@@ -89,7 +89,7 @@
               class="w-100"
               outlined
               @click="$emit('clearEZ2Ball')" />
-          </div>
+          </div> -->
         </div>
         <div class="divider mt-1 mb-3"></div>
         <div class="balls-handler">
@@ -121,7 +121,7 @@
                   @input="updateAmountBet" />
               </div>
               <div class="">
-                <span>Enter a name (Optional)</span
+                <span>Enter player name (Optional)</span
                 ><InputText type="text" v-model="playerName" />
               </div>
             </div>
@@ -139,7 +139,7 @@
         </div>
       </div>
       <div class="bettings-button mt-3">
-        <Button label="Submit" class="w-100" @click="submitTicket" />
+        <Button label="Place Bet" class="w-100" @click="submitTicket" />
         <Button
           label="View Mechanics"
           class="w-100"
@@ -174,6 +174,7 @@
           <Column field="category" header="Amount"></Column>
           <Column field="quantity" header="Status"></Column>
           <Column field="quantity" header="Remarks"></Column>
+          <Column field="quantity" header="Player Name"></Column>
         </DataTable>
       </div>
       <!-- <div class="imagePrize">

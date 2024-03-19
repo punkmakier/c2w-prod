@@ -38,7 +38,7 @@ const routes = [
   {
     path: "/sabong/:type",
     name: "sabong",
-    // beforeEnter: auth,
+    beforeEnter: auth,
     component: () => import("@/views/Sabong.vue"),
   },
   {

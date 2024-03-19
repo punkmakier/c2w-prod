@@ -125,7 +125,6 @@ export default {
       { icon: "user-edit", name: "2D Lotto", badge: "", info: "ez2" },
       { icon: "bolt", name: "3D Lotto", badge: "", info: "3dlotto" },
 
-      { icon: "bolt", name: "STL", badge: "", info: "stl" },
       {
         icon: "money-bill",
         name: "Lucky Pick 3",

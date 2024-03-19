@@ -64,7 +64,7 @@ export default {
         imageHolder: "char2.webp",
       },
       {
-        bgimage: "bg-first-deposit.webp",
+        bgimage: "bg-first-deposit.png",
         headerImage: "first-deposit-bonus.png",
         subtext: t("heroSection.slide_first_depo.text"),
         button: t("heroSection.slide_first_depo.btnText"),
@@ -240,8 +240,7 @@ export default {
   left: 0;
 }
 .hero-section {
-  min-height: 107vh;
-  /* background: url("@/assets/images/bghero-1.avif"); */
+  min-height: 113vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
