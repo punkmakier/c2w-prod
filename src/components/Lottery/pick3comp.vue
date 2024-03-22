@@ -5,7 +5,7 @@
     </div>
     <div class="nextDrawClass">
       <div class="ndtime">
-        <span>Next Draw</span><span class="countdownLottoTime">03:03:24</span>
+        <span>Next Draw</span><span class="countdownLottoTime">9:00 PM</span>
       </div>
     </div>
     <div class="money-wallet"><TheWalletMoney /></div>
@@ -31,9 +31,19 @@
   </div>
 
   <div class="mobile-draw-class" style="text-align: center; display: none">
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 30px;
+      ">
+      <span style="font-size: 0.8rem !important">LATEST RESULT</span>
+      <span style="font-size: 4rem !important">12, 7, 54, 43, 23, 4</span>
+    </div>
     <div style="display: flex; flex-direction: column; gap: 10px">
       <span class="nextDrawMobile">Next Draw</span
-      ><span class="countdownLottoTimeMobile">03:03:24</span>
+      ><span class="countdownLottoTimeMobile">9:00 PM</span>
     </div>
   </div>
   <div class="lottery-body-info">
@@ -99,7 +109,9 @@
             :key="numb.id"
             @click="$emit('selectedBall', numb)"
             :class="{
-              'active-ball': isBallSelected(numb) || isBallSelected2(numb),
+              'active-red': isBallSelected(numb) || isBallSelected2(numb),
+              'active-blue': isBallSelected3(numb) || isBallSelected4(numb),
+              'active-green': isBallSelected5(numb) || isBallSelected6(numb),
             }">
             <span>{{ numb }}</span>
           </div>
@@ -110,12 +122,13 @@
           <div class="bet bem">
             <div class="inner-bet">
               <div class="">
-                <span>Your Bet</span
+                <span
+                  >Your Bet <small style="color: var(--red-300)">*</small></span
                 ><InputNumber
                   v-model="dataValue"
                   inputId="minmaxfraction"
                   :maxFractionDigits="2"
-                  :max="4124"
+                  :max="balance.current_balance"
                   :min="0"
                   class="w-100"
                   @input="updateAmountBet" />
@@ -213,6 +226,7 @@
 import { ref, watch, onMounted } from "vue";
 import TheWalletMoney from "@/components/TheWalletMoney.vue";
 import LottoSidebar from "@/components/Lottery/LottoSidebar.vue";
+import { useAccountBalance } from "@/stores/user_balance.js";
 export default {
   components: { TheWalletMoney, LottoSidebar },
   props: {
@@ -239,75 +253,9 @@ export default {
   },
   setup(props, { emit }) {
     const sidebarCanvas = ref(false);
-    const lottoNumbers = [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-      "19",
-      "20",
-      "21",
-      "22",
-      "23",
-      "24",
-      "25",
-      "26",
-      "27",
-      "28",
-      "29",
-      "30",
-      "31",
-      "32",
-      "33",
-      "34",
-      "35",
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42",
-      "43",
-      "44",
-      "45",
-      "46",
-      "47",
-      "48",
-      "49",
-      "50",
-      "51",
-      "52",
-      "53",
-      "54",
-      "55",
-      "56",
-      "57",
-      "58",
-      "59",
-      "60",
-      "61",
-      "62",
-      "63",
-      "64",
-      "65",
-      "66",
-    ];
+    const lottoNumbers = ref();
     const localPicked2Numbers = ref(props.picked2numbers);
+    const { balance } = useAccountBalance();
 
     const dataValue = ref(props.valueAmount);
     const playerName = ref(props.name);
@@ -330,22 +278,71 @@ export default {
     const isBallSelected = (numb) => {
       return (
         parseInt(numb) ===
-          (localPicked2Numbers.value && localPicked2Numbers.value[0]) ||
-        parseInt(numb) ===
-          (localPicked2Numbers.value && localPicked2Numbers.value[1]) ||
-        parseInt(numb) ===
-          (localPicked2Numbers.value && localPicked2Numbers.value[2])
+        (localPicked2Numbers.value && localPicked2Numbers.value[0])
       );
     };
     const isBallSelected2 = (numb) => {
-      return (
-        numb === (props.picked2numbers && props.picked2numbers[0]) ||
-        numb === (props.picked2numbers && props.picked2numbers[1]) ||
-        numb === (props.picked2numbers && props.picked2numbers[2])
-      );
+      return numb === (props.picked2numbers && props.picked2numbers[0]);
     };
 
+    const isBallSelected3 = (numb) => {
+      return (
+        parseInt(numb) ===
+        (localPicked2Numbers.value && localPicked2Numbers.value[1])
+      );
+    };
+    const isBallSelected4 = (numb) => {
+      return numb === (props.picked2numbers && props.picked2numbers[1]);
+    };
+
+    const isBallSelected5 = (numb) => {
+      return (
+        parseInt(numb) ===
+        (localPicked2Numbers.value && localPicked2Numbers.value[2])
+      );
+    };
+    const isBallSelected6 = (numb) => {
+      return numb === (props.picked2numbers && props.picked2numbers[2]);
+    };
+
+    function getTotalBalls() {
+      const daysOfWeek = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      const today = new Date();
+      const currentDayIndex = today.getDay();
+      const currentDay = daysOfWeek[currentDayIndex];
+
+      switch (currentDayIndex) {
+        case 1: // Monday
+        case 3: // Wednesday
+        case 5: // Friday
+          lottoNumbers.value = 45;
+          break;
+        case 2: // Tuesday
+        case 4: // Thursday
+        case 0: // Sunday
+          lottoNumbers.value = 49;
+          break;
+        case 6: // Saturday
+          lottoNumbers.value = 55;
+          break;
+        default:
+          lottoNumbers.value = 0; // Default value
+          break;
+      }
+
+      console.log(`Today is ${currentDay}, total balls: ${lottoNumbers.value}`);
+    }
+
     onMounted(() => {
+      getTotalBalls();
       emit("updateAmount", dataValue.value);
     });
 
@@ -359,7 +356,7 @@ export default {
       viewBoughtTickets.value = true;
     };
 
-    const latestResult = ref(["12", "7", "54"]);
+    const latestResult = ref(["12", "7", "54", "43", "23", "4"]);
     const viewAllResultModal = ref(false);
     const viewAllResultFunc = () => {
       viewAllResultModal.value = true;
@@ -371,6 +368,7 @@ export default {
           pickedNumbers: localPicked2Numbers.value,
           bet: dataValue.value,
           name: playerName.value,
+          gameID: 4,
         },
       ];
       emit("submitTicket", data);
@@ -391,7 +389,27 @@ export default {
       playerName,
       sidebarCanvas,
       submitTicket,
+      isBallSelected3,
+      isBallSelected4,
+      isBallSelected5,
+      isBallSelected6,
+      balance,
     };
   },
 };
 </script>
+
+<style>
+.active-red {
+  background-color: #df1818 !important;
+  color: #fff !important;
+}
+.active-blue {
+  background-color: #3d18df !important;
+  color: #fff !important;
+}
+.active-green {
+  color: #fff !important;
+  background-color: #17e117 !important;
+}
+</style>

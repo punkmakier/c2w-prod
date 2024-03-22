@@ -1,4 +1,16 @@
 @media (width <= 430px) {
+  .drawBetForMobile,
+  .regladaForMobile {
+    display: block !important;
+  }
+  .chips-amount {
+    justify-content: space-around;
+    align-items: center;
+  }
+  .drawBetForDesktop,
+  .regladaForDesktop {
+    display: none !important;
+  }
   .intro-guest {
     width: 80% !important;
   }
@@ -479,10 +491,12 @@
   .latestResBalls {
     flex-direction: column !important;
     gap: 20px;
-    align-items: center;
   }
   .latestResBalls button {
     width: 100% !important;
+  }
+  .successBalls {
+    flex-wrap: wrap;
   }
 }
 

@@ -5,7 +5,8 @@
     </div>
     <div class="nextDrawClass">
       <div class="ndtime">
-        <span>Next Draw</span><span class="countdownLottoTime">03:03:24</span>
+        <span>Next Draw</span
+        ><span class="countdownLottoTime">{{ nextDrawTimeVal }}</span>
       </div>
     </div>
     <div class="money-wallet"><TheWalletMoney /></div>
@@ -31,9 +32,19 @@
   </div>
 
   <div class="mobile-draw-class" style="text-align: center; display: none">
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 30px;
+      ">
+      <span style="font-size: 0.8rem !important">LATEST RESULT</span>
+      <span style="font-size: 4rem !important">12, 7</span>
+    </div>
     <div style="display: flex; flex-direction: column; gap: 10px">
       <span class="nextDrawMobile">Next Draw</span
-      ><span class="countdownLottoTimeMobile">03:03:24</span>
+      ><span class="countdownLottoTimeMobile">{{ nextDrawTimeVal }}</span>
     </div>
   </div>
 
@@ -79,7 +90,8 @@
             :key="numb.id"
             @click="$emit('selectedBall', numb)"
             :class="{
-              'active-ball': isBallSelected(numb) || isBallSelected2(numb),
+              'active-red': isBallSelected(numb) || isBallSelected2(numb),
+              'active-blue': isBallSelected3(numb) || isBallSelected4(numb),
             }">
             <span>{{ numb }}</span>
           </div>
@@ -90,12 +102,13 @@
           <div class="bet bem">
             <div class="inner-bet">
               <div class="inputBet" style="width: 50%">
-                <span>Your Bet</span
+                <span
+                  >Your Bet <small style="color: var(--red-300)">*</small></span
                 ><InputNumber
                   v-model="dataValue"
                   inputId="minmaxfraction"
                   :maxFractionDigits="2"
-                  :max="4124"
+                  :max="balance.current_balance"
                   :min="0"
                   class="w-100"
                   @input="updateAmountBet" />
@@ -217,6 +230,7 @@
 import { ref, watch, onMounted } from "vue";
 import TheWalletMoney from "@/components/TheWalletMoney.vue";
 import LottoSidebar from "@/components/Lottery/LottoSidebar.vue";
+import { useAccountBalance } from "@/stores/user_balance.js";
 export default {
   components: { TheWalletMoney, LottoSidebar },
   props: {
@@ -248,7 +262,7 @@ export default {
   },
   setup(props, { emit }) {
     const sidebarCanvas = ref(false);
-
+    const { balance } = useAccountBalance();
     const lottoNumbers = [
       "1",
       "2",
@@ -287,7 +301,7 @@ export default {
     const dataValue = ref(props.valueAmount);
     const playerName = ref(props.name);
     const betTypeValue = ref(props.betType);
-
+    const nextDrawTimeVal = ref();
     watch(
       () => props.valueAmount,
       (newValue) => {
@@ -306,19 +320,57 @@ export default {
     const isBallSelected = (numb) => {
       return (
         parseInt(numb) ===
-          (localPicked2Numbers.value && localPicked2Numbers.value[0]) ||
-        parseInt(numb) ===
-          (localPicked2Numbers.value && localPicked2Numbers.value[1])
+        (localPicked2Numbers.value && localPicked2Numbers.value[0])
       );
     };
     const isBallSelected2 = (numb) => {
-      return (
-        numb === (props.picked2numbers && props.picked2numbers[0]) ||
-        numb === (props.picked2numbers && props.picked2numbers[1])
-      );
+      return numb === (props.picked2numbers && props.picked2numbers[0]);
     };
 
+    const isBallSelected3 = (numb) => {
+      return (
+        parseInt(numb) ===
+        (localPicked2Numbers.value && localPicked2Numbers.value[1])
+      );
+    };
+    const isBallSelected4 = (numb) => {
+      return numb === (props.picked2numbers && props.picked2numbers[1]);
+    };
+    function getNextDrawTime() {
+      const drawTimes = ["2:00 PM", "5:00 PM", "9:00 PM"];
+      const currentTime = new Date();
+      const currentHour = currentTime.getHours();
+      const currentMinutes = currentTime.getMinutes();
+      const currentAMPM = currentHour >= 12 ? "PM" : "AM";
+
+      // Convert current time to string format like the draw times
+      const currentTimeString = `${currentHour % 12}:${
+        currentMinutes < 10 ? "0" + currentMinutes : currentMinutes
+      } ${currentAMPM}`;
+
+      let nextDrawIndex = 0;
+      for (let i = 0; i < drawTimes.length; i++) {
+        if (drawTimes[i] > currentTimeString) {
+          nextDrawIndex = i;
+          break;
+        }
+      }
+
+      let nextDrawTime;
+      if (nextDrawIndex === 0) {
+        nextDrawTime = drawTimes[0];
+      } else if (nextDrawIndex === drawTimes.length || currentHour > 21) {
+        nextDrawTime = drawTimes[0];
+      } else {
+        nextDrawTime = drawTimes[nextDrawIndex];
+      }
+      nextDrawTimeVal.value = nextDrawTime;
+      console.log("Next draw time:", nextDrawTime);
+    }
+
     onMounted(() => {
+      getNextDrawTime();
+
       emit("updateAmount", dataValue.value);
     });
 
@@ -344,6 +396,7 @@ export default {
           pickedNumbers: localPicked2Numbers.value,
           bet: dataValue.value,
           name: playerName.value,
+          gameID: 1,
         },
       ];
       emit("submitTicket", data);
@@ -365,6 +418,10 @@ export default {
       submitTicket,
       betTypeValue,
       sidebarCanvas,
+      isBallSelected3,
+      isBallSelected4,
+      nextDrawTimeVal,
+      balance,
     };
   },
 };

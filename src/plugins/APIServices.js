@@ -133,4 +133,15 @@ export const C2WAPIService = {
   postFetchReglada: async (data) => {
     return await post("/api/sabong/fetchReglada", data);
   },
+
+  // LOTTERY
+  postPlaceBet2D: async (data) => {
+    return await post("/api/lottery/placeBet2D", data);
+  },
+  postPlaceBet3D: async (data) => {
+    return await post("/api/lottery/placeBet3D", data);
+  },
+  postPlaceBetP3: async (data) => {
+    return await post("/api/lottery/placeBetP3", data);
+  },
 };

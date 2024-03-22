@@ -34,6 +34,15 @@ watch(
   }
 );
 
+watch(
+  () => store.user,
+  (newVal) => {
+    if (!store.user) {
+      router.push("/");
+    }
+  }
+);
+
 const handleIncomingMessage = async (data) => {
   console.log(data);
   if (data.type === "sabong") {
@@ -516,7 +525,7 @@ for (let i = 0; i < numRowsStraight; i++) {
     <div class="content2-sabong">
       <div
         class="content-left-sabong drawBetForMobile"
-        style="width: 50%; display: none">
+        style="width: 100%; display: none">
         <div class="par-bet-draw">
           <div
             class="betTypeBtn"
@@ -550,7 +559,7 @@ for (let i = 0; i < numRowsStraight; i++) {
         >
         <div
           class="content-right-sabong regladaForMobile"
-          style="width: 50%; display: none">
+          style="width: 100%; display: none">
           <div class="reglada" style="height: 213px; overflow: auto">
             <table style="min-width: max-content">
               <tbody>

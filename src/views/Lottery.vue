@@ -1,5 +1,6 @@
 <template>
   <div class="info-body">
+    <Toast position="top-center" />
     <div class="left-content-body">
       <div v-if="routeInfo === 'ez2'">
         <ez2comp
@@ -52,14 +53,76 @@
       :header="HeaderMechanics"
       :style="{ width: '50rem' }"
       :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-      <div v-if="mechanicsType === 'ez2mechanics'"><p>EZ 2 Mechanics</p></div>
-      <div v-else-if="mechanicsType === 'pick3'">Pick 3 Mechanics</div>
-      <div v-else-if="mechanicsType === '3DLotto'">3D Lotto Mechanics</div>
+      <div v-if="mechanicsType === 'ez2mechanics'">
+        <ul>
+          <li>Pumili ng dalawang (2) numero mula 1-31. Ex:04 18</li>
+          <li>
+            Pumili kung
+            <span style="color: red; text-shadow: 0 0 2px #000">Straight</span>
+            or <span style="color: red; text-shadow: 0 0 2px #000">Rumble</span>
+          </li>
+          <li>
+            <span style="color: red; text-shadow: 0 0 2px #000">Straight</span>
+            - kung ano result ganun din dapat ang itsura ng taya. Ex: 04 18.
+            <span style="color: green; text-shadow: 0 0 2px #000"
+              >WINNER KA</span
+            >
+          </li>
+          <li>
+            <span style="color: red; text-shadow: 0 0 2px #000">Rumble</span>
+            - in any order ng result basta nakuha mo pares. Ex: 18 04.
+            <span style="color: green; text-shadow: 0 0 2px #000"
+              >WINNER KA</span
+            >
+          </li>
+          <li>
+            <span style="color: red; text-shadow: 0 0 2px #000">Pompyang</span>
+            - kung dalawang parehas na numero ang tinayaan.Ex: 18 18.
+            <span style="color: green; text-shadow: 0 0 2px #000"
+              >WINNER KA</span
+            >
+          </li>
+        </ul>
+      </div>
+      <div v-else-if="mechanicsType === 'pick3'">
+        <ul>
+          <li>Pumili ng tatlong numero (3) mula 1-55. Ex: 16, 32, 49</li>
+          <li>Lotto result(galing PCSO) - (07, 32, 29, 16, 23, 49)</li>
+          <li>
+            Kapag lumabas ang 3 picked numbers mo sa Lotto Result:<br />
+            <span style="color: red; text-shadow: 0 0 2px #000"
+              >32, 49, 16 (In any order)</span
+            >
+            <span style="color: green; text-shadow: 0 0 2px #000"
+              >WINNER KA</span
+            >
+          </li>
+        </ul>
+      </div>
+      <div v-else-if="mechanicsType === '3DLotto'">
+        <ul>
+          <li>Pumili ng tatlong numero (3) mula 0-9. Ex: 3, 7, 9</li>
+          <li>
+            <span style="color: red; text-shadow: 0 0 2px #000">Straight</span>
+            - kung ano result ganun din dapat ang itsura ng taya. Ex: 3, 7, 9.
+            <span style="color: green; text-shadow: 0 0 2px #000"
+              >WINNER KA</span
+            >
+          </li>
+          <li>
+            <span style="color: red; text-shadow: 0 0 2px #000">Rumble</span>
+            - in any order ng result basta nakuha mo pares. Ex: 7, 9, 3.
+            <span style="color: green; text-shadow: 0 0 2px #000"
+              >WINNER KA</span
+            >
+          </li>
+        </ul>
+      </div>
     </Dialog>
   </div>
 </template>
 <script>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import LottoSidebar from "@/components/Lottery/LottoSidebar.vue";
 import TheWalletMoney from "@/components/TheWalletMoney.vue";
 import { ref, watch } from "vue";
@@ -68,7 +131,8 @@ import ez2comp from "@/components/Lottery/ez2comp.vue";
 import d3lottocomp from "@/components/Lottery/d3lottocomp.vue";
 import pick3comp from "@/components/Lottery/pick3comp.vue";
 import { useAuthStore } from "@/stores/user.js";
-
+import { useToast } from "primevue/usetoast";
+import useValidate from "@vuelidate/core";
 export default {
   components: {
     LottoSidebar,
@@ -79,10 +143,21 @@ export default {
   },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const routeInfo = ref(route.params.type || "");
     const store = useAuthStore();
     const token = store.user[0].token;
     const user = store.user[0].username;
+    const toast = useToast();
+
+    watch(
+      () => store.user,
+      (newVal) => {
+        if (!store.user) {
+          router.push("/");
+        }
+      }
+    );
 
     const moneyBalls = [
       "10",
@@ -120,7 +195,7 @@ export default {
         HeaderMechanics.value = "3D Lotto Mechanics";
       }
       if (mechtype === "pick3") {
-        HeaderMechanics.value = "Pick 3 Mechanics";
+        HeaderMechanics.value = "Lucky Pick 3 Mechanics";
       }
     };
 
@@ -152,7 +227,7 @@ export default {
     // const submitTicket = (data) => {
     //   console.log(data);
     // };
-    const showAlert = () => {
+    const showAlert = (sendData) => {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
@@ -161,51 +236,64 @@ export default {
       });
       swalWithBootstrapButtons
         .fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
+          title: "Choose Bet Type",
           showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel!",
+          confirmButtonText: "Rumble",
+          cancelButtonText: "Straight",
           reverseButtons: true,
         })
         .then((result) => {
           if (result.isConfirmed) {
             swalWithBootstrapButtons.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
+              title: "Success",
+              text: "Your bet has been place.",
               icon: "success",
             });
+            sendData.betType = "Rumble";
+            console.log(sendData);
           } else if (
             /* Read more about handling dismissals below */
             result.dismiss === Swal.DismissReason.cancel
           ) {
             swalWithBootstrapButtons.fire({
-              title: "Cancelled",
-              text: "Your imaginary file is safe :)",
-              icon: "error",
+              title: "Success",
+              text: "Your bet has been place.",
+              icon: "success",
             });
+            sendData.betType = "Straight";
+            console.log(sendData);
           }
         });
     };
     const submitTicketEZ2 = (data) => {
-      showAlert();
       const firstNum = data[0].pickedNumbers[0];
       const secondNum = data[0].pickedNumbers[1];
       const bet = data[0].bet;
       const name = data[0].name;
+      const gameID = data[0].gameID;
+      console.log(firstNum);
 
-      const sendData = [
-        {
-          username: user,
-          token: token,
-          firstNumber: firstNum,
-          secondNumber: secondNum,
-          amountBet: bet,
-          name: name,
-        },
-      ];
+      if (firstNum == undefined || secondNum == undefined || bet == 0) {
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: "Please fill the required fields",
+          life: 3000,
+        });
+        return;
+      }
+
+      const sendData = {
+        username: user,
+        token: token,
+        firstNumber: firstNum,
+        secNumber: secondNum,
+        betAmount: bet,
+        name: name,
+        gameID: gameID,
+      };
       console.log(sendData);
+      showAlert(sendData);
     };
 
     const submitTicketPICK3 = (data) => {
@@ -214,19 +302,34 @@ export default {
       const thirdNum = data[0].pickedNumbers[2];
       const bet = data[0].bet;
       const name = data[0].name;
+      const gameID = data[0].gameID;
+      if (
+        firstNum == undefined ||
+        secondNum == undefined ||
+        thirdNum == undefined ||
+        bet == 0
+      ) {
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: "Please fill the required fields",
+          life: 3000,
+        });
+        return;
+      }
+      const sendData = {
+        username: user,
+        token: token,
+        firstNumber: firstNum,
+        secNumber: secondNum,
+        thirdNumber: thirdNum,
+        betAmount: bet,
+        name: name,
+        gameID: gameID,
+      };
 
-      const sendData = [
-        {
-          username: user,
-          token: token,
-          firstNumber: firstNum,
-          secondNumber: secondNum,
-          thirdNumber: thirdNum,
-          amountBet: bet,
-          name: name,
-        },
-      ];
       console.log(sendData);
+      showAlert(sendData);
     };
     const submitTicket3D = (data) => {
       const firstNum = data[0].pickedNumbers[0];
@@ -234,19 +337,34 @@ export default {
       const thirdNum = data[0].pickedNumbers[2];
       const bet = data[0].bet;
       const name = data[0].name;
+      const gameID = data[0].gameID;
+      if (
+        firstNum == undefined ||
+        secondNum == undefined ||
+        thirdNum == undefined ||
+        bet == 0
+      ) {
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: "Please fill the required fields",
+          life: 3000,
+        });
+        return;
+      }
+      const sendData = {
+        username: user,
+        token: token,
+        firstNumber: firstNum,
+        secNumber: secondNum,
+        thirdNumber: thirdNum,
+        betAmount: bet,
+        name: name,
+        gameID: gameID,
+      };
 
-      const sendData = [
-        {
-          username: user,
-          token: token,
-          firstNumber: firstNum,
-          secondNumber: secondNum,
-          thirdNumber: thirdNum,
-          amountBet: bet,
-          name: name,
-        },
-      ];
       console.log(sendData);
+      showAlert(sendData);
     };
 
     const selectedBallEZ2 = (ball) => {
@@ -380,6 +498,9 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 .latest-result {
   background-color: #f1f1f1;
@@ -402,6 +523,7 @@ export default {
 .successBalls {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 .latest-result-header {
   display: flex;

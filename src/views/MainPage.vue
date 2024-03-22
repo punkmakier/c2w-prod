@@ -1199,6 +1199,7 @@ export default {
           htmlVal.value = res.html;
         }
         showGameModal.value = true;
+        document.body.style.overflow = "hidden";
 
         if (res.resMsg === "Session expired please relogin.") {
           localStorage.removeItem("auth.user");
@@ -1405,6 +1406,8 @@ export default {
     };
 
     const exitGame = async () => {
+      document.body.style.overflow = "";
+
       showGameModal.value = false;
       if (store.user) {
         const uname = store.user[0].username;
