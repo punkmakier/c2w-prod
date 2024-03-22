@@ -144,4 +144,14 @@ export const C2WAPIService = {
   postPlaceBetP3: async (data) => {
     return await post("/api/lottery/placeBetP3", data);
   },
+  postLotteryLogin: async (data) => {
+    return await post("/api/lottery/login", data);
+  },
+  postFetchMybets: async (data) => {
+    return await post("/api/lottery/fetchBetting", data);
+  },
+
+  postFetchLatestResult: async (data) => {
+    return await post("/api/lottery/fetchHistory", data);
+  },
 };

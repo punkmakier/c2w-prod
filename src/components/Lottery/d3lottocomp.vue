@@ -1,5 +1,5 @@
 <template>
-  <div class="header-lottery" style="margin-bottom: 90px">
+  <div class="header-lottery" style="margin-bottom: 20px">
     <div class="lotoTypeLogo">
       <img src="@/assets/lotto_logos/3d.png" style="width: 80px" alt="" />
     </div>
@@ -20,7 +20,7 @@
       align-items: center;
       padding: 10px 20px;
       display: none;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     ">
     <div class="lotoTypeLogo">
       <img src="@/assets/lotto_logos/3d.png" style="width: 50px" alt="" />
@@ -46,6 +46,19 @@
       <span class="nextDrawMobile">Next Draw</span
       ><span class="countdownLottoTimeMobile">{{ nextDrawTimeVal }}</span>
     </div>
+  </div>
+  <div style="display: grid; place-items: center">
+    <iframe
+      class="lotto-vid"
+      width="1300"
+      height="500"
+      style="border-radius: 10px"
+      src="https://www.youtube.com/embed/I4-4rUCJ6FE?si=YNvXSXbONipdPq6W"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen></iframe>
   </div>
   <div class="lottery-body-info">
     <div class="create-lot">
@@ -179,16 +192,15 @@
       <div class="mt-3">
         <span>My Bets</span>
         <DataTable
-          :value="products"
+          :value="myBets"
           tableStyle="min-width: 40rem"
           paginator
           :rows="5"
           :rowsPerPageOptions="[5, 10, 20, 50]">
-          <Column field="name" header="Method"></Column>
-          <Column field="category" header="Amount"></Column>
-          <Column field="quantity" header="Status"></Column>
-          <Column field="quantity" header="Remarks"></Column>
-          <Column field="quantity" header="Player Name"></Column>
+          <Column field="comb" header="Combination"></Column>
+          <Column field="bet" header="Bet"></Column>
+          <Column field="possibleWin" header="Possible Win"></Column>
+          <Column field="name" header="Name"></Column>
         </DataTable>
       </div>
       <!-- <div class="imagePrize">
@@ -225,10 +237,12 @@
   </div>
 </template>
 <script>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import TheWalletMoney from "@/components/TheWalletMoney.vue";
 import LottoSidebar from "@/components/Lottery/LottoSidebar.vue";
 import { useAccountBalance } from "@/stores/user_balance.js";
+import { C2WAPIService as axios } from "@/plugins/APIServices.js";
+import { useAuthStore } from "@/stores/user.js";
 export default {
   components: { TheWalletMoney, LottoSidebar },
   props: {
@@ -259,10 +273,17 @@ export default {
 
     const sidebarCanvas = ref(false);
     const localPicked2Numbers = ref(props.picked2numbers);
-
+    const store = useAuthStore();
+    const token = store.user[0].token;
+    const user = store.user[0].username;
+    const gameID = ref();
     const dataValue = ref(props.valueAmount);
     const playerName = ref(props.name);
     const nextDrawTimeVal = ref();
+    const myBets = ref();
+    const latestResult = ref();
+    const resCountdownVal = ref(null);
+    const startCountdown = ref(null);
 
     watch(
       () => props.valueAmount,
@@ -309,40 +330,87 @@ export default {
       return numb === (props.picked2numbers && props.picked2numbers[2]);
     };
 
-    function getNextDrawTime() {
-      const drawTimes = ["2:00 PM", "5:00 PM", "9:00 PM"];
-      const currentTime = new Date();
-      const currentHour = currentTime.getHours();
-      const currentMinutes = currentTime.getMinutes();
-      const currentAMPM = currentHour >= 12 ? "PM" : "AM";
-
-      // Convert current time to string format like the draw times
-      const currentTimeString = `${currentHour % 12}:${
-        currentMinutes < 10 ? "0" + currentMinutes : currentMinutes
-      } ${currentAMPM}`;
-
-      let nextDrawIndex = 0;
-      for (let i = 0; i < drawTimes.length; i++) {
-        if (drawTimes[i] > currentTimeString) {
-          nextDrawIndex = i;
-          break;
-        }
+    const lottoLogin = async () => {
+      const passData = {
+        username: user,
+        token: token,
+        gameType: "3D",
+      };
+      console.log(passData);
+      const res = await axios.postLotteryLogin(passData);
+      if (res.error === 0) {
+        gameID.value = res.gameDetails.id;
+        resCountdownVal.value = res.gameDetails.ballClose;
+        console.log(gameID.value);
       }
+      console.log(res);
+    };
 
-      let nextDrawTime;
-      if (nextDrawIndex === 0) {
-        nextDrawTime = drawTimes[0];
-      } else if (nextDrawIndex === drawTimes.length || currentHour > 21) {
-        nextDrawTime = drawTimes[0];
-      } else {
-        nextDrawTime = drawTimes[nextDrawIndex];
+    const fetchMyBets = async () => {
+      const passData = {
+        username: user,
+        token: token,
+        gameType: "3D",
+      };
+      const res = await axios.postFetchMybets(passData);
+      const finalBetList = res.betList.map((bet) => ({
+        comb: bet.firstNumber + "*" + bet.secNumber + "*" + bet.thirdNumber,
+        bet: bet.betAmount,
+        possibleWin: (bet.betAmount * res.multi3D).toLocaleString(),
+        name: bet.name === "default" ? "" : bet.name,
+      }));
+      myBets.value = finalBetList;
+    };
+
+    const calculateCountdown = () => {
+      if (!startCountdown.value || !resCountdownVal.value) return;
+
+      const currentDatetime = new Date();
+      const diff = startCountdown.value - currentDatetime;
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      nextDrawTimeVal.value = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    };
+
+    const fetchLatestResult = async () => {
+      const passData = {
+        username: user,
+        token: token,
+        gameType: "3D",
+      };
+      const res = await axios.postFetchLatestResult(passData);
+      if (res.error === 0) {
+        latestResult.value = [
+          res.betHistory[0].firstNumber,
+          res.betHistory[0].secNumber,
+          res.betHistory[0].thirdNumber,
+        ];
       }
-      nextDrawTimeVal.value = nextDrawTime;
-      console.log("Next draw time:", nextDrawTime);
-    }
+    };
+
     onMounted(() => {
-      getNextDrawTime();
+      lottoLogin();
+      fetchMyBets();
+      fetchLatestResult();
       emit("updateAmount", dataValue.value);
+
+      watch(resCountdownVal, (newVal) => {
+        if (newVal) {
+          startCountdown.value = new Date(newVal);
+        }
+      });
+
+      calculateCountdown();
+      // Update the countdown every second
+      const interval = setInterval(calculateCountdown, 1000);
+
+      // Clean up
+      onUnmounted(() => clearInterval(interval));
     });
 
     const updateAmountBet = () => {
@@ -355,7 +423,6 @@ export default {
       viewBoughtTickets.value = true;
     };
 
-    const latestResult = ref(["12", "7", "23"]);
     const viewAllResultModal = ref(false);
     const viewAllResultFunc = () => {
       viewAllResultModal.value = true;
@@ -367,7 +434,7 @@ export default {
           pickedNumbers: localPicked2Numbers.value,
           bet: dataValue.value,
           name: playerName.value,
-          gameID: 1,
+          gameID: gameID.value,
         },
       ];
       emit("submitTicket", data);
@@ -394,6 +461,7 @@ export default {
       isBallSelected6,
       nextDrawTimeVal,
       balance,
+      myBets,
     };
   },
 };

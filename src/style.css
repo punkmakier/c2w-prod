@@ -362,6 +362,10 @@ input {
   }
 }
 
+.lotto-vid {
+  width: 80%;
+}
+
 /* PRIMEVUE COMPONENT CUSTOM */
 .p-button-outlined {
   background-color: transparent !important;

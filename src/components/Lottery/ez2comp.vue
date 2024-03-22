@@ -1,5 +1,5 @@
 <template>
-  <div class="header-lottery" style="margin-bottom: 90px">
+  <div class="header-lottery" style="margin-bottom: 20px">
     <div class="lotoTypeLogo">
       <img src="@/assets/lotto_logos/ez2.png" style="width: 80px" alt="" />
     </div>
@@ -47,6 +47,19 @@
       ><span class="countdownLottoTimeMobile">{{ nextDrawTimeVal }}</span>
     </div>
   </div>
+  <div style="display: grid; place-items: center">
+    <iframe
+      class="lotto-vid"
+      width="1300"
+      height="500"
+      style="border-radius: 10px"
+      src="https://www.youtube.com/embed/I4-4rUCJ6FE?si=YNvXSXbONipdPq6W"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen></iframe>
+  </div>
 
   <div class="lottery-body-info">
     <div class="create-lot">
@@ -54,7 +67,7 @@
         <div class="creating-lottery-viewmy-tickets"></div>
         <div class="youpick">
           <div class="first-youpick">
-            <span>Pick 2 Numbers </span>
+            <span style="font-weight: 600">Pick 2 Numbers </span>
             <div class="pick-balls-handler">
               <div
                 class="noballs"
@@ -80,7 +93,7 @@
               </div>
             </div>
           </div>
-          <div class="second-youpick"></div>
+          <!-- <div class="second-youpick"></div> -->
         </div>
         <div class="divider mt-1 mb-3"></div>
         <div class="balls-handler">
@@ -167,7 +180,7 @@
     <div class="lottery-prizes">
       <div class="latest-result">
         <div class="latest-result-header">
-          <span>Latest Result</span>
+          <span style="font-weight: 600">Latest Result</span>
           <span>2023-01-10 / 09:00:00</span>
         </div>
         <div class="latestResBalls">
@@ -180,18 +193,17 @@
         </div>
       </div>
       <div class="mt-3">
-        <span>My Bets</span>
+        <span style="font-weight: 600">My Bets</span>
         <DataTable
-          :value="products"
+          :value="myBets"
           tableStyle="min-width: 40rem"
           paginator
           :rows="5"
           :rowsPerPageOptions="[5, 10, 20, 50]">
-          <Column field="name" header="Method"></Column>
-          <Column field="category" header="Amount"></Column>
-          <Column field="quantity" header="Status"></Column>
-          <Column field="quantity" header="Remarks"></Column>
-          <Column field="quantity" header="Player Name"></Column>
+          <Column field="comb" header="Combination"></Column>
+          <Column field="bet" header="Bet"></Column>
+          <Column field="possibleWin" header="Possible Win"></Column>
+          <Column field="name" header="Name"></Column>
         </DataTable>
       </div>
       <!-- <div class="imagePrize">
@@ -227,10 +239,13 @@
   </div>
 </template>
 <script>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import TheWalletMoney from "@/components/TheWalletMoney.vue";
 import LottoSidebar from "@/components/Lottery/LottoSidebar.vue";
 import { useAccountBalance } from "@/stores/user_balance.js";
+import { C2WAPIService as axios } from "@/plugins/APIServices.js";
+import { useAuthStore } from "@/stores/user.js";
+
 export default {
   components: { TheWalletMoney, LottoSidebar },
   props: {
@@ -296,12 +311,19 @@ export default {
       "30",
       "31",
     ];
+    const myBets = ref();
     const localPicked2Numbers = ref(props.picked2numbers);
-
+    const store = useAuthStore();
+    const token = store.user[0].token;
+    const user = store.user[0].username;
+    const gameID = ref();
     const dataValue = ref(props.valueAmount);
     const playerName = ref(props.name);
     const betTypeValue = ref(props.betType);
     const nextDrawTimeVal = ref();
+    const latestResult = ref();
+    const resCountdownVal = ref(null);
+    const startCountdown = ref(null);
     watch(
       () => props.valueAmount,
       (newValue) => {
@@ -336,40 +358,95 @@ export default {
     const isBallSelected4 = (numb) => {
       return numb === (props.picked2numbers && props.picked2numbers[1]);
     };
-    function getNextDrawTime() {
-      const drawTimes = ["2:00 PM", "5:00 PM", "9:00 PM"];
-      const currentTime = new Date();
-      const currentHour = currentTime.getHours();
-      const currentMinutes = currentTime.getMinutes();
-      const currentAMPM = currentHour >= 12 ? "PM" : "AM";
 
-      // Convert current time to string format like the draw times
-      const currentTimeString = `${currentHour % 12}:${
-        currentMinutes < 10 ? "0" + currentMinutes : currentMinutes
-      } ${currentAMPM}`;
-
-      let nextDrawIndex = 0;
-      for (let i = 0; i < drawTimes.length; i++) {
-        if (drawTimes[i] > currentTimeString) {
-          nextDrawIndex = i;
-          break;
-        }
+    const lottoLogin = async () => {
+      const passData = {
+        username: user,
+        token: token,
+        gameType: "2D",
+      };
+      const res = await axios.postLotteryLogin(passData);
+      console.log(res);
+      if (res.error === 0) {
+        gameID.value = res.gameDetails.id;
+        resCountdownVal.value = res.gameDetails.ballClose;
+        console.log(gameID.value);
       }
+    };
 
-      let nextDrawTime;
-      if (nextDrawIndex === 0) {
-        nextDrawTime = drawTimes[0];
-      } else if (nextDrawIndex === drawTimes.length || currentHour > 21) {
-        nextDrawTime = drawTimes[0];
+    const fetchMyBets = async () => {
+      const passData = {
+        username: user,
+        token: token,
+        gameType: "2D",
+      };
+      const res = await axios.postFetchMybets(passData);
+      console.log(res);
+
+      if (res.error === 0) {
+        const finalBetList = res.betList.map((bet) => ({
+          comb: bet.firstNumber + "*" + bet.secNumber,
+          bet: bet.betAmount,
+          possibleWin: (bet.betAmount * res.multi2D).toLocaleString(),
+          name: bet.name === "default" ? "" : bet.name,
+        }));
+        myBets.value = finalBetList;
       } else {
-        nextDrawTime = drawTimes[nextDrawIndex];
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: res.description,
+          life: 3000,
+        });
       }
-      nextDrawTimeVal.value = nextDrawTime;
-      console.log("Next draw time:", nextDrawTime);
-    }
+    };
 
+    const fetchLatestResult = async () => {
+      const passData = {
+        username: user,
+        token: token,
+        gameType: "2D",
+      };
+      const res = await axios.postFetchLatestResult(passData);
+      if (res.error === 0) {
+        latestResult.value = [
+          res.betHistory[0].firstNumber,
+          res.betHistory[0].secNumber,
+        ];
+      }
+    };
+
+    const calculateCountdown = () => {
+      if (!startCountdown.value || !resCountdownVal.value) return;
+
+      const currentDatetime = new Date();
+      const diff = startCountdown.value - currentDatetime;
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      nextDrawTimeVal.value = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    };
     onMounted(() => {
-      getNextDrawTime();
+      lottoLogin();
+      fetchMyBets();
+      fetchLatestResult();
+
+      watch(resCountdownVal, (newVal) => {
+        if (newVal) {
+          startCountdown.value = new Date(newVal);
+        }
+      });
+
+      calculateCountdown();
+      // Update the countdown every second
+      const interval = setInterval(calculateCountdown, 1000);
+
+      // Clean up
+      onUnmounted(() => clearInterval(interval));
 
       emit("updateAmount", dataValue.value);
     });
@@ -384,7 +461,6 @@ export default {
       viewBoughtTickets.value = true;
     };
 
-    const latestResult = ref(["12", "7"]);
     const viewAllResultModal = ref(false);
     const viewAllResultFunc = () => {
       viewAllResultModal.value = true;
@@ -396,7 +472,7 @@ export default {
           pickedNumbers: localPicked2Numbers.value,
           bet: dataValue.value,
           name: playerName.value,
-          gameID: 1,
+          gameID: gameID.value,
         },
       ];
       emit("submitTicket", data);
@@ -422,6 +498,7 @@ export default {
       isBallSelected4,
       nextDrawTimeVal,
       balance,
+      myBets,
     };
   },
 };

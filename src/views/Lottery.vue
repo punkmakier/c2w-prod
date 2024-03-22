@@ -1,5 +1,6 @@
 <template>
   <div class="info-body">
+    <Loaders v-if="showLoaders" />
     <Toast position="top-center" />
     <div class="left-content-body">
       <div v-if="routeInfo === 'ez2'">
@@ -133,6 +134,9 @@ import pick3comp from "@/components/Lottery/pick3comp.vue";
 import { useAuthStore } from "@/stores/user.js";
 import { useToast } from "primevue/usetoast";
 import useValidate from "@vuelidate/core";
+import { C2WAPIService as axios } from "@/plugins/APIServices.js";
+import { useAccountBalance } from "@/stores/user_balance.js";
+import Loaders from "@/components/Loaders.vue";
 export default {
   components: {
     LottoSidebar,
@@ -140,6 +144,7 @@ export default {
     ez2comp,
     d3lottocomp,
     pick3comp,
+    Loaders,
   },
   setup() {
     const route = useRoute();
@@ -149,6 +154,8 @@ export default {
     const token = store.user[0].token;
     const user = store.user[0].username;
     const toast = useToast();
+    const showLoaders = ref(false);
+    const { balance } = useAccountBalance();
 
     watch(
       () => store.user,
@@ -224,47 +231,85 @@ export default {
     const ez2generatedNumber = () => {
       ez2HolderNumber.value = [...getRandomNumbers(1, 31, 2)];
     };
-    // const submitTicket = (data) => {
-    //   console.log(data);
-    // };
-    const showAlert = (sendData) => {
+    const placeBetFunc = async (sendData, betType) => {
+      console.log(betType);
+      let response;
+      switch (betType) {
+        case "ez2":
+          response = await axios.postPlaceBet2D(sendData);
+          break;
+        case "3D":
+          response = await axios.postPlaceBet3D(sendData);
+          break;
+        case "pick3":
+          response = await axios.postPlaceBetP3(sendData);
+          break;
+        default:
+          throw new Error("Invalid bet type.");
+      }
+      console.log(response);
+      return response;
+    };
+
+    const showAlert = async (sendData, type) => {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
           cancelButton: "btn btn-danger",
         },
       });
-      swalWithBootstrapButtons
-        .fire({
-          title: "Choose Bet Type",
-          showCancelButton: true,
-          confirmButtonText: "Rumble",
-          cancelButtonText: "Straight",
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
+
+      const result = await swalWithBootstrapButtons.fire({
+        title: "Choose Bet Type",
+        showCancelButton: true,
+        confirmButtonText: "Rambol",
+        cancelButtonText: "Straight",
+        reverseButtons: true,
+      });
+
+      if (result.isConfirmed || result.dismiss === Swal.DismissReason.cancel) {
+        const betType = result.isConfirmed ? "Rambol" : "Straight";
+
+        sendData.betType = betType;
+        console.log(sendData);
+        try {
+          showLoaders.value = true;
+          const res = await placeBetFunc(sendData, type);
+          console.log(res);
+          if (res.error === 0) {
+            swalWithBootstrapButtons
+              .fire({
+                title: "Success",
+                text: "Your bet has been placed.",
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Okay",
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  window.location.reload();
+                }
+              });
+          } else {
             swalWithBootstrapButtons.fire({
-              title: "Success",
-              text: "Your bet has been place.",
-              icon: "success",
+              title: "Failed",
+              text: res.description,
+              icon: "error",
             });
-            sendData.betType = "Rumble";
-            console.log(sendData);
-          } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-          ) {
-            swalWithBootstrapButtons.fire({
-              title: "Success",
-              text: "Your bet has been place.",
-              icon: "success",
-            });
-            sendData.betType = "Straight";
-            console.log(sendData);
           }
-        });
+          showLoaders.value = false;
+        } catch (error) {
+          swalWithBootstrapButtons.fire({
+            title: "Failed",
+            text: "Something went wrong...",
+            icon: "error",
+          });
+          console.error("Error placing bet:", error.message);
+        }
+      }
     };
+
     const submitTicketEZ2 = (data) => {
       const firstNum = data[0].pickedNumbers[0];
       const secondNum = data[0].pickedNumbers[1];
@@ -293,10 +338,10 @@ export default {
         gameID: gameID,
       };
       console.log(sendData);
-      showAlert(sendData);
+      showAlert(sendData, "ez2");
     };
 
-    const submitTicketPICK3 = (data) => {
+    const submitTicketPICK3 = async (data) => {
       const firstNum = data[0].pickedNumbers[0];
       const secondNum = data[0].pickedNumbers[1];
       const thirdNum = data[0].pickedNumbers[2];
@@ -317,6 +362,7 @@ export default {
         });
         return;
       }
+      showLoaders.value = true;
       const sendData = {
         username: user,
         token: token,
@@ -326,12 +372,33 @@ export default {
         betAmount: bet,
         name: name,
         gameID: gameID,
+        betType: "Straight",
       };
 
       console.log(sendData);
-      showAlert(sendData);
+      const res = await placeBetFunc(sendData, "pick3");
+      console.log(res);
+      if (res.error === 0) {
+        balance.current_balance = res.afterBalance;
+        Swal.fire({
+          title: "Success",
+          text: "Your bet has been placed.",
+          icon: "success",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        });
+      } else {
+        Swal.fire({
+          title: "Failed",
+          text: res.description,
+          icon: "error",
+        });
+      }
+      showLoaders.value = false;
     };
-    const submitTicket3D = (data) => {
+    const submitTicket3D = async (data) => {
       const firstNum = data[0].pickedNumbers[0];
       const secondNum = data[0].pickedNumbers[1];
       const thirdNum = data[0].pickedNumbers[2];
@@ -352,6 +419,9 @@ export default {
         });
         return;
       }
+
+      showLoaders.value = true;
+
       const sendData = {
         username: user,
         token: token,
@@ -361,10 +431,30 @@ export default {
         betAmount: bet,
         name: name,
         gameID: gameID,
+        betType: "Straight",
       };
 
       console.log(sendData);
-      showAlert(sendData);
+      const res = await placeBetFunc(sendData, "3D");
+      if (res.error === 0) {
+        balance.current_balance = res.afterBalance;
+        Swal.fire({
+          title: "Success",
+          text: "Your bet has been placed.",
+          icon: "success",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        });
+      } else {
+        Swal.fire({
+          title: "Failed",
+          text: res.description,
+          icon: "error",
+        });
+      }
+      showLoaders.value = false;
     };
 
     const selectedBallEZ2 = (ball) => {
@@ -463,6 +553,7 @@ export default {
       submitTicketEZ2,
       submitTicketPICK3,
       submitTicket3D,
+      showLoaders,
     };
   },
 };
@@ -484,7 +575,8 @@ export default {
   border-radius: 50%;
 }
 .lottery-prizes {
-  width: 40%;
+  width: 100%;
+  margin-top: 20px;
 }
 .imagePrize {
   margin-top: 15px;
@@ -721,7 +813,7 @@ export default {
 .youpick {
   color: #1a1c1e;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px;
 }
@@ -795,7 +887,7 @@ export default {
   border-top-left-radius: 20px;
 }
 .create-lot {
-  width: 60%;
+  width: 100%;
   position: relative;
 }
 .creating-lottery-viewmy-tickets {
