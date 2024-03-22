@@ -366,6 +366,26 @@ input {
   width: 80%;
 }
 
+.full-ball {
+  background-color: #8a8a8a7b !important;
+}
+.nums {
+  position: absolute;
+  top: -50%;
+  width: 150px;
+  font-size: 0.8rem;
+  left: -10%;
+  color: #fff;
+}
+.nums2 {
+  position: absolute;
+  top: -50%;
+  width: 150px;
+  font-size: 0.8rem;
+  left: -10%;
+  color: #fff;
+}
+
 /* PRIMEVUE COMPONENT CUSTOM */
 .p-button-outlined {
   background-color: transparent !important;

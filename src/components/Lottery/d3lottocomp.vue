@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="mobile-draw-class" style="text-align: center; display: none">
+  <div class="mobile-draw-class mb-5" style="text-align: center; display: none">
     <div
       style="
         display: flex;
@@ -40,7 +40,36 @@
         margin-bottom: 30px;
       ">
       <span style="font-size: 0.8rem !important">LATEST RESULT</span>
-      <span style="font-size: 4rem !important">12, 7, 23</span>
+      <div
+        v-if="latestResult"
+        style="
+          display: flex;
+          gap: 40px;
+          justify-content: center;
+          align-items: center;
+          margin-top: 30px;
+        ">
+        <div
+          v-for="(val, index) in latestResult"
+          :key="index"
+          class="diamond-shape"
+          :class="{
+            'red-ball': index === 0 || index === 3,
+            'blue-ball': index === 1 || index === 4,
+            'green-ball': index === 2 || index === 5,
+          }">
+          <div class="item-count">
+            <span
+              style="
+                color: #fff !important;
+                font-weight: 700;
+                font-size: 1.3rem !important;
+              "
+              >{{ val }}</span
+            >
+          </div>
+        </div>
+      </div>
     </div>
     <div style="display: flex; flex-direction: column; gap: 10px">
       <span class="nextDrawMobile">Next Draw</span
@@ -66,7 +95,7 @@
         <div class="creating-lottery-viewmy-tickets"></div>
         <div class="youpick">
           <div class="first-youpick">
-            <span>Pick 3 Numbers </span>
+            <span style="color: #fff; font-weight: 700">Pick 3 Numbers </span>
             <div class="pick-balls-handler">
               <div
                 class="noballs"
@@ -75,7 +104,9 @@
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[0])"
-                  ><i class="pi pi-times" style="font-size: 0.6rem"></i
+                  ><i
+                    class="pi pi-times"
+                    style="font-size: 0.6rem; color: #000"></i
                 ></span>
                 <span>{{ picked2numbers[0] }}</span>
               </div>
@@ -86,7 +117,9 @@
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[1])"
-                  ><i class="pi pi-times" style="font-size: 0.6rem"></i
+                  ><i
+                    class="pi pi-times"
+                    style="font-size: 0.6rem; color: #000"></i
                 ></span>
                 <span>{{ picked2numbers[1] }}</span>
               </div>
@@ -97,7 +130,9 @@
                 <span
                   class="removeBall"
                   @click="$emit('removeBall', picked2numbers[2])"
-                  ><i class="pi pi-times" style="font-size: 0.6rem"></i
+                  ><i
+                    class="pi pi-times"
+                    style="font-size: 0.6rem; color: #000"></i
                 ></span>
                 <span>{{ picked2numbers[2] }}</span>
               </div>
@@ -126,6 +161,7 @@
               'active-red': isBallSelected(numb) || isBallSelected2(numb),
               'active-blue': isBallSelected3(numb) || isBallSelected4(numb),
               'active-green': isBallSelected5(numb) || isBallSelected6(numb),
+              'full-ball': picked2numbers.length == 3,
             }">
             <span>{{ numb }}</span>
           </div>
@@ -136,7 +172,7 @@
           <div class="bet bem">
             <div class="inner-bet">
               <div class="">
-                <span
+                <span style="color: #fff"
                   >Your Bet <small style="color: var(--red-300)">*</small></span
                 ><InputNumber
                   v-model="dataValue"
@@ -148,7 +184,7 @@
                   @input="updateAmountBet" />
               </div>
               <div class="">
-                <span>Enter player name (Optional)</span
+                <span style="color: #fff">Enter player name (Optional)</span
                 ><InputText type="text" v-model="playerName" />
               </div>
             </div>
@@ -160,7 +196,7 @@
               v-for="mb in moneyList"
               :key="mb.id"
               @click="$emit('moneyPlacement', mb)">
-              <span>₱ {{ mb }}</span>
+              <span style="color: #1e1a1a">₱ {{ mb }}</span>
             </div>
           </div>
         </div>
@@ -189,7 +225,7 @@
           <Button label="View All Result" @click="viewAllResultFunc" />
         </div>
       </div>
-      <div class="mt-3">
+      <div class="mt-3 myBetsClass">
         <span>My Bets</span>
         <DataTable
           :value="myBets"
@@ -201,6 +237,7 @@
           <Column field="bet" header="Bet"></Column>
           <Column field="possibleWin" header="Possible Win"></Column>
           <Column field="name" header="Name"></Column>
+          <Column field="status" header="status"></Column>
         </DataTable>
       </div>
       <!-- <div class="imagePrize">
@@ -210,21 +247,12 @@
 
     <Dialog
       :draggable="false"
-      v-model:visible="viewBoughtTickets"
-      modal
-      header="My Tickets"
-      :style="{ width: '50rem' }"
-      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-      <p>TABLE FORMAT - FOR BOUGHT TICKETS FOR 3D</p>
-    </Dialog>
-    <Dialog
-      :draggable="false"
       v-model:visible="viewAllResultModal"
       modal
       header="View All Results"
       :style="{ width: '50rem' }"
       :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-      <p>View All Result Modal Here 3D</p>
+      <p>N/A</p>
     </Dialog>
 
     <Sidebar
@@ -342,10 +370,29 @@ export default {
         gameID.value = res.gameDetails.id;
         resCountdownVal.value = res.gameDetails.ballClose;
         console.log(gameID.value);
+      } else {
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: res.description,
+          life: 3000,
+        });
       }
       console.log(res);
     };
 
+    const formatedStatus = (val) => {
+      switch (val) {
+        case 1:
+          return "Unsettled";
+        case 2:
+          return "Win";
+        case 0:
+          return "Loss";
+        default:
+          return "";
+      }
+    };
     const fetchMyBets = async () => {
       const passData = {
         username: user,
@@ -358,6 +405,7 @@ export default {
         bet: bet.betAmount,
         possibleWin: (bet.betAmount * res.multi3D).toLocaleString(),
         name: bet.name === "default" ? "" : bet.name,
+        status: formatedStatus(bet.status),
       }));
       myBets.value = finalBetList;
     };
@@ -371,7 +419,10 @@ export default {
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
+      if (seconds < 0) {
+        nextDrawTimeVal.value = "00:00:00 - CLOSED";
+        return;
+      }
       nextDrawTimeVal.value = `${hours.toString().padStart(2, "0")}:${minutes
         .toString()
         .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
@@ -390,6 +441,13 @@ export default {
           res.betHistory[0].secNumber,
           res.betHistory[0].thirdNumber,
         ];
+      } else {
+        toast.add({
+          severity: "error",
+          summary: "Failed",
+          detail: res.description,
+          life: 3000,
+        });
       }
     };
 
@@ -417,12 +475,6 @@ export default {
       emit("updateAmount", dataValue.value);
     };
 
-    const viewBoughtTickets = ref(false);
-
-    const viewMytickets = () => {
-      viewBoughtTickets.value = true;
-    };
-
     const viewAllResultModal = ref(false);
     const viewAllResultFunc = () => {
       viewAllResultModal.value = true;
@@ -447,8 +499,6 @@ export default {
       isBallSelected,
       localPicked2Numbers,
       isBallSelected2,
-      viewMytickets,
-      viewBoughtTickets,
       latestResult,
       viewAllResultModal,
       viewAllResultFunc,

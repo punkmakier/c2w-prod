@@ -1,4 +1,7 @@
 @media (width <= 430px) {
+  .lotto-vid {
+    width: 95% !important;
+  }
   .drawBetForMobile,
   .regladaForMobile {
     display: block !important;

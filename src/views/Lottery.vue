@@ -563,7 +563,7 @@ export default {
   position: absolute;
   top: -15%;
   right: -20%;
-  background-color: #1a1c1e;
+  background-color: #fff;
   padding: 4px 3px;
   border-radius: 3px;
   cursor: pointer;
@@ -595,8 +595,8 @@ export default {
   gap: 30px;
 }
 .latest-result {
-  background-color: #f1f1f1;
-  color: #1a1c1e;
+  /* background-color: #f1f1f1; */
+  color: #fff;
   padding: 10px;
   border-radius: 17px;
 }
@@ -680,8 +680,8 @@ export default {
   margin-top: 20px;
 }
 .money-ball {
-  width: 55px;
-  height: 55px;
+  width: 60px;
+  height: 60px;
   background: rgb(255, 243, 20);
   cursor: pointer;
   border-radius: 50%;
@@ -692,6 +692,7 @@ export default {
   transition: 0.5s ease-in-out;
   position: relative;
   overflow: hidden;
+  font-weight: 700;
 }
 .money-ball::before {
   content: "";
@@ -725,9 +726,9 @@ export default {
 }
 .bettings {
   width: 100%;
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   margin-top: 20px;
-  color: #1a1c1e;
+  color: #fff;
   padding: 20px;
   border-bottom-left-radius: 17px;
   border-bottom-right-radius: 17px;
@@ -740,10 +741,12 @@ export default {
   gap: 10px;
   padding-bottom: 30px;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 .balls-handler .lottery-balls {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   background-color: #fff;
   border-radius: 50%;
   display: flex;
@@ -753,6 +756,7 @@ export default {
   box-shadow: -1px 1px 2px #1a1c1e43;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+  font-weight: 700;
 }
 .lottery-balls:hover {
   font-weight: 600;
@@ -842,17 +846,18 @@ export default {
   gap: 10px;
 }
 .youpick .balls-pick {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   background-color: #ff1354;
   box-shadow: -1px 2px 5px #ff1354;
   border-radius: 50%;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
   position: relative;
+  font-size: 1.3rem;
 }
 .red-ball {
   background-color: #df1818 !important;
@@ -868,8 +873,8 @@ export default {
 }
 .pick-balls-handler {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 40px;
+  margin-top: 40px;
   align-items: center;
 }
 .lottery-body-info {
@@ -880,7 +885,6 @@ export default {
   gap: 50px;
 }
 .lottery-body-info .creating-lottery {
-  background-color: #f1f1f1;
   display: flex;
   flex-direction: column;
   border-top-right-radius: 20px;
@@ -967,5 +971,27 @@ export default {
 }
 .right-content-body {
   width: 20%;
+}
+
+.diamond-shape {
+  background: #fff;
+  height: 70px;
+  text-align: center;
+  transform: rotate(45deg);
+  width: 70px;
+}
+.item-count {
+  color: #333;
+  display: table-cell;
+  height: 70px;
+  transform: rotate(-45deg);
+  vertical-align: middle;
+  width: 70px;
+}
+
+.myBetsClass .p-datatable .p-datatable-thead > tr > th,
+.myBetsClass .p-datatable .p-datatable-tbody > tr > td {
+  background-color: #1a1c1e !important;
+  color: #fff !important;
 }
 </style>
