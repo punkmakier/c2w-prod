@@ -44,13 +44,13 @@ export const useAuthStore = defineStore("auth", () => {
           email: getResult.email,
           mobile: getResult.mobile,
           chatToken: getResult.chatToken,
+          is_agent: getResult.is_agent,
         },
       ];
       user.value = res;
       return "Success";
     } else {
       return getResult.resMsg;
-      // return "Failed";
     }
   }
 

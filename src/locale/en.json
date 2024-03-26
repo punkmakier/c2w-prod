@@ -34,6 +34,7 @@
   "poweredBy": "POWERED BY",
   "ourPaymentGateway": "OUR PAYMENT GATEWAY",
   "sideMenus": {
+    "agentDashboard": "Agent Dashboard",
     "otherInfo": "Other Information",
     "menuTitle": "Menu",
     "comingSoon": "Coming Soon",

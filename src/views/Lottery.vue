@@ -990,7 +990,8 @@ export default {
 }
 
 .myBetsClass .p-datatable .p-datatable-thead > tr > th,
-.myBetsClass .p-datatable .p-datatable-tbody > tr > td {
+.myBetsClass .p-datatable .p-datatable-tbody > tr > td,
+.myBetsClass .p-paginator {
   background-color: #1a1c1e !important;
   color: #fff !important;
 }

@@ -363,7 +363,12 @@
                 @input="handleSlicedChange"
                 type="text"
                 :placeholder="$t('chats.enterName')"
-                style="border: none; outline: none" />
+                style="
+                  border: none;
+                  outline: none;
+                  color: #1e1a1a;
+                  background-color: #fff;
+                " />
               <button
                 style="
                   padding: 10px 15px;
@@ -550,6 +555,7 @@
               border: none;
               outline: none;
               background-color: #fff;
+              color: #1e1a1a;
             " />
           <span style="color: #000; font-weight: 500" v-if="countDownChat">{{
             countDownChat
@@ -787,7 +793,8 @@ export default {
         };
         console.log(data);
         socket.emit("chat-message", JSON.stringify(data));
-        await axios.addMessageChat(data);
+        const res = await axios.addMessageChat(data);
+        console.log(res);
         msg.value = "";
       }
 
@@ -979,16 +986,24 @@ export default {
           token: dataUser[0].chatToken,
           user: "registered",
         });
-        console.log();
+        const sortedMessagesByDate = resGuest.data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
         if (resGuest.data != null || resGuest.data != undefined) {
-          resGuest.data.forEach((element) => {
+          sortedMessagesByDate.forEach((element) => {
+            // handleIncomingMessage(element);
             messages.value.push(element);
-            // socket.emit("chat-message", element);
-          });
-          nextTick(() => {
-            bottomChat.value?.scrollIntoView({ behavior: "smooth" });
           });
         }
+        // if (resGuest.data != null || resGuest.data != undefined) {
+        //   resGuest.data.forEach((element) => {
+        //     messages.value.push(element);
+        //     // socket.emit("chat-message", element);
+        //   });
+        //   nextTick(() => {
+        //     bottomChat.value?.scrollIntoView({ behavior: "smooth" });
+        //   });
+        // }
       }
     };
 
@@ -1021,7 +1036,13 @@ export default {
       }
 
       if (window.screen.width <= 834) {
-        showSplashScreen.value = true;
+        if (localStorage.getItem("hasSplashScreen")) {
+          showSplashScreen.value = false;
+          return;
+        } else {
+          localStorage.setItem("hasSplashScreen", "true");
+          showSplashScreen.value = true;
+        }
         setTimeout(() => {
           showSplashScreen.value = false;
         }, 4000);
@@ -1663,6 +1684,7 @@ export default {
       showLiveGameModalFunc,
       checkMessageFile,
       showBigImage,
+      handleSlicedChange,
       // removeGameType,
     };
   },

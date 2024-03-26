@@ -1,5 +1,5 @@
 <template>
-  <div class="load-parent">
+  <div class="load-parent" v-if="!hasSpash">
     <img
       class="showFades"
       src="@/assets/images/logo.webp"

@@ -43,9 +43,9 @@
         {{ data.name }}
         <small class="comingsoon" v-if="data.badge">{{ data.badge }}</small>
       </router-link>
-      <div class="menu-link-d" @click="toAgentDashboard">
+      <div class="menu-link-d" @click="toAgentDashboard" v-if="isAgent">
         <i class="pi pi-briefcase" style="font-size: 1rem"></i>
-        <span>Agent Dashboard</span>
+        <span>{{ $t("sideMenus.agentDashboard") }}</span>
       </div>
 
       <div class="menu-text mt-3">
@@ -204,6 +204,8 @@ export default {
     const responseMessage = ref("");
     const severity = ref("");
     const deposit = ref(false);
+    const isAgent = ref(false);
+
     const { t } = useI18n();
 
     const logout = async () => {
@@ -297,6 +299,9 @@ export default {
       const username = store.user[0].username;
       uname.value = store.user[0].username;
       firstLetter.value = username[0].toUpperCase();
+      if (store.user[0].is_agent) {
+        isAgent.value = true;
+      }
     });
 
     const depositSubmit = async (data) => {
@@ -325,6 +330,9 @@ export default {
       isLoadingButton.value = false;
     };
     const withdrawSubmit = async (data) => {
+      severity.value = "";
+      responseMessage.value = "";
+
       console.log(data);
       isLoadingButton.value = true;
       const uname = store.user[0].username;
@@ -375,6 +383,7 @@ export default {
       amountDep,
       responseMessage,
       severity,
+      isAgent,
       logout,
       capitalizeFirstLetter,
       withdrawSubmit,

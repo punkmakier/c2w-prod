@@ -1,6 +1,16 @@
 @media (width <= 430px) {
+  .mb3d {
+    flex-direction: column;
+  }
   .lotto-vid {
     width: 95% !important;
+  }
+  .latestResDesktop {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .drawTimeC {
+    font-size: 1.7rem !important;
   }
   .drawBetForMobile,
   .regladaForMobile {
@@ -53,7 +63,10 @@
     height: auto !important;
   }
   .hero-content-1 {
-    padding-bottom: 50px !important;
+    padding-bottom: 10px !important;
+  }
+  .logo2c2w {
+    width: 100px !important;
   }
 
   .providerNameSpan span {
@@ -474,6 +487,10 @@
   }
 }
 @media (width <= 375px) {
+  .diamond-shape {
+    width: 65px !important;
+    height: 65px !important;
+  }
   .game-info,
   .game-info-live {
     width: 160px !important;
@@ -504,6 +521,11 @@
 }
 
 @media (width <= 360px) {
+  .diamond-shape,
+  .item-count {
+    width: 60px !important;
+    height: 60px !important;
+  }
   .chat-box {
     width: 337px !important;
   }

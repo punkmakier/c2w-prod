@@ -57,7 +57,7 @@ export default {
     });
     const heroContent = ref([
       {
-        bgimage: "main-bg.png",
+        bgimage: "bg_main.png",
         headerImage: "logo.webp",
         subtext: t("heroSection.slide_c2w.text"),
         button: t("heroSection.slide_c2w.btnText"),
@@ -71,35 +71,35 @@ export default {
         imageHolder: "prom-1.png",
       },
       {
-        bgimage: "sabong-bg.png",
+        bgimage: "bg_sabong.png",
         headerImage: "sabong-float.png",
         subtext: t("heroSection.slide_first_depo.text"),
         button: t("heroSection.slide_first_depo.btnText"),
         imageHolder: "dot.png",
       },
       {
-        bgimage: "bingo-bg.png",
+        bgimage: "bg_bingo.png",
         headerImage: "pick3-float.png",
         subtext: t("heroSection.slide_first_depo.text"),
         button: t("heroSection.slide_first_depo.btnText"),
         imageHolder: "bingo-float.png",
       },
       {
-        bgimage: "lottery-bg.png",
+        bgimage: "bg_lotto.png",
         headerImage: "ez2-float.png",
         subtext: t("heroSection.slide_first_depo.text"),
         button: t("heroSection.slide_first_depo.btnText"),
         imageHolder: "lottery-float.png",
       },
       {
-        bgimage: "virtual-bg.png",
+        bgimage: "bg_virtual.png",
         headerImage: "virtual-header.png",
         subtext: t("heroSection.slide_first_depo.text"),
         button: t("heroSection.slide_first_depo.btnText"),
         imageHolder: "virtual-float.png",
       },
       {
-        bgimage: "sports-bg.png",
+        bgimage: "bg_sports.png",
         headerImage: "sport-betting-float.png",
         subtext: t("heroSection.slide_first_depo.text"),
         button: t("heroSection.slide_first_depo.btnText"),
@@ -196,7 +196,16 @@ export default {
               rounded />
           </div>
           <img :src="`/src/assets/images/${value.imageHolder}`" class="chars" />
-          <!-- <img :src="`/src/assets/images/char2.webp`" class="characters" /> -->
+          <img
+            src="/src/assets/images/c2w.png"
+            class="logo2c2w"
+            style="
+              position: absolute;
+              right: 3%;
+              z-index: 3;
+              top: 10%;
+              width: 150px;
+            " />
         </div>
       </swiper-slide>
     </swiper>

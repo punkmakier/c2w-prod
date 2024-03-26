@@ -154,4 +154,7 @@ export const C2WAPIService = {
   postFetchLatestResult: async (data) => {
     return await post("/api/lottery/fetchHistory", data);
   },
+  postBanklist: async (data) => {
+    return await post("/api/bankList", data);
+  },
 };

@@ -68,10 +68,10 @@
         <!-- <div class="paymentMethods"> -->
         <!-- <div
             :class="`g ${
-              depositActivePayment == 'GCASH' ? 'active-payment' : ''
+              depositActivePayment == 'GCash' ? 'active-payment' : ''
             }`"
-            @click="depositActivePayment = 'GCASH'">
-            <span>GCASH</span>
+            @click="depositActivePayment = 'GCash'">
+            <span>GCash</span>
             <div class="gcash"></div>
           </div>
 
@@ -102,7 +102,7 @@
         <!-- </div> -->
         <!-- <div
           v-if="
-            depositActivePayment == 'GCASH' || depositActivePayment == 'Paymaya'
+            depositActivePayment == 'GCash' || depositActivePayment == 'Paymaya'
           ">
           <span>Select Providers</span>
 
@@ -190,24 +190,24 @@
           <div class="withdrawMethods">
             <div
               :class="`g ${
-                withdrawActivePayment == 'GCASH' ? 'active-payment' : ''
+                withdrawActivePayment == 'GCash' ? 'active-payment' : ''
               }`"
               @click="
-                withdrawActivePayment = 'GCASH';
+                withdrawActivePayment = 'GCash';
                 selectedBank = '';
               ">
-              <span>GCASH</span>
+              <span>GCash</span>
               <div class="gcash"></div>
             </div>
             <div
               :class="`g ${
-                withdrawActivePayment == 'Paymaya' ? 'active-payment' : ''
+                withdrawActivePayment == 'PayMaya' ? 'active-payment' : ''
               }`"
               @click="
-                withdrawActivePayment = 'Paymaya';
+                withdrawActivePayment = 'PayMaya';
                 selectedBank = '';
               ">
-              <span>Paymaya</span>
+              <span>PayMaya</span>
               <div class="paymaya"></div>
             </div>
             <div
@@ -226,7 +226,29 @@
         <div
           class="flex flex-column gap-2"
           :class="{ depbank: withdrawActivePayment === 'Bank' }"
-          v-if="withdrawActivePayment === 'Bank'">
+          v-if="withdrawActivePayment === 'Bank'"
+          style="width: 25%">
+          <label for="username" class="fw-500"
+            >Provider <small style="color: var(--red-300)">*</small></label
+          >
+          <Dropdown
+            v-model="selectedProviderWithdraw"
+            :options="providerOptionsWithdraw"
+            optionLabel="name"
+            placeholder="Select Provider"
+            @change="handleProviderChange"
+            class="w-100" />
+          <small
+            style="color: var(--red-500); font-weight: 500"
+            v-if="accountBankErrorMessage"
+            >{{ accountBankErrorMessage }}</small
+          >
+        </div>
+        <div
+          class="flex flex-column gap-2"
+          :class="{ depbank: withdrawActivePayment === 'Bank' }"
+          v-if="withdrawActivePayment === 'Bank'"
+          style="width: 25%">
           <label for="username" class="fw-500"
             >Bank <small style="color: var(--red-300)">*</small></label
           >
@@ -235,7 +257,8 @@
             :options="bankOptions"
             optionLabel="name"
             placeholder="Select Payment Method"
-            class="w-100" />
+            class="w-100 withdrawD"
+            filter />
           <small
             style="color: var(--red-500); font-weight: 500"
             v-if="accountBankErrorMessage"
@@ -258,6 +281,11 @@
             aria-describedby="username-help"
             style="margin-top: 5px"
             autocomplete="off" />
+          <small
+            style="color: var(--red-500); font-weight: 500"
+            v-if="accountNameErrorMsg"
+            >{{ accountNameErrorMsg }}</small
+          >
         </div>
         <div
           class="flex flex-column gap-2"
@@ -415,18 +443,11 @@ export default {
     const { severity, type } = toRefs(props);
 
     const selectedBank = ref();
-    const bankOptions = ref([
-      { name: "BPI", code: "BPI" },
-      { name: "Chinabank", code: "CHINABANK" },
-      { name: "East West", code: "EASTWEST" },
-      { name: "KOMO", code: "KOMO" },
-      { name: "Landbank", code: "LANDBANK" },
-      { name: "Metrobank", code: "METROBANK" },
-      { name: "PNB", code: "PNB" },
-      { name: "Security Bank", code: "SECURITYBANK" },
-      { name: "Tonik", code: "TONIK" },
-      { name: "Union Bank", code: "UNIONBANK" },
-      { name: "UCPB", code: "UCPB" },
+    const bankOptions = ref();
+
+    const providerOptionsWithdraw = ref([
+      { name: "Toppay", code: "toppay" },
+      { name: "Pagarstar", code: "pagarstar" },
     ]);
 
     const store = useAuthStore();
@@ -436,8 +457,8 @@ export default {
     const availableBalance = ref(0);
     const addPaymentInfo = ref(false);
     const currentBalance = ref(0);
-    const depositActivePayment = ref("GCASH");
-    const withdrawActivePayment = ref("GCASH");
+    const depositActivePayment = ref("GCash");
+    const withdrawActivePayment = ref("GCash");
     const accountName = ref("");
     const accountNumber = ref("");
     const selectedPaymentGateway = ref("A+Pay");
@@ -451,6 +472,11 @@ export default {
     const minimumdeposit = ref(0);
     const { balance } = useAccountBalance();
     const toast = useToast();
+    const paymentMethod = ref();
+    const accountNameErrorMsg = ref("");
+    const providerID = ref("");
+
+    const selectedProviderWithdraw = ref();
 
     const handleInputAmount = computed(() => {
       const numericValue = accountNumber.value.replace(/\D/g, "");
@@ -482,7 +508,6 @@ export default {
         style: "currency",
         currency: "PHP",
       });
-      console.log(res);
       return res.replace("₱", "₱ ");
     };
 
@@ -498,7 +523,7 @@ export default {
           { name: "komo", logo: "komo.png" },
           { name: "landbank", logo: "lb.png" },
           { name: "metrobank", logo: "mb.png" },
-          { name: "paymaya", logo: "paymaya.png" },
+          { name: "PayMaya", logo: "paymaya.png" },
           { name: "pnb", logo: "pnb.png" },
           { name: "rcbc", logo: "rcbc.svg" },
           { name: "security bank", logo: "scb.png" },
@@ -549,6 +574,23 @@ export default {
       minimumdeposit.value = event.value.minDeposit;
     };
 
+    const handleProviderChange = async () => {
+      const res = await axios.postBanklist({
+        username: store.user[0].username,
+        token: store.user[0].token,
+        providerName: selectedProviderWithdraw.value.code,
+      });
+      const updatedData = res.map((item) => {
+        return {
+          providerID: item.providerID,
+          name: item.method, // Updating 'method' to 'name'
+          methodID: item.methodID,
+        };
+      });
+      bankOptions.value = updatedData;
+      console.log(bankOptions.value);
+    };
+
     onMounted(async () => {
       if (store.user) {
         // const uname = store.user[0].username;
@@ -576,7 +618,16 @@ export default {
           accountNumErrorMessage.value =
             "Invalid number. It should start with '09xx'-xxx-xxxx.";
           return;
+        }
+        if (accountName.value == "") {
+          accountNameErrorMsg.value = "Account name is required.";
+          return;
         } else {
+          accountNumErrorMessage.value = "";
+          accountNameErrorMsg.value = "";
+          paymentMethod.value = withdrawActivePayment.value;
+          providerID.value =
+            withdrawActivePayment.value === "GCash" ? "6" : "1";
           accountNumber.value = accs;
         }
       } else {
@@ -585,18 +636,30 @@ export default {
           accountBankErrorMessage.value = "Please select a bank";
           return;
         }
+        if (accountName.value == "") {
+          accountNameErrorMsg.value = "Account name is required.";
+          return;
+        }
+        if (accountNumber.value == "") {
+          accountNumErrorMessage.value = "Account number is required.";
+          return;
+        } else {
+          accountNumErrorMessage.value = "";
+          accountNameErrorMsg.value = "";
+          paymentMethod.value = selectedBank.value.name;
+        }
       }
 
       accountNumErrorMessage.value = "";
       accountBankErrorMessage.value = "";
       const data = {
-        methods: withdrawActivePayment.value,
+        methods: paymentMethod.value,
         amount: amountValue.value
           ? parseFloat(amountValue.value.toFixed(2))
           : 0,
         accountName: accountName.value.trim(),
         accountNumber: accountNumber.value.trim(),
-        selectedBank: selectedBank.value ? selectedBank.value.code : "",
+        // selectedBank: selectedBank.value ? selectedBank.value.code : "",
       };
       emit("submitWithdraw", data);
     };
@@ -615,13 +678,19 @@ export default {
     const paymentProviders = ref(["A+Pay", "FPAy", "Pagarstar"]);
 
     watch(depositActivePayment, (newVal) => {
-      if (newVal === "Paymaya") {
+      if (newVal === "PayMaya") {
         paymentProviders.value = ["Toppay"];
         selectedPaymentGateway.value = "Toppay";
-      } else if (newVal === "GCASH") {
+      } else if (newVal === "GCash") {
         paymentProviders.value = ["A+Pay", "FPAy", "Pagarstar"];
         selectedPaymentGateway.value = "A+Pay";
       }
+    });
+
+    watch(withdrawActivePayment, (newVal) => {
+      console.log(newVal);
+      accountNumErrorMessage.value = "";
+      accountNameErrorMsg.value = "";
     });
 
     watch(severity, (newVal) => {
@@ -633,7 +702,7 @@ export default {
         accountNumber.value = "";
         accountName.value = "";
         amountValue.value = 0;
-        withdrawActivePayment.value = "GCASH";
+        withdrawActivePayment.value = "GCash";
       }
     });
 
@@ -704,6 +773,11 @@ export default {
       optionResultPaymentMethod,
       selectedPaymentMethod,
       minimumdeposit,
+      paymentMethod,
+      accountNameErrorMsg,
+      providerID,
+      providerOptionsWithdraw,
+      selectedProviderWithdraw,
       depositSubmit,
       withdrawSubmit,
       withdrawButtonClicked,
@@ -713,6 +787,7 @@ export default {
       handleSliderChange,
       formatCurrency,
       handleChangePaymentMethod,
+      handleProviderChange,
     };
   },
 
@@ -737,6 +812,12 @@ export default {
 };
 </script>
 <style>
+.withdrawD .p-dropdown-panel {
+  width: 350px !important;
+}
+.p-dropdown-items-wrapper {
+  right: 0 !important;
+}
 .deposit_info {
   display: flex;
   gap: 20px;

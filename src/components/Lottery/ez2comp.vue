@@ -217,14 +217,62 @@
       <div class="latest-result">
         <div class="latest-result-header">
           <span style="font-weight: 600">Latest Result</span>
-          <span>2023-01-10 / 09:00:00</span>
+          <span>{{ dateRes }}</span>
         </div>
-        <div class="latestResBalls">
-          <div class="successBalls">
-            <div class="sb" v-for="value in latestResult" :key="value.id">
-              <span>{{ value }}</span>
+        <div
+          class="latestResDesktop"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          ">
+          <div
+            style="display: flex; gap: 50px; margin-top: 30px"
+            v-if="latestResult">
+            <div class="diamond-shape red-ball">
+              <div class="item-count">
+                <span
+                  style="
+                    color: #fff !important;
+                    font-weight: 700;
+                    font-size: 1.3rem !important;
+                  "
+                  >{{ latestResult[0] }}</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+              ">
+              <span style="font-size: 1.3rem" class="drawTimeC">{{
+                drawSchedTime[0]
+              }}</span>
+              <div
+                style="width: 60px; height: 3px; background-color: #ccc"
+                class="drawTimeLine"></div>
+              <span style="font-size: 1.3rem" class="drawTimeC">{{
+                drawSchedTime[1]
+              }}</span>
+            </div>
+            <div class="diamond-shape blue-ball">
+              <div class="item-count">
+                <span
+                  style="
+                    color: #fff !important;
+                    font-weight: 700;
+                    font-size: 1.3rem !important;
+                  "
+                  >{{ latestResult[1] }}</span
+                >
+              </div>
             </div>
           </div>
+
           <Button label="View All Result" @click="viewAllResultFunc" />
         </div>
       </div>
@@ -352,6 +400,8 @@ export default {
     const latestResult = ref();
     const resCountdownVal = ref(null);
     const startCountdown = ref(null);
+    const drawSchedTime = ref();
+    const dateRes = ref();
     watch(
       () => props.valueAmount,
       (newValue) => {
@@ -394,6 +444,7 @@ export default {
         gameType: "2D",
       };
       const res = await axios.postLotteryLogin(passData);
+      console.log(res);
       if (res.error === 0) {
         gameID.value = res.gameDetails.id;
         resCountdownVal.value = res.gameDetails.ballClose;
@@ -456,7 +507,12 @@ export default {
         gameType: "2D",
       };
       const res = await axios.postFetchLatestResult(passData);
+      console.log(res);
       if (res.error === 0) {
+        dateRes.value = res.betHistory[0].date.split(" ")[0];
+        drawSchedTime.value = res.betHistory[0].gameTime
+          .split(/(\d+)/)
+          .filter(Boolean);
         latestResult.value = [
           res.betHistory[0].firstNumber,
           res.betHistory[0].secNumber,
@@ -551,6 +607,8 @@ export default {
       nextDrawTimeVal,
       balance,
       myBets,
+      drawSchedTime,
+      dateRes,
     };
   },
 };
