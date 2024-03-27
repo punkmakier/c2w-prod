@@ -202,6 +202,7 @@ import { useAuthStore } from "@/stores/user.js";
 import { useI18n } from "vue-i18n";
 import { useToast } from "primevue/usetoast";
 import { usePaymentProcess } from "@/stores/payment_process";
+import { socket } from "@/socket";
 export default {
   components: {
     TheWallet,
@@ -321,15 +322,25 @@ export default {
 
       isLoadingButton.value = false;
     };
+    const setupWebSocket = () => {
+      if (socket) {
+        socket.on("connect", () => {
+          console.log("Connected to WebSocket server.");
+          // Your open event handling logic
+        });
+      } else {
+        console.error("Socket is not initialized properly.");
+      }
+    };
     const withdrawSubmit = async (data) => {
-      console.log(data);
       isLoadingButton.value = true;
       const uname = store.user[0].username;
       const token = store.user[0].token;
       const passData = { username: uname, token: token, ...data };
       const res = await axios.postWithdraw(passData);
-      console.log(res);
       if (res.resStatus === 0) {
+        const dataRes = { type: "withdraw" };
+        socket.emit("chat-message", JSON.stringify(dataRes));
         isLoadingButton.value = false;
         responseMessage.value =
           "Your withdrawal request has been processed. Your funds will be credited shortly.";
@@ -350,6 +361,7 @@ export default {
       }
     };
     onMounted(() => {
+      setupWebSocket();
       if (store.user) {
         isLogin.value = true;
       } else {

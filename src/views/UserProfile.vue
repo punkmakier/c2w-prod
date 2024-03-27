@@ -1,7 +1,7 @@
 <template>
   <div class="user-profile-parent">
     <Toast position="bottom-center" />
-    <div class="user-profile">
+    <div class="user-profile mt-3">
       <div class="back-to-homepage">
         <router-link to="/"
           ><i class="pi pi-arrow-left me-1"></i>
@@ -13,9 +13,30 @@
         <div class="upper-profile">
           <div class="image-balance">
             <div class="unameHolder">
-              <span class="unameHandler" v-if="username">{{
+              <img
+                :src="`/src/assets/avatars/${avatarImage}`"
+                style="border-radius: 10px" />
+              <!-- <span class="unameHandler" v-if="username">{{
                 username[0].toUpperCase()
-              }}</span>
+              }}</span> -->
+              <span
+                style="
+                  position: absolute;
+                  z-index: 3;
+                  background-color: blue;
+                  width: 50px;
+                  height: 50px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 50%;
+                  bottom: -5%;
+                  right: -10%;
+                  cursor: pointer;
+                "
+                @click="showAvatars = true"
+                ><i class="pi pi-images" style="font-size: 1rem"></i
+              ></span>
             </div>
             <TheWalletMoney class="w-100" />
 
@@ -123,7 +144,7 @@
           </div>
         </div>
         <TabView class="mt-3 tabbersView">
-          <!-- <TabPanel header="Transaction History" >
+          <TabPanel header="Transaction History">
             <div class="card">
               <DataTable
                 :value="gameProviders"
@@ -153,7 +174,7 @@
                 </Column>
               </DataTable>
             </div>
-          </TabPanel> -->
+          </TabPanel>
           <TabPanel :header="$t('profile.depositHistory')">
             <div class="card">
               <div class="mb-2">
@@ -328,28 +349,113 @@
         :isLoading="isLoading" />
     </Dialog>
 
-    <!-- <Dialog
-      v-model:visible="wallet"
-      modal
-      header="Wallet"
-      :style="{ width: '50rem' }"
-      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-      <TheWallet />
-    </Dialog> -->
+    <!-- {
+        id: 76539,
+        uniqueTrx: '0',
+        username: 'Makier',
+        before: 263.71,
+        after: 277.71,
+        betAmount: 11,
+        winAmount: 22,
+        transactionAmount: 0,
+        dummyBet: 10.934,
+        preserve: 0,
+        transactionID: '0',
+        transactionIDString: '65de033c6d5bf8675443cb5b',
+        bonusCode: '0',
+        wagerID: '0',
+        provider: 'Fachai',
+        gameName: '21003',
+        status: 1,
+        date: '2024-02-27 07:43:56.000'
+      }, -->
 
     <Dialog
       v-model:visible="showHistoryOfSelectedProvider"
       modal
-      header="Provider History"
+      header="Bet History"
+      :style="{ width: '70rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+      :draggable="false">
+      <DataTable
+        :value="gameProviderHistoryData"
+        paginator
+        :rows="5"
+        :rowsPerPageOptions="[5, 10, 20, 50]">
+        <div class="mb-2">
+          <label class="daterangetext">{{ $t("profile.selectDates") }}</label>
+          <div class="" style="display: flex; align-items: center; gap: 15px">
+            <Calendar
+              v-model="dateRangeBetHistory"
+              selectionMode="range"
+              :manualInput="false"
+              :numberOfMonths="2" />
+            <Button
+              :label="$t('profile.show')"
+              outlined
+              @click="changeDateRangeBetHistory()" />
+          </div>
+        </div>
+        <Column field="username" header="Username">
+          <template #body="slotProps">
+            {{ slotProps.data.username }}
+          </template>
+        </Column>
+        <Column field="betAmount" header="Bet Amount">
+          <template #body="slotProps">
+            {{ slotProps.data.betAmount }}
+          </template>
+        </Column>
+        <Column field="winAmount" header="Win Amount">
+          <template #body="slotProps">
+            {{ slotProps.data.winAmount }}
+          </template>
+        </Column>
+        <Column field="provider" header="Provider">
+          <template #body="slotProps">
+            {{ slotProps.data.provider }}
+          </template>
+        </Column>
+        <Column field="date" header="Date & Time">
+          <template #body="slotProps">
+            {{ slotProps.data.date }}
+          </template>
+        </Column>
+      </DataTable>
+    </Dialog>
+
+    <Dialog
+      v-model:visible="showAvatars"
+      modal
+      header="Choose Avatar"
       :style="{ width: '50rem' }"
-      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-      <span>PROVIDER HISTORY</span>
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+      :draggable="false">
+      <div
+        style="
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          justify-content: space-around;
+        ">
+        <TheAvatarItem
+          v-for="(data, index) in avatars"
+          :key="index"
+          :imgsrc="data"
+          @selectedAvatar="selectedAvatar"
+          :selectedAvatarImg="selectedAvatarImg" />
+      </div>
+      <div class="cdivider"></div>
+      <div class="avatar-footer" style="text-align: center; margin-top: 30px">
+        <Button label="Update Avatar" @click="updateAvatar" />
+      </div>
     </Dialog>
   </div>
 </template>
 <script>
 import TheChangePassword from "@/components/TheChangePassword.vue";
 import TheWallet from "@/components/TheWallet.vue";
+import TheAvatarItem from "@/components/TheAvatarItem.vue";
 import { ref, onMounted, reactive, computed } from "vue";
 import { useAuthStore } from "@/stores/user.js";
 import TheWalletMoney from "../components/TheWalletMoney.vue";
@@ -357,16 +463,26 @@ import { C2WAPIService as axios } from "@/plugins/APIServices.js";
 import { useToast } from "primevue/usetoast";
 
 export default {
-  components: { TheWallet, TheChangePassword, TheWalletMoney },
+  components: { TheWallet, TheChangePassword, TheWalletMoney, TheAvatarItem },
   data() {
     return {
       wallet: false,
     };
   },
   setup() {
+    const avatars = ref([
+      "av1.png",
+      "av2.png",
+      "av3.png",
+      "av4.png",
+      "av5.png",
+    ]);
     const showHistoryOfSelectedProvider = ref(false);
     const changepass = ref(false);
-    const gameProviders = [{ name: "JILI", logo: "jili.png" }];
+    const showAvatars = ref(false);
+
+    const gameProviders = ref();
+    const gameProviderHistoryData = ref();
 
     const expandedRows = ref([]);
     const errorMessage = ref("");
@@ -381,11 +497,21 @@ export default {
     const username = ref("");
     const email = ref("");
     const mobile = ref("");
+    const avatarImage = ref("");
+    const selectedAvatarImg = ref(); // Initialize selectedGameType with a default value
     const isLoading = ref(false);
+    const selectedBetProviderHistory = ref("");
 
     const dateRange = ref();
+    const dateRangeBetHistory = ref();
+
     const cashflowhistory = ref();
     const store = useAuthStore();
+
+    const selectedAvatar = (val) => {
+      selectedAvatarImg.value = val;
+      console.log(selectedAvatarImg.value);
+    };
 
     const getFormattedDate = (date) => {
       const year = date.getFullYear();
@@ -418,9 +544,14 @@ export default {
         new Date(dateStart.value),
         new Date(getDateToday.value),
       ];
+      dateRangeBetHistory.value = [
+        new Date(dateStart.value),
+        new Date(getDateToday.value),
+      ];
       username.value = uname;
       email.value = udata[0].email.replace("default@gmail.com", "");
       mobile.value = udata[0].mobile;
+      avatarImage.value = udata[0].avatar;
 
       const req =
         "username=" +
@@ -432,7 +563,6 @@ export default {
         "&dateend=" +
         getDateToday.value;
       const cashflowHistory = await axios.getCashFlowHistory(req);
-
       if (cashflowHistory.resMsg === "Success") {
         const updatedDepositHistory = cashflowHistory.depositHistory.map(
           (entry) => {
@@ -470,8 +600,37 @@ export default {
         fetchResult.withdrawalHistory = updatedWithdrawalHistory;
       }
 
+      const prov = await axios.getProviders();
+      console.log(prov);
+      gameProviders.value = prov;
       // cashflowhistory.value = cashflowHistory
     });
+
+    const updateAvatar = async () => {
+      const data = {
+        username: store.user[0].username,
+        token: store.user[0].token,
+        avatar: selectedAvatarImg.value,
+      };
+      const res = await axios.postUpdateAvatar(data);
+      if (res.resStatus === 0) {
+        const localStorageData = localStorage.getItem("auth.user");
+        const userData = JSON.parse(localStorageData);
+        userData[0].avatar = selectedAvatarImg.value;
+        avatarImage.value = selectedAvatarImg.value;
+        const updatedLocalStorageData = JSON.stringify(userData);
+        localStorage.setItem("auth.user", updatedLocalStorageData);
+        toast.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Avatar has been successfully updated.",
+        });
+        showAvatars.value = false;
+      } else {
+        toast.add({ severity: "error", summary: "Failed", detail: res.resMsg });
+      }
+      console.log(res);
+    };
 
     const UpdateInfo = async () => {
       isLoading.value = true;
@@ -564,6 +723,7 @@ export default {
         "&dateend=" +
         splitDates[1];
       const cashflowHistory = await axios.getCashFlowHistory(req);
+      console.log(cashflowHistory);
       if (cashflowHistory.resMsg === "Success") {
         fetchResult.depositHistory = cashflowHistory.depositHistory;
         fetchResult.withdrawalHistory = cashflowHistory.withdrawalHistory;
@@ -582,7 +742,7 @@ export default {
         return "success";
       }
       if (value == 1) {
-        return "failed";
+        return "danger";
       }
       if (value == undefined) {
         return;
@@ -591,6 +751,7 @@ export default {
       }
     };
     const getValueSeverityStatus = (value) => {
+      console.log(value);
       switch (value) {
         case 0:
           return "success";
@@ -623,9 +784,57 @@ export default {
       // }
     };
 
-    const showHistoryByProvider = (data) => {
-      console.log(data);
-      showHistoryOfSelectedProvider.value = true;
+    const changeDateRangeBetHistory = async () => {
+      const splitDates = dateRangeBetHistory.value.map((dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      });
+      console.log(splitDates);
+
+      const passData = {
+        username: store.user[0].username,
+        token: store.user[0].token,
+        provider: selectedBetProviderHistory.value,
+        dateFrom: splitDates[0],
+        dateTo: splitDates[1],
+      };
+      const req = await axios.fetchUserBetCasinoHistory(passData);
+      if (req.resStatus === 0) {
+        showHistoryOfSelectedProvider.value = true;
+        gameProviderHistoryData.value = req.data;
+      }
+    };
+
+    const showHistoryByProvider = async (data) => {
+      dateRangeBetHistory.value = [
+        new Date(dateStart.value),
+        new Date(getDateToday.value),
+      ];
+
+      selectedBetProviderHistory.value = data;
+      const splitDates = dateRangeBetHistory.value.map((dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      });
+
+      const passData = {
+        username: store.user[0].username,
+        token: store.user[0].token,
+        provider: data,
+        dateFrom: splitDates[0],
+        dateTo: splitDates[1],
+      };
+      const req = await axios.fetchUserBetCasinoHistory(passData);
+      if (req.resStatus === 0) {
+        showHistoryOfSelectedProvider.value = true;
+        gameProviderHistoryData.value = req.data;
+      }
     };
 
     const handleInputMobile = computed(() => {
@@ -640,7 +849,9 @@ export default {
       username,
       email,
       mobile,
+      avatarImage,
       dateRange,
+      dateRangeBetHistory,
       cashflowhistory,
       fetchResult,
       expandedRows,
@@ -648,6 +859,10 @@ export default {
       changepass,
       gameProviders,
       showHistoryOfSelectedProvider,
+      gameProviderHistoryData,
+      selectedAvatarImg,
+      showAvatars,
+      avatars,
       UpdateInfo,
       changePassword,
       changeDateRange,
@@ -656,8 +871,12 @@ export default {
       formatCurrency,
       getPaymentMethod,
       showHistoryByProvider,
+      changeDateRangeBetHistory,
+      selectedAvatar,
+      updateAvatar,
       handleInputMobile,
       isLoading,
+      selectedBetProviderHistory,
     };
   },
 };
@@ -695,7 +914,7 @@ export default {
   width: 70%;
 }
 .image-balance .unameHolder {
-  width: 300px;
+  width: 220px;
   height: 220px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 0 8px 32px 0 rgba(32, 33, 34, 0.37);
@@ -705,8 +924,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ff1354;
-  box-shadow: 0 0 10px #ff1354;
+  /* background-color: #ff1354; */
+  /* box-shadow: 0 0 10px #ff1354; */
 }
 .image-balance .unameHandler {
   font-size: 7rem;

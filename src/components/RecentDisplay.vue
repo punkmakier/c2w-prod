@@ -1,11 +1,13 @@
 <template>
-  <div class="w-container">
+  <div
+    class="w-container"
+    :style="{ width: recentWithdrawn.length <= 7 ? '1450px' : '100%' }">
     <div class="winners-list">
       <swiper
         ref="swSwiper"
         :modules="modules"
         :slides-per-view="8"
-        :space-between="10"
+        :space-between="30"
         :loop="true"
         :allow-touch-move="false"
         :breakpoints="{
@@ -147,59 +149,95 @@ export default {
     onMounted(async () => {
       try {
         const response = await axios.getWithdrawals();
-        const returnValue = response.map((item) => {
-          if (parseInt(item.via) === 0) {
-            return { ...item, via: "Paymaya" };
-          } else if (parseInt(item.via) === 7) {
-            return { ...item, via: "GCASH" };
-          } else {
-            return item;
-          }
-        });
-        const getRandomPic = returnValue.map((item) => {
-          const picRandomizer = [
-            "pic1.png",
-            "pic2.png",
-            "pic3.png",
-            "pic4.png",
-            "pic5.png",
-            "pic6.png",
-            "pic7.png",
-            "pic8.png",
-            "pic9.png",
-            "pic10.png",
-            "pic11.png",
-            "pic12.png",
-            "pic13.png",
-            "pic14.png",
-            "pic15.png",
-            "pic16.png",
-            "pic17.png",
-            "pic18.png",
-            "pic19.png",
-            "pic20.png",
-            "pic21.png",
-            "pic22.png",
-            "pic23.png",
-          ];
-          const imgsrc =
-            picRandomizer[Math.floor(Math.random() * picRandomizer.length)];
-          return { ...item, imgsrc };
-        });
+        console.log(response);
+        if (response.length > 0) {
+          const returnValue = response.map((item) => {
+            if (parseInt(item.via) === 0) {
+              return { ...item, via: "Paymaya" };
+            } else if (parseInt(item.via) === 7) {
+              return { ...item, via: "GCASH" };
+            } else {
+              return item;
+            }
+          });
+          // const getRandomPic = returnValue.map((item) => {
+          //   const picRandomizer = ["av1.png", "av2.png", "av3.png", "av4.png"];
+          //   const imgsrc =
+          //     picRandomizer[Math.floor(Math.random() * picRandomizer.length)];
+          //   return { ...item, imgsrc };
+          // });
 
-        const finalValue = getRandomPic.map((item) => {
-          const moneyFormatted = item.money.toLocaleString("en-US", {
-            style: "currency",
-            currency: "PHP",
+          const finalValue = returnValue.map((item) => {
+            const moneyFormatted = item.money.toLocaleString("en-US", {
+              style: "currency",
+              currency: "PHP",
+            });
+
+            return {
+              ...item,
+              money: moneyFormatted,
+            };
           });
 
-          return {
-            ...item,
-            money: moneyFormatted,
-          };
-        });
-
-        recentWithdrawn.value = finalValue;
+          recentWithdrawn.value = finalValue;
+        } else {
+          recentWithdrawn.value = [
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+            {
+              name: "demo016",
+              money: "₱1,600.00",
+              via: "GCash",
+              imgsrc: "empty.png",
+            },
+          ];
+        }
       } catch (error) {
         console.error("Error fetching games:", error);
       }
@@ -286,6 +324,9 @@ export default {
   padding-top: 10px;
   overflow: hidden;
   width: 100%;
+  min-width: 1000px;
+  min-height: 150px;
+  height: auto;
 }
 .winner-info {
   border-radius: 5px;

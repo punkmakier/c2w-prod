@@ -40,13 +40,12 @@ export const C2WAPIService = {
     return await get("/api/cashflowDeposithistory?" + data);
   },
 
-  getTest: async () => {
-    return await get("/api/test");
-  },
-
   // Post Request
   postRegister: async (data) => {
     return await post("/api/register", data);
+  },
+  postUpdateAvatar: async (data) => {
+    return await post("/api/updateAvatar", data);
   },
   postLogin: async (data) => {
     return await post("/api/login", data);
@@ -71,6 +70,9 @@ export const C2WAPIService = {
   },
   resetPassword: async (data) => {
     return await post("/api/resetPassword", data);
+  },
+  fetchUserBetCasinoHistory: async (data) => {
+    return await post("/api/fetchUserBetCasinoHistory", data);
   },
 
   forceLogout: async (data) => {

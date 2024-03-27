@@ -1,14 +1,24 @@
 <template>
   <div class="winner-info">
     <img
-      :src="`/src/assets/random_images/${imgsrc}`"
+      :src="`/src/assets/avatars/${imgsrc}`"
       :alt="name"
       style="width: 100px; height: 100px; border-radius: 5px" />
-    <p style="color: #fff; text-align: center; font-size: 0.7rem">
+    <p
+      style="color: #fff; text-align: center; font-size: 0.7rem"
+      :style="{ color: imgsrc === 'empty.png' ? 'transparent' : '' }">
       {{ randomReplace(name) }} {{ $t("scwithdrawn") }}
-      <span class="fw-700" style="color: #fff314">{{ money }}</span>
+      <span
+        class="fw-700"
+        style="color: #fff314"
+        :style="{ color: imgsrc === 'empty.png' ? 'transparent' : '#fff314' }"
+        >{{ money }}</span
+      >
       {{ $t("via") }}
-      <b>{{ via }}</b>
+      <b
+        :style="{ color: imgsrc === 'empty.png' ? 'transparent' : '#fff314' }"
+        >{{ via }}</b
+      >
     </p>
   </div>
 </template>

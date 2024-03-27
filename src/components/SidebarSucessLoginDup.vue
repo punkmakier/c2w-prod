@@ -152,6 +152,7 @@ import { usePaymentProcess } from "@/stores/payment_process";
 import { useToast } from "primevue/usetoast";
 import { useI18n } from "vue-i18n";
 import { routerKey } from "vue-router";
+import { socket } from "@/socket";
 export default {
   components: {
     TheWalletMoney,
@@ -229,8 +230,7 @@ export default {
     const toAgentDashboard = () => {
       const agentInfo =
         "username=" + store.user[0].username + "&token=" + store.user[0].token;
-      window.open("http://localhost:5175/dashboard?" + agentInfo, "_blank");
-      // window.open("http://agent.come2win.ph/dashboard", "_blank");
+      window.open("http://agent.come2win.ph/dashboard?" + agentInfo, "_blank");
     };
 
     uname.value = capitalizeFirstLetter(store.user[0].username);
@@ -291,6 +291,7 @@ export default {
     ]);
 
     onMounted(() => {
+      setupWebSocket();
       const getLang = localStorage.getItem("language");
       const selectedLang = languages.value.filter(
         (item) => item.code === getLang
@@ -329,6 +330,16 @@ export default {
 
       isLoadingButton.value = false;
     };
+    const setupWebSocket = () => {
+      if (socket) {
+        socket.on("connect", () => {
+          console.log("Connected to WebSocket server.");
+          // Your open event handling logic
+        });
+      } else {
+        console.error("Socket is not initialized properly.");
+      }
+    };
     const withdrawSubmit = async (data) => {
       severity.value = "";
       responseMessage.value = "";
@@ -339,8 +350,9 @@ export default {
       const token = store.user[0].token;
       const passData = { username: uname, token: token, ...data };
       const res = await axios.postWithdraw(passData);
-      console.log(res);
       if (res.resStatus === 0) {
+        const dataRes = { type: "withdraw" };
+        socket.emit("chat-message", JSON.stringify(dataRes));
         isLoadingButton.value = false;
         responseMessage.value =
           "Your withdrawal request has been processed. Your funds will be credited shortly.";

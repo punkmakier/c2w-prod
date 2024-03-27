@@ -45,6 +45,7 @@ export const useAuthStore = defineStore("auth", () => {
           mobile: getResult.mobile,
           chatToken: getResult.chatToken,
           is_agent: getResult.is_agent,
+          avatar: getResult.avatar,
         },
       ];
       user.value = res;
