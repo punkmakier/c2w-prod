@@ -168,7 +168,7 @@
                   <template #body="slotProps">
                     <Button
                       label="Show History"
-                      @click="showHistoryByProvider(slotProps.data.name)"
+                      @click="showHistoryByProvider(slotProps.data.pname)"
                       outlined />
                   </template>
                 </Column>
@@ -809,6 +809,7 @@ export default {
     };
 
     const showHistoryByProvider = async (data) => {
+      console.log(data);
       dateRangeBetHistory.value = [
         new Date(dateStart.value),
         new Date(getDateToday.value),

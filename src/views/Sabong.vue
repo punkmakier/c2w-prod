@@ -5,6 +5,7 @@ import { C2WAPIService as axios } from "@/plugins/APIServices.js";
 import { socket } from "@/socket";
 import { useToast } from "primevue/usetoast";
 import CellSabongTable from "@/data/CellSabongTable.json";
+import { VideoPlayer } from "vue-hls-video-player";
 const route = useRoute();
 const toast = useToast();
 const router = useRouter();
@@ -16,7 +17,7 @@ const { sabongData } = useSabong();
 const betAmount = ref();
 const isLoading = ref(false);
 const arenaClosed = ref(false);
-
+// const videoSrc = "https://come2win.xyz/hls/stream.m3u8";
 // Sample data from regladaData ref
 const regladaData = ref([]);
 const regladaDataStraight = ref([]);
@@ -339,9 +340,18 @@ for (let i = 0; i < numRowsStraight; i++) {
       >The arena is closed. Please wait for the next fight.</Message
     >
     <div class="content-sabong">
+      <!-- <VideoPlayer
+        type="default"
+        previewImageLink="poster.webp"
+        link="https://come2win.xyz/hls/stream.m3u8"
+        :progress="30"
+        :isMuted="false"
+        :isControls="true"
+        class="iframeSabong item-sabong" /> -->
+
       <iframe
         class="iframeSabong item-sabong"
-        src="https://www.youtube.com/embed/yUQIXf7WV78?si=CHy6hXld3MDtLoBm"
+        src="https://come2win.xyz/hls/stream.m3u8"
         title="YouTube video player"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -412,20 +422,43 @@ for (let i = 0; i < numRowsStraight; i++) {
             </tr>
             <tr>
               <td>
-                <span style="font-size: 1.2rem">{{
-                  sabongData.meronOdds ? sabongData.meronOdds : 0
-                }}</span
-                ><br /><small style="font-size: 0.9rem">{{
-                  sabongData.meronBet ? formatCurrency(sabongData.meronBet) : 0
-                }}</small>
+                <div>
+                  <span style="font-size: 1.2rem"
+                    >PAYOUT =
+                    {{ sabongData.meronOdds ? sabongData.meronOdds : 0 }}</span
+                  >
+                </div>
+                <div>
+                  <small style="font-size: 0.9rem">{{
+                    sabongData.meronBet
+                      ? formatCurrency(sabongData.meronBet)
+                      : 0
+                  }}</small>
+                  = {{ sabongData.meronBet * sabongData.meronOdds }}
+                </div>
               </td>
               <td>
-                <span style="font-size: 1.2rem">{{
-                  sabongData.walaOdds ? sabongData.walaOdds.toLocaleString() : 0
-                }}</span
-                ><br /><small style="font-size: 0.9rem">{{
-                  sabongData.walaBet ? formatCurrency(sabongData.walaBet) : 0
-                }}</small>
+                <div>
+                  <span style="font-size: 1.2rem"
+                    >PAYOUT =
+                    {{
+                      sabongData.walaOdds
+                        ? sabongData.walaOdds.toLocaleString()
+                        : 0
+                    }}</span
+                  >
+                </div>
+
+                <div>
+                  <small style="font-size: 0.9rem"
+                    >{{
+                      sabongData.walaBet
+                        ? formatCurrency(sabongData.walaBet)
+                        : 0
+                    }}
+                    = {{ sabongData.walaBet * sabongData.walaOdds }}</small
+                  >
+                </div>
               </td>
             </tr>
             <tr>
