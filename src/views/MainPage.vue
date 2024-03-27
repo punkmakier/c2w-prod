@@ -592,7 +592,7 @@ import SplashScreen from "@/components/SplashScreen.vue";
 import { useToast } from "primevue/usetoast";
 import InHouseGame from "@/data/InhouseGames.json";
 import LiveGames from "@/data/LiveGames.json";
-import AllGames from "@/data/AllGames.json";
+// import AllGames from "@/data/AllGames.json";
 import { useAccountBalance } from "@/stores/user_balance";
 import { useI18n } from "vue-i18n";
 
@@ -1048,8 +1048,8 @@ export default {
         }, 4000);
       }
       try {
-        // const response = await axios.getGames();
-        originalGameDataList.value = AllGames;
+        const response = await axios.getGames();
+        originalGameDataList.value = response;
         receivedGameDataList.value = [...originalGameDataList.value];
         receivedGameDataList.value = originalGameDataList.value.slice(
           0,
