@@ -230,7 +230,8 @@ export default {
     const toAgentDashboard = () => {
       const agentInfo =
         "username=" + store.user[0].username + "&token=" + store.user[0].token;
-      window.open("http://agent.come2win.ph/dashboard?" + agentInfo, "_blank");
+      window.open("https://agent.come2win.ph/?" + agentInfo, "_blank");
+      // window.open("http://localhost:5175/?" + agentInfo, "_blank");
     };
 
     uname.value = capitalizeFirstLetter(store.user[0].username);
