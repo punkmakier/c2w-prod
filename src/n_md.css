@@ -6,6 +6,9 @@
   .lotto-vid {
     width: 90% !important;
   }
+  .provMob {
+    width: 100% !important;
+  }
   .drawBetForMobile,
   .regladaForMobile {
     display: block !important;

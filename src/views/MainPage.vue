@@ -1008,6 +1008,19 @@ export default {
     };
 
     onMounted(async () => {
+      try {
+        const response = await axios.getGames();
+        originalGameDataList.value = response;
+        receivedGameDataList.value = [...originalGameDataList.value];
+        receivedGameDataList.value = originalGameDataList.value.slice(
+          0,
+          countGameCards.value
+        );
+        totalGames.value = originalGameDataList.value.length;
+        totalShowGames.value = receivedGameDataList.value.length;
+      } catch (error) {
+        console.error("Error fetching games:", error);
+      }
       setupWebSocket();
       originalInHouseGame1.value = LiveGames;
       originalInHouseGame2.value = InHouseGame;
@@ -1047,19 +1060,7 @@ export default {
           showSplashScreen.value = false;
         }, 4000);
       }
-      try {
-        const response = await axios.getGames();
-        originalGameDataList.value = response;
-        receivedGameDataList.value = [...originalGameDataList.value];
-        receivedGameDataList.value = originalGameDataList.value.slice(
-          0,
-          countGameCards.value
-        );
-        totalGames.value = originalGameDataList.value.length;
-        totalShowGames.value = receivedGameDataList.value.length;
-      } catch (error) {
-        console.error("Error fetching games:", error);
-      }
+
       checkFavorites();
     });
     watchEffect(async () => {

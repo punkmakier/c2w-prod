@@ -152,6 +152,22 @@ onMounted(async () => {
     sabongData.meronOdds = res.meronOdds;
     sabongData.walaOdds = res.walaOdds;
     currentBets.value = res.currentBets;
+    res.currentBets.forEach((element) => {
+      console.log(element);
+      if (element.betInfo === "Draw") {
+        sabongData.drawBet += element.betAmount;
+      } else if (element.betInfo === "Meron") {
+        sabongData.meronBet += element.betAmount;
+      } else if (element.betInfo === "Wala") {
+        sabongData.walaBet += element.betAmount;
+      }
+    });
+    // sabongData.meronBet =
+    // sabongData.meronBet
+    //                     ? formatCurrency(sabongData.meronBet)
+    //                     : 0
+    //                 }}
+    //                 = {{ sabongData.meronBet * sabongData.meronOdds
 
     const resFetch = await axios.postFetchReglada({
       username: store.user[0].username,
@@ -343,7 +359,7 @@ for (let i = 0; i < numRowsStraight; i++) {
       <!-- <VideoPlayer
         type="default"
         previewImageLink="poster.webp"
-        link="https://come2win.xyz/hls/stream.m3u8"
+        link="https://macwin.live"
         :progress="30"
         :isMuted="false"
         :isControls="true"
@@ -351,7 +367,7 @@ for (let i = 0; i < numRowsStraight; i++) {
 
       <iframe
         class="iframeSabong item-sabong"
-        src="https://come2win.xyz/hls/stream.m3u8"
+        src="https://macwin.live"
         title="YouTube video player"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -429,12 +445,14 @@ for (let i = 0; i < numRowsStraight; i++) {
                   >
                 </div>
                 <div>
-                  <small style="font-size: 0.9rem">{{
-                    sabongData.meronBet
-                      ? formatCurrency(sabongData.meronBet)
-                      : 0
-                  }}</small>
-                  = {{ sabongData.meronBet * sabongData.meronOdds }}
+                  <span style="font-size: 1.2rem; color: #39ff14"
+                    >{{
+                      sabongData.meronBet
+                        ? formatCurrency(sabongData.meronBet)
+                        : 0
+                    }}
+                    = {{ sabongData.meronBet * sabongData.meronOdds }}</span
+                  >
                 </div>
               </td>
               <td>
@@ -450,13 +468,14 @@ for (let i = 0; i < numRowsStraight; i++) {
                 </div>
 
                 <div>
-                  <small style="font-size: 0.9rem"
+                  <span style="font-size: 1.2rem; color: #39ff14"
                     >{{
                       sabongData.walaBet
                         ? formatCurrency(sabongData.walaBet)
                         : 0
                     }}
-                    = {{ sabongData.walaBet * sabongData.walaOdds }}</small
+                    =
+                    {{ sabongData.walaBet * sabongData.walaOdds }}</span
                   >
                 </div>
               </td>
@@ -626,11 +645,10 @@ for (let i = 0; i < numRowsStraight; i++) {
             paginator
             :rows="5"
             :value="currentBets"
-            tableStyle="min-width: 50rem">
+            tableStyle="min-width: 100%">
             <Column field="fightNumber" header="FIGHT #"></Column>
             <Column field="betAmount" header="AMOUNT"></Column>
             <Column field="betInfo" header="BET TYPE"></Column>
-            <Column field="payout" header="PAYOUT"></Column>
           </DataTable>
         </div>
       </div>
@@ -716,7 +734,6 @@ for (let i = 0; i < numRowsStraight; i++) {
             <Column field="fightNumber" header="FIGHT #"></Column>
             <Column field="betAmount" header="AMOUNT"></Column>
             <Column field="betInfo" header="BET TYPE"></Column>
-            <Column field="payout" header="PAYOUT"></Column>
           </DataTable>
         </div>
       </div>
@@ -971,7 +988,7 @@ for (let i = 0; i < numRowsStraight; i++) {
   gap: 2rem;
 }
 .iframeSabong {
-  /* height: 350px; */
+  /* height: 450px; */
   border-radius: 5px;
 }
 .sabong-title {

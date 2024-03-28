@@ -324,8 +324,8 @@ export default {
   padding-top: 10px;
   overflow: hidden;
   width: 100%;
-  min-width: 1000px;
-  min-height: 150px;
+  /* min-width: 1000px; */
+  /* min-height: 150px; */
   height: auto;
 }
 .winner-info {

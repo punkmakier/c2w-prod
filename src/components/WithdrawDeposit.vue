@@ -224,7 +224,7 @@
       <div class="customDivider1"></div>
       <div class="depositView">
         <div
-          class="flex flex-column gap-2"
+          class="flex flex-column gap-2 provMob"
           :class="{ depbank: withdrawActivePayment === 'Bank' }"
           v-if="withdrawActivePayment === 'Bank'"
           style="width: 25%">
@@ -245,7 +245,7 @@
           >
         </div>
         <div
-          class="flex flex-column gap-2"
+          class="flex flex-column gap-2 provMob"
           :class="{ depbank: withdrawActivePayment === 'Bank' }"
           v-if="withdrawActivePayment === 'Bank'"
           style="width: 25%">

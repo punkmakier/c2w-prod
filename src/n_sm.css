@@ -1,4 +1,7 @@
 @media (width <= 430px) {
+  .provMob {
+    width: 100% !important;
+  }
   .mb3d {
     flex-direction: column;
   }
